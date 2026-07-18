@@ -25,7 +25,7 @@ CREATE TABLE RSD_ORGANIZATIONS (
     FULL_NAME            CLOB,
     MAIN_BANK_ACCOUNT_ID NUMBER,  -- FK deferred: Catalog.БанковскиеСчета is EXTERNAL (майбутній батч)
     DOC_PREFIX           VARCHAR2(2 CHAR),
-    ENTITY_KIND_ID       NUMBER             NOT NULL,  -- FK deferred: Enum.ЮрФизЛицо is EXTERNAL (§9.5)
+    ENTITY_KIND_ID       NUMBER             NOT NULL,  -- FK → RSD_ENUMS(ID) enum_type='ЮрФизЛицо'; замикається migration/002-enums-wave-1/close-deferred-fks.sql (був §9.5)
     IS_VAT_PAYER         BOOLEAN DEFAULT FALSE NOT NULL,
     DEVELOPER_ID         NUMBER,  -- FK deferred: Catalog.Контрагенты is EXTERNAL
     IS_DELETED           BOOLEAN DEFAULT FALSE NOT NULL,

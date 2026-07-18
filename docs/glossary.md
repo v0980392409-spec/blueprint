@@ -53,3 +53,4 @@
 | ДополнительныеРеквизитыИСведения | ADD_ATTR_PROPERTIES | Додаткові реквізити й відомості* | EXTERNAL |
 | ТипыКонтактнойИнформации | CONTACT_INFO_TYPES | Типи контактної інформації* | EXTERNAL |
 | ЮрФизЛицо (enum) | ENTITY_KINDS | Види організацій* | EXTERNAL |
+| _(будь-яке перечислення)_ | RSD_ENUMS (ENUM_TYPE=<імʼя>) | — | Enum→lookup (батч 002) |
