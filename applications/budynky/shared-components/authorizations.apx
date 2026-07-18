@@ -1,0 +1,31 @@
+authorization admin (
+    name: ADMIN
+    type: isInRoleOrGroup
+    settings {
+        names: ADMIN
+    }
+)
+
+authorization admin-or-contributor (
+    name: ADMIN or CONTRIBUTOR
+    type: isInRoleOrGroup
+    settings {
+        names: [
+            ADMIN
+            CONTRIBUTOR
+        ]
+    }
+)
+
+authorization admin-or-contributor-or-reader (
+    name: ADMIN or CONTRIBUTOR or READER
+    type: isInRoleOrGroup
+    settings {
+        names: [
+            ADMIN
+            CONTRIBUTOR
+            READER
+        ]
+    }
+)
+

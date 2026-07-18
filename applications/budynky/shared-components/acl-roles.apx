@@ -1,0 +1,21 @@
+role admin (
+    name: ADMIN
+    description {
+        description: Full access to all pages and actions, including delete operations.
+    }
+)
+
+role contributor (
+    name: CONTRIBUTOR
+    description {
+        description: Create and edit access on houses, sections, and organizations; no delete.
+    }
+)
+
+role reader (
+    name: READER
+    description {
+        description: Read-only access to the list pages and reports.
+    }
+)
+

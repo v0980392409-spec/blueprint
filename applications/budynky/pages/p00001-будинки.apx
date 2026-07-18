@@ -1,0 +1,408 @@
+page 1 (
+    name: Будинки
+    alias: БУДИНКИ
+    title: Будинки
+    pageGroup: @будинки
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor-or-reader
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Entry list of the house registry; row edit link and the create action open the modal house form for CONTRIBUTOR and ADMIN, while READER may only browse.
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 5
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region будинки (
+        name: Будинки
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select h.id as id
+                     , h.code as code
+                     , h.name as name
+                     , h.organization_id as organization_id
+                     , o.name as organization_name
+                     , h.house_address as house_address
+                     , h.item_no as item_no
+                     , h.is_active as is_active
+                     , h.is_house_zero as is_house_zero
+                from rsd_houses h
+                left join rsd_organizations o
+                    on o.id = h.organization_id
+                where h.is_deleted = false
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/interactive-report
+            templateOptions: [
+                #DEFAULT#
+                t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        advanced {
+            htmlDomId: будинки
+        }
+        comments {
+            comments: Interactive report over RSD_HOUSES joined to RSD_ORGANIZATIONS; required filtering on Організація and Активність is provided by the interactive report native filter toolbar; soft-deleted rows are excluded.
+        }
+        link {
+            linkColumn: customTarget
+            target: {
+                page: 2
+                items: {
+                    P2_ID: \#ID#\
+                }
+            }
+            linkIcon: <span role="img" aria-label="Редагувати" class="fa fa-edit" title="Редагувати"></span>
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+        genAI {
+            naturalLanguageSupport: true
+            reportContext: Будинки (Catalog.RSD_Дома): реєстр будинків забудовника
+        }
+        advanced {
+            savedReportMappingIdentifier: 9178333191962709
+        }
+
+        column CODE (
+            type: plainText
+            heading {
+                heading: Код
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: A
+            }
+            genAI {
+                columnContext: Код з 1С, унікальний
+            }
+        )
+
+        column HOUSE_ADDRESS (
+            type: plainText
+            heading {
+                heading: Адреса будинку
+            }
+            layout {
+                sequence: 60
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: B
+            }
+            genAI {
+                columnContext: Адреса будинку
+            }
+        )
+
+        column ID (
+            type: hidden
+            heading {
+                heading: ІД
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: C
+            }
+            genAI {
+                columnContext: Сурогатний первинний ключ
+            }
+        )
+
+        column IS_ACTIVE (
+            type: plainText
+            heading {
+                heading: Активність
+            }
+            layout {
+                sequence: 80
+            }
+            source {
+                dataType: BOOLEAN
+            }
+            advanced {
+                endUserAlias: D
+            }
+            genAI {
+                columnContext: Ознака активності будинку
+            }
+        )
+
+        column IS_HOUSE_ZERO (
+            type: plainText
+            heading {
+                heading: Будинок 0 (LOT 100)
+            }
+            layout {
+                sequence: 90
+            }
+            source {
+                dataType: BOOLEAN
+            }
+            advanced {
+                endUserAlias: E
+            }
+            genAI {
+                columnContext: Ознака «Будинок 0 (LOT 100)»
+            }
+        )
+
+        column ITEM_NO (
+            type: plainText
+            heading {
+                heading: Номер
+            }
+            layout {
+                sequence: 70
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: F
+            }
+            genAI {
+                columnContext: Номер будинку
+            }
+        )
+
+        column NAME (
+            type: plainText
+            heading {
+                heading: Найменування
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: G
+            }
+            genAI {
+                columnContext: Найменування будинку
+            }
+        )
+
+        column ORGANIZATION_ID (
+            type: hidden
+            heading {
+                heading: Організація ІД
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: H
+            }
+            genAI {
+                columnContext: Організація-власник
+            }
+        )
+
+        column ORGANIZATION_NAME (
+            type: plainText
+            heading {
+                heading: Організація
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: I
+            }
+            genAI {
+                columnContext: Найменування організації
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
+        savedReport budynky_primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+
+            displayColumn CODE (
+                sequence: 1
+            )
+
+            displayColumn HOUSE_ADDRESS (
+                sequence: 4
+            )
+
+            displayColumn IS_ACTIVE (
+                sequence: 6
+            )
+
+            displayColumn IS_HOUSE_ZERO (
+                sequence: 7
+            )
+
+            displayColumn ITEM_NO (
+                sequence: 5
+            )
+
+            displayColumn NAME (
+                sequence: 2
+            )
+
+            displayColumn ORGANIZATION_NAME (
+                sequence: 3
+            )
+
+        )
+
+    )
+
+    button reset-будинки (
+        buttonName: RESET-будинки
+        label: Reset
+        layout {
+            sequence: 2
+            region: @будинки
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text-with-icon
+            templateOptions: [
+                #DEFAULT#
+                t-Button--iconLeft
+            ]
+            icon: fa-undo-alt
+        }
+        behavior {
+            action: triggerAction
+        }
+
+        triggerAction reset (
+            name: Reset
+            action: executeJsCode
+            settings {
+                jsCode: apex.jQuery("#будинки_actions_menu").menu("find", "irReset").action();
+            }
+            execution {
+                sequence: 10
+            }
+        )
+
+    )
+
+    button створити-будинок (
+        buttonName: СТВОРИТИ-БУДИНОК
+        label: Створити будинок
+        layout {
+            sequence: 1
+            region: @будинки
+            slot: rightOfInteractiveReportSearchBar
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: redirectThisApp
+            target: {
+                page: 2
+            }
+        }
+        security {
+            authorizationScheme: @admin-or-contributor
+        }
+    )
+
+    dynamicAction dialog-refresh-будинки (
+        name: Refresh on dialog close Будинки
+        execution {
+            sequence: 10
+        }
+        when {
+            event: apexafterclosedialog
+            selectionType: region
+            region: @будинки
+        }
+
+        action refresh (
+            action: refresh
+            settings {
+                maintainPagination: true
+            }
+            affectedElements {
+                selectionType: region
+                region: @будинки
+            }
+            execution {
+                sequence: 10
+                fireOnInit: false
+            }
+        )
+
+    )
+
+)
+

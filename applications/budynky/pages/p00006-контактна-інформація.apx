@@ -1,0 +1,630 @@
+page 6 (
+    name: Контактна інформація
+    alias: КОНТАКТНА-ІНФОРМАЦІЯ
+    title: Контактна інформація
+    pageGroup: @організації
+    appearance {
+        pageMode: modalDialog
+        dialogTemplate: @/drawer
+        templateOptions: [
+            #DEFAULT#
+            js-dialog-class-t-Drawer--pullOutEnd
+        ]
+    }
+    dialog {
+        chained: false
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Contact info row create/edit dialog launched from the Контактна інформація list on Page 5; TYPE_ID, KIND_ID, and LIST_KIND_ID stay plain numeric inputs because their reference tables are not migrated yet, and delete is limited to ADMIN.
+    }
+
+    region buttons (
+        name: Buttons
+        type: staticContent
+        layout {
+            sequence: 20
+            slot: dialogFooter
+        }
+        appearance {
+            template: @/buttons-container
+            templateOptions: #DEFAULT#
+        }
+        settings {
+            outputAs: text
+        }
+    )
+
+    region контактна-інформація (
+        name: Контактна інформація
+        type: form
+        source {
+            location: localDatabase
+            tableName: RSD_ORGANIZATIONS_CONTACT_INFO
+        }
+        layout {
+            sequence: 10
+            slot: contentBody
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+                t-Region--noBorder
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        comments {
+            comments: Single-record form over RSD_ORGANIZATIONS_CONTACT_INFO; the technical FIELD_VALUES column is excluded from editing.
+        }
+        edit {
+            enabled: true
+            allowedOperations: [
+                add
+                update
+                delete
+            ]
+        }
+    )
+
+    pageItem P6_CITY (
+        type: textField
+        label {
+            label: Місто
+            alignment: right
+        }
+        layout {
+            sequence: 90
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: CITY
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_COUNTRY (
+        type: textField
+        label {
+            label: Країна
+            alignment: right
+        }
+        layout {
+            sequence: 70
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: COUNTRY
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_EMAIL_ADDRESS (
+        type: textField
+        label {
+            label: Адреса ЕП
+            alignment: right
+        }
+        layout {
+            sequence: 100
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: EMAIL_ADDRESS
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_ID (
+        type: hidden
+        layout {
+            sequence: 10
+            region: @контактна-інформація
+            slot: regionBody
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: ID
+            dataType: number
+            primaryKey: true
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_KIND_ID (
+        type: numberField
+        label {
+            label: Вид
+            alignment: right
+        }
+        layout {
+            sequence: 50
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: KIND_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_LINE_NO (
+        type: numberField
+        label {
+            label: № рядка
+            alignment: right
+        }
+        layout {
+            sequence: 30
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: LINE_NO
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_LIST_KIND_ID (
+        type: numberField
+        label {
+            label: Вид для списку
+            alignment: right
+        }
+        layout {
+            sequence: 140
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: LIST_KIND_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_ORGANIZATION_ID (
+        type: selectList
+        label {
+            label: Організація
+            alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-organizations
+        }
+        layout {
+            sequence: 20
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: ORGANIZATION_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_PHONE_NUMBER (
+        type: textField
+        label {
+            label: Номер телефону
+            alignment: right
+        }
+        layout {
+            sequence: 120
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: PHONE_NUMBER
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_PHONE_NUMBER_LOCAL (
+        type: textField
+        label {
+            label: Номер без кодів
+            alignment: right
+        }
+        layout {
+            sequence: 130
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: PHONE_NUMBER_LOCAL
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_PRESENTATION (
+        type: textField
+        label {
+            label: Представлення
+            alignment: right
+        }
+        layout {
+            sequence: 60
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: PRESENTATION
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_REGION (
+        type: textField
+        label {
+            label: Регіон
+            alignment: right
+        }
+        layout {
+            sequence: 80
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: REGION
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_SERVER_DOMAIN (
+        type: textField
+        label {
+            label: Доменне імʼя сервера
+            alignment: right
+        }
+        layout {
+            sequence: 110
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: SERVER_DOMAIN
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_TYPE_ID (
+        type: numberField
+        label {
+            label: Тип
+            alignment: right
+        }
+        layout {
+            sequence: 40
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: TYPE_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P6_VALID_FROM (
+        type: datePicker
+        label {
+            label: Діє з
+            alignment: right
+        }
+        layout {
+            sequence: 150
+            region: @контактна-інформація
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            formatMask: DD.MM.YYYY
+            width: 32
+        }
+        source {
+            formRegion: @контактна-інформація
+            column: VALID_FROM
+            dataType: date
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    button apply-changes (
+        buttonName: APPLY-CHANGES
+        label: Apply Changes
+        layout {
+            sequence: 2
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: update
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P6_ID
+        }
+    )
+
+    button cancel (
+        buttonName: CANCEL
+        label: Cancel
+        layout {
+            sequence: 4
+            region: @buttons
+            slot: close
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: triggerAction
+            executeValidations: false
+        }
+
+        triggerAction cancel-dialog (
+            name: Cancel Dialog
+            action: cancelDialog
+            execution {
+                sequence: 10
+            }
+        )
+
+    )
+
+    button create (
+        buttonName: CREATE
+        label: Create
+        layout {
+            sequence: 1
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: insert
+        }
+        serverSideCondition {
+            type: itemIsNull
+            item: P6_ID
+        }
+    )
+
+    button delete (
+        buttonName: DELETE
+        label: Delete
+        layout {
+            sequence: 3
+            region: @buttons
+            slot: delete
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            executeValidations: false
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: delete
+            requiresConfirmation: true
+        }
+        confirmation {
+            message: &APP_TEXT$DELETE_MSG!RAW.
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P6_ID
+        }
+        security {
+            authorizationScheme: @admin
+        }
+    )
+
+    process close-dialog (
+        name: Close Dialog
+        type: closeDialog
+        settings {
+            itemsToReturn: P6_ID
+        }
+        execution {
+            sequence: 20
+        }
+        advanced {
+            executionMappingIdentifier: 9193446166962831
+        }
+    )
+
+    process initialize-form-контактна-інформація (
+        name: Initialize form Контактна інформація
+        type: formInitialization
+        formRegion: @контактна-інформація
+        execution {
+            sequence: 10
+            point: beforeHeader
+        }
+        advanced {
+            executionMappingIdentifier: 9193503396962831
+        }
+    )
+
+    process process-form-контактна-інформація (
+        name: Process form Контактна інформація
+        type: formAutoRowProcessing
+        formRegion: @контактна-інформація
+        execution {
+            sequence: 10
+        }
+        advanced {
+            executionMappingIdentifier: 9193611942962831
+        }
+    )
+
+)
+

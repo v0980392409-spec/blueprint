@@ -1,0 +1,31 @@
+breadcrumb breadcrumb (
+    name: Breadcrumb
+
+    entry будинки (
+        name: Будинки
+        pageNumber: 1
+        execution {
+            sequence: 10
+        }
+        link {
+            target: {
+                page: 1
+            }
+        }
+    )
+
+    entry організації (
+        name: Організації
+        pageNumber: 4
+        execution {
+            sequence: 20
+        }
+        link {
+            target: {
+                page: 4
+            }
+        }
+    )
+
+)
+

@@ -1,0 +1,14 @@
+pageGroup будинки (
+    name: Будинки
+    description {
+        description: House registry workflow: house list, house form, and section form.
+    }
+)
+
+pageGroup організації (
+    name: Організації
+    description {
+        description: Organization workflow: faceted organization list, organization form, and child row forms for contact info and additional attributes.
+    }
+)
+

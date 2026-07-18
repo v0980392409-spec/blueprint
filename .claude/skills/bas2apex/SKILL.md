@@ -144,19 +144,44 @@ paraphrase it, load it and follow it. If the output contains
 `## Validation Findings`, fix the blueprint with the same prompt and inputs
 until clean.
 
-## Stage 7 — import
+## Stage 7 — import (server-side; proven on batch 001)
 
-App Builder (`https://apex.173-242-60-109.sslip.io/ords/`) → App Builder →
-Import → file type **Application Blueprint**, UTF-8. The parsing schema
-(BAS_REVERSE) must be REST-enabled and must already contain the stage-5
-objects, otherwise import fails. On import errors: copy the full error log and
-fix blueprint.md with the canonical prompt.
+The App Builder import wizard (Import → Application Blueprint) parses the file
+but its final install step can stall on a blank page — do NOT rely on it.
+The reliable path is fully server-side:
 
-After import, export the result back into the repo so it stays the source of
-truth (SQLcl in the ords container):
+```bash
+# 1. blueprint.md → APEXlang zip (validates too: p_parsing_log stays null when clean)
+scp migration/NNN-<slug>/blueprint.md apex-vps:/tmp/ && ssh apex-vps '
+docker cp /tmp/blueprint.md apex-db:/tmp/
+PW=$(grep "^schema BAS_REVERSE" /root/apex-credentials.txt | awk "{print \$4}")
+docker exec -i -e NLS_LANG=.AL32UTF8 apex-db sqlplus -s BAS_REVERSE/$PW@FREEPDB1'
+# PL/SQL: read /tmp/blueprint.md via directory BP_TMP_DIR (exists on the stand),
+# call apex_gendev.process_blueprint(p_blueprint, p_parsing_log, p_apexlang_zip),
+# write the blob to /tmp/apexlang.zip (see migration/001-rsd-doma history for the block)
+
+# 2. unzip on the VPS, then import via SQLcl in the ords container.
+#    LANG/LC_ALL=C.utf8 is MANDATORY — page files have Cyrillic names and the
+#    JVM dies with InvalidPathException in POSIX locale. -alias must be ASCII,
+#    otherwise the friendly URL gets a Cyrillic alias.
+docker exec -e NLS_LANG=.AL32UTF8 -e LANG=C.utf8 -e LC_ALL=C.utf8 apex-ords \
+  bash -c '... /opt/oracle/sqlcl/bin/sql ... "apex import -input /tmp/apx -id <NNN> -alias <ASCII> -workspace BAS_REVERSE"'
+```
+
+Known converter/compiler pitfalls (all hit on batch 001):
+- Faceted filter `Datatype: boolean` — App Builder parser rejects it even
+  though the canonical prompt's grammar allows it; project a varchar2 label
+  (`case when ... then 'Так' else 'Ні' end`) and facet on that.
+- `apex_gendev` derives IR savedReport ids from region names → Cyrillic name
+  gives an illegal static id (`будинки-primary`). After unzip, rename such ids
+  to ASCII (`sed`) before `apex import`.
+- FILENAME_MISMATCH warnings from transliterated filenames are harmless.
+
+After import, export the result back into the repo (`applications/<alias>/`)
+so it stays the source of truth:
 
 ```
-apex export -applicationid <id> -exptype APEXLANG -dir /tmp/apx
+apex export -applicationid <id> -exptype APEXLANG -dir /tmp/apx-export
 ```
 
 ## Failure modes worth knowing

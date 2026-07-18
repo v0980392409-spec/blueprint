@@ -1,0 +1,58 @@
+lov lov-houses (
+    name: LOV_HOUSES
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select h.name as display
+                 , h.id as return
+            from rsd_houses h
+            where h.is_deleted = false
+            order by 1
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+
+lov lov-organizations (
+    name: LOV_ORGANIZATIONS
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select o.name as display
+                 , o.id as return
+            from rsd_organizations o
+            where o.is_deleted = false
+            order by 1
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+
+lov lov-yes-no (
+    name: LOV_YES_NO
+    source {
+        location: staticValues
+    }
+
+    entry ні (
+        sequence: 2
+        display: Ні
+        return: Ні
+    )
+
+    entry так (
+        sequence: 1
+        display: Так
+        return: Так
+    )
+
+)
+

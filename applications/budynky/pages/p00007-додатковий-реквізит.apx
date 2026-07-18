@@ -1,0 +1,362 @@
+page 7 (
+    name: Додатковий реквізит
+    alias: ДОДАТКОВИЙ-РЕКВІЗИТ
+    title: Додатковий реквізит
+    pageGroup: @організації
+    appearance {
+        pageMode: modalDialog
+        dialogTemplate: @/drawer
+        templateOptions: [
+            #DEFAULT#
+            js-dialog-class-t-Drawer--pullOutEnd
+        ]
+    }
+    dialog {
+        chained: false
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Additional attribute row create/edit dialog launched from the Додаткові реквізити list on Page 5; PROPERTY_ID stays a plain numeric input because its reference table is not migrated yet, and delete is limited to ADMIN.
+    }
+
+    region buttons (
+        name: Buttons
+        type: staticContent
+        layout {
+            sequence: 20
+            slot: dialogFooter
+        }
+        appearance {
+            template: @/buttons-container
+            templateOptions: #DEFAULT#
+        }
+        settings {
+            outputAs: text
+        }
+    )
+
+    region додатковий-реквізит (
+        name: Додатковий реквізит
+        type: form
+        source {
+            location: localDatabase
+            tableName: RSD_ORGANIZATIONS_ADD_ATTRS
+        }
+        layout {
+            sequence: 10
+            slot: contentBody
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+                t-Region--noBorder
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        comments {
+            comments: Single-record form over RSD_ORGANIZATIONS_ADD_ATTRS for one additional attribute line of an organization.
+        }
+        edit {
+            enabled: true
+            allowedOperations: [
+                add
+                update
+                delete
+            ]
+        }
+    )
+
+    pageItem P7_ID (
+        type: hidden
+        layout {
+            sequence: 10
+            region: @додатковий-реквізит
+            slot: regionBody
+        }
+        source {
+            formRegion: @додатковий-реквізит
+            column: ID
+            dataType: number
+            primaryKey: true
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P7_LINE_NO (
+        type: numberField
+        label {
+            label: № рядка
+            alignment: right
+        }
+        layout {
+            sequence: 30
+            region: @додатковий-реквізит
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @додатковий-реквізит
+            column: LINE_NO
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P7_ORGANIZATION_ID (
+        type: selectList
+        label {
+            label: Організація
+            alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-organizations
+        }
+        layout {
+            sequence: 20
+            region: @додатковий-реквізит
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @додатковий-реквізит
+            column: ORGANIZATION_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P7_PROPERTY_ID (
+        type: numberField
+        label {
+            label: Властивість
+            alignment: right
+        }
+        layout {
+            sequence: 40
+            region: @додатковий-реквізит
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @додатковий-реквізит
+            column: PROPERTY_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P7_TEXT_VALUE (
+        type: textarea
+        label {
+            label: Текстовий рядок
+            alignment: right
+        }
+        layout {
+            sequence: 50
+            region: @додатковий-реквізит
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @додатковий-реквізит
+            column: TEXT_VALUE
+            dataType: clob
+        }
+        sessionState {
+            dataType: clob
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    button apply-changes (
+        buttonName: APPLY-CHANGES
+        label: Apply Changes
+        layout {
+            sequence: 2
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: update
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P7_ID
+        }
+    )
+
+    button cancel (
+        buttonName: CANCEL
+        label: Cancel
+        layout {
+            sequence: 4
+            region: @buttons
+            slot: close
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: triggerAction
+            executeValidations: false
+        }
+
+        triggerAction cancel-dialog (
+            name: Cancel Dialog
+            action: cancelDialog
+            execution {
+                sequence: 10
+            }
+        )
+
+    )
+
+    button create (
+        buttonName: CREATE
+        label: Create
+        layout {
+            sequence: 1
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: insert
+        }
+        serverSideCondition {
+            type: itemIsNull
+            item: P7_ID
+        }
+    )
+
+    button delete (
+        buttonName: DELETE
+        label: Delete
+        layout {
+            sequence: 3
+            region: @buttons
+            slot: delete
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            executeValidations: false
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: delete
+            requiresConfirmation: true
+        }
+        confirmation {
+            message: &APP_TEXT$DELETE_MSG!RAW.
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P7_ID
+        }
+        security {
+            authorizationScheme: @admin
+        }
+    )
+
+    process close-dialog (
+        name: Close Dialog
+        type: closeDialog
+        settings {
+            itemsToReturn: P7_ID
+        }
+        execution {
+            sequence: 20
+        }
+        advanced {
+            executionMappingIdentifier: 9195067546962838
+        }
+    )
+
+    process initialize-form-додатковий-реквізит (
+        name: Initialize form Додатковий реквізит
+        type: formInitialization
+        formRegion: @додатковий-реквізит
+        execution {
+            sequence: 10
+            point: beforeHeader
+        }
+        advanced {
+            executionMappingIdentifier: 9195176764962838
+        }
+    )
+
+    process process-form-додатковий-реквізит (
+        name: Process form Додатковий реквізит
+        type: formAutoRowProcessing
+        formRegion: @додатковий-реквізит
+        execution {
+            sequence: 10
+        }
+        advanced {
+            executionMappingIdentifier: 9195254198962838
+        }
+    )
+
+)
+
