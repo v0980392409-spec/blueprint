@@ -36,7 +36,8 @@ ssh apex-vps 'docker exec -it apex-ords /opt/oracle/sqlcl/bin/sql BAS_REVERSE@//
 - `reference/ords/`, `reference/sqlcl/` — доки з oracle/skills (vendored, не редагувати).
 - `reference/apexlang-sample/apextogo/` — повний приклад застосунку в `.apx` (структура: `application.apx`, `pages/pNNNNN-*.apx`, `shared-components/*.apx`, `deployments/default.json`, `.apex/apexlang.json`).
 - `applications/erp/` — **робочий APEXLang-експорт цільового застосунку 122 «ERP»** зі стенду (SQLcl: `apex export -applicationid 122 -exptype APEXLANG`). Це і є артефакт міграції: редагується тут, валідується `apex validate -input`, імпортується назад `apex import`. Після імпорту в APEX — переекспортувати, щоб репо лишався джерелом правди.
-- `docs/` — рукописні доки цього експерименту (`stand.md` — стенд/доступи/цільовий застосунок).
+- `.claude/skills/bas2apex/` — **скіл міграції BAS → APEX**: конвеєр із 7 етапів (extract → specify → ревю → derive → install → blueprint → import), екстрактор кластера з XML-дампу (`tools/extract_cluster.py`), правила маппінгу і шаблон специфікації. Один кластер = один прогін; артефакти — у `migration/NNN-<slug>/`; глосарій імен накопичується в `docs/glossary.md`.
+- `docs/` — рукописні доки цього експерименту (`stand.md` — стенд/доступи/цільовий застосунок; `glossary.md` — накопичувальний глосарій імен міграції).
 
 ## Суміжні локальні репо (контекст, не залежності)
 

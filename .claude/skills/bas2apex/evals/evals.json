@@ -1,0 +1,37 @@
+{
+  "skill_name": "bas2apex",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Мы мигрируем BAS на Oracle APEX 26.1. Извлеки кластер справочника Catalog.RSD_Дома из дампа конфигурации /Users/stepanovviktor/Claude/BAS new/_source/EDO_XML_Conf и подготовь спецификацию миграции: модель данных для Oracle, страницы APEX, глоссарий имён. Спецификация пойдёт на ревью архитектору.",
+      "expected_output": "cluster.json (выжимка кластера) + spec.md с 9 секциями, Coverage-строкой, всеми 5 реквизитами, точными квалификаторами (CODE VARCHAR2(9), NAME VARCHAR2(150 CHAR)), LEGACY_REF/IS_DELETED, украинскими подписями из XML",
+      "files": [],
+      "assertions": [
+        "Spec contains all 9 sections in the required order",
+        "Coverage line present and arithmetically consistent",
+        "All 5 source attributes (Организация, АдресДома, Активность, Номер, Дом0) in Data Model or Open Questions",
+        "LEGACY_REF VARCHAR2(36) unique and IS_DELETED BOOLEAN present",
+        "Exact qualifiers: CODE VARCHAR2(9), NAME VARCHAR2(150 CHAR)",
+        "No DDL/PLSQL/APEXlang in the spec",
+        "Compact cluster.json produced instead of raw XML in context",
+        "Ukrainian label «Будинки» taken from uk synonym"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Продолжаем миграцию BAS на APEX. Сделай спецификацию миграции для документа Document.Отсутствие из дампа /Users/stepanovviktor/Claude/BAS new/_source/EDO_XML_Conf — с табличными частями, моделью данных и страницами.",
+      "expected_output": "cluster.json + spec.md: DOC_NO VARCHAR2(11), IS_POSTED (Posting=Allow), табличная часть как дочерняя таблица с LINE_NO и unique(DOC_ID,LINE_NO), украинские подписи (Відсутність), 9 секций, Coverage",
+      "files": [],
+      "assertions": [
+        "Spec contains all 9 sections in the required order",
+        "Coverage line present and arithmetically consistent",
+        "DOC_NO VARCHAR2(11), DOC_DATE TIMESTAMP, IS_POSTED BOOLEAN, LEGACY_REF, IS_DELETED present",
+        "Заместители → child table with document FK, LINE_NO, unique(FK, LINE_NO)",
+        "Ukrainian labels from uk synonyms (Відсутність)",
+        "All 9 document attributes in Data Model or Open Questions",
+        "ВидыОтсутствий and Пользователи handled as FK with entity or EXTERNAL",
+        "No DDL/PLSQL; module handlers as names only in Open Questions"
+      ]
+    }
+  ]
+}

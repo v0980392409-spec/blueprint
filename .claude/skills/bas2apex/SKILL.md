@@ -1,0 +1,165 @@
+---
+name: bas2apex
+description: >
+  Migrate 1C/BAS configuration objects (справочники, документы, перечисления,
+  регистры) to Oracle APEX 26.1 via the Blueprint pipeline. Use this skill
+  whenever the user asks to migrate, transform, or reverse a BAS/1C object or
+  cluster into APEX — including phrases like "перенеси справочник в APEX",
+  "сделай спецификацию миграции", "трансформируй XML в blueprint", "извлеки
+  кластер", "продолжи миграцию BAS", or mentions of EDO_XML_Conf /
+  ERP_XML_Conf dumps. Covers the full path: XML dump → cluster JSON → 9-section
+  spec → human review → FR + schema metadata + DDL → blueprint → import into
+  APEX app 122.
+---
+
+# bas2apex — миграция BAS → Oracle APEX 26.1 через Blueprint
+
+One cluster = one pipeline run. A cluster is a root object (документ or
+справочник) plus the catalogs/enums it references. Never attempt the whole
+configuration at once.
+
+The pipeline is deliberately staged so that every LLM step consumes a compact,
+deterministic input and produces a reviewable artifact. Raw 1C XML never goes
+into context — it is 80% noise and blows past attribute-level fidelity, which
+is the whole point (zero silent drops).
+
+## Pipeline
+
+```
+1. extract   cluster JSON from XML dump          (script, deterministic)
+2. specify   9-section migration spec            (LLM, references/spec-template.md)
+3. review    human approves spec; §9 = backlog   (GATE — do not proceed without it)
+4. derive    FR + schema metadata + DDL + seed   (LLM, references/derive-guide.md)
+5. install   DDL + seed on the stand             (ssh apex-vps, sqlplus)
+6. blueprint canonical Oracle prompt             (blueprints/prompt/blueprint-prompt.md)
+7. import    App Builder → Import → Application Blueprint
+```
+
+## Workspace layout
+
+Each cluster gets `migration/NNN-<slug>/` (sequential NNN) in the repo root:
+
+```
+migration/001-rsd-doma/
+├── cluster.json          # stage 1 output
+├── spec.md               # stage 2 output, reviewed at stage 3
+├── fr.md                 # stage 4: functional requirements
+├── schema-metadata.md    # stage 4: schema metadata
+├── ddl.sql               # stage 4: tables + comments
+├── seed.sql              # stage 4: predefined items / enum values
+└── blueprint.md          # stage 6 output → imported at stage 7
+```
+
+`docs/glossary.md` is the cumulative naming glossary across ALL clusters —
+read it before stage 2, append new rows after stage 3 approval. It is what
+makes naming deterministic between batches; without it the same 1C name can
+drift to different English identifiers in different runs.
+
+## Stage 1 — extract
+
+```bash
+python3 .claude/skills/bas2apex/tools/extract_cluster.py \
+  --source "/Users/stepanovviktor/Claude/BAS new/_source/EDO_XML_Conf" \
+  --object "Catalog.RSD_Дома" \
+  --out migration/NNN-<slug>/cluster.json
+```
+
+- `--source`: `EDO_XML_Conf` (Документообіг) or `ERP_XML_Conf` (BAS ERP).
+- `--object`: `Тип.Имя` exactly as in 1C (`Catalog.X`, `Document.X`, `Enum.X`,
+  `InformationRegister.X`, `AccumulationRegister.X`, …).
+- Output: root object with full attribute detail (types, qualifiers,
+  FillChecking, ru/uk synonyms, tooltips, tabular sections, predefined items,
+  module handler names), referenced objects at depth 1, `external` list for
+  refs that could not be loaded. Referenced objects' own outward refs are in
+  `outward_refs` — they become EXTERNAL in the spec.
+
+If the cluster JSON exceeds ~150 KB, the cluster is too big: split it
+(reference-heavy catalogs like Пользователи/Организации stay depth-1 stubs by
+design — do not re-root on them).
+
+## Stage 2 — specify
+
+Read `references/mapping-rules.md` and `references/spec-template.md`, then
+transform `cluster.json` into `spec.md` following them exactly. Also read
+`docs/glossary.md` first and reuse every existing identifier mapping.
+
+Key invariants (full rules in the references):
+- Every source attribute lands in §2 (Data Model) or §9 (Open Questions);
+  the Coverage line must be arithmetically consistent.
+- Ukrainian labels come from the `uk` synonym in cluster.json — translate
+  only when `uk` is missing, and flag those translations in §9.
+- No DDL, no PL/SQL, no APEXlang in the spec. Handler names → §9 as names only.
+- Same source name → same identifier, across all batches (glossary).
+
+## Stage 3 — review (GATE)
+
+Present spec.md to the user. §9 (Unmapped & Open Questions) is the working
+backlog for the architect — composite types, register totals, numbering
+scopes, handler logic. Do not start stage 4 until the user approves the spec
+or resolves the §9 items that block schema design. After approval, append new
+glossary rows to `docs/glossary.md`.
+
+## Stage 4 — derive
+
+Read `references/derive-guide.md`. From the approved spec produce, in this
+order: `ddl.sql`, `seed.sql`, `schema-metadata.md`, `fr.md`. The blueprint
+does NOT create tables — DDL is a first-class artifact here, not an option.
+
+## Stage 5 — install
+
+Target: workspace/schema `BAS_REVERSE` on the stand (see `docs/stand.md`).
+
+```bash
+scp migration/NNN-<slug>/{ddl,seed}.sql apex-vps:/tmp/
+ssh apex-vps 'source /opt/apex-stand/.env && for f in /tmp/ddl.sql /tmp/seed.sql; do
+  docker cp $f apex-db:/tmp/ && docker exec -i -e NLS_LANG=.AL32UTF8 apex-db \
+  sqlplus BAS_REVERSE/<pwd из /root/apex-credentials.txt>@FREEPDB1 @$f; done'
+```
+
+Cyrillic literals corrupt without `NLS_LANG=.AL32UTF8` — never skip it.
+Verify each object compiled/created before moving on.
+
+## Stage 6 — blueprint
+
+Follow `blueprints/QUICKSTART.md` §"Generate The Blueprint" verbatim:
+
+```
+Using the prompt and icon allowlist files:
+- blueprints/prompt/blueprint-prompt.md
+- blueprints/prompt/apex-fa-icons-allowlist.txt
+Generate and overwrite:
+- migration/NNN-<slug>/blueprint.md
+Using:
+- migration/NNN-<slug>/fr.md
+- migration/NNN-<slug>/schema-metadata.md
+Don't read any other files unless directed by the prompt.
+```
+
+The canonical prompt is ~2200 lines of hard validation rules — do not
+paraphrase it, load it and follow it. If the output contains
+`## Validation Findings`, fix the blueprint with the same prompt and inputs
+until clean.
+
+## Stage 7 — import
+
+App Builder (`https://apex.173-242-60-109.sslip.io/ords/`) → App Builder →
+Import → file type **Application Blueprint**, UTF-8. The parsing schema
+(BAS_REVERSE) must be REST-enabled and must already contain the stage-5
+objects, otherwise import fails. On import errors: copy the full error log and
+fix blueprint.md with the canonical prompt.
+
+After import, export the result back into the repo so it stays the source of
+truth (SQLcl in the ords container):
+
+```
+apex export -applicationid <id> -exptype APEXLANG -dir /tmp/apx
+```
+
+## Failure modes worth knowing
+
+- **Spec drops attributes silently** — recompute Coverage against
+  cluster.json programmatically if in doubt (`jq` the attribute names).
+- **Blueprint import: missing database objects** — stage 5 skipped or DDL
+  failed silently; re-check object list in the schema.
+- **Mojibake in Ukrainian labels** — NLS_LANG was not set during stage 5, or
+  a file was written without UTF-8; re-run with the exact commands above.

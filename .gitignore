@@ -8,3 +8,4 @@ apex-credentials.txt
 tools/build/
 artifacts/
 .apexlang/
+.claude/skills/bas2apex-workspace/
