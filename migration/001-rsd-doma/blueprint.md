@@ -50,10 +50,10 @@ order by 1
     - Entries:
       - Entry:
         - Display: Так
-        - Return: true
+        - Return: Так
       - Entry:
         - Display: Ні
-        - Return: false
+        - Return: Ні
 - Page Groups
   - Page Group
     - Name: Будинки
@@ -441,12 +441,12 @@ where h.is_deleted = false
 - Filtered Region: Результати пошуку організацій
 - Filters:
   - Filter
-    - Name: P4_F_IS_VAT_PAYER
+    - Name: P4_F_IS_VAT_PAYER_LABEL
     - Label: Платник ПДВ
     - Render As: checkboxGroup
     - LOV: LOV_YES_NO
-    - Database Column: IS_VAT_PAYER
-    - Datatype: boolean
+    - Database Column: IS_VAT_PAYER_LABEL
+    - Datatype: varchar2
 ##### Region: Результати пошуку організацій
 - Comments: Classic report over RSD_ORGANIZATIONS serving as the faceted search target; soft-deleted rows are excluded and each row links to the organization form.
 - Position: body
@@ -456,11 +456,21 @@ where h.is_deleted = false
   - Component Type: Classic Report
   - Qualifier: Standard
 - Data Source:
-  - Type: Table
-  - Name: RSD_ORGANIZATIONS
+  - Type: SQL
   - Primary Keys: ID
-  - Where: is_deleted = false
-  - Summary: Non-deleted organizations available for faceted filtering.
+  - SQL:
+```sql
+select o.id
+     , o.code
+     , o.name
+     , o.tax_id
+     , o.edrpou_code
+     , o.doc_prefix
+     , case when o.is_vat_payer then 'Так' else 'Ні' end as is_vat_payer_label
+from rsd_organizations o
+where o.is_deleted = false
+```
+  - Summary: Non-deleted organizations with the VAT payer flag projected as a Так/Ні text label for faceted filtering.
 - Columns:
   - Column Name: ID
     - Label: ІД
@@ -486,9 +496,9 @@ where h.is_deleted = false
     - Label: Префікс
     - Datatype: varchar2
     - Render As: plainText
-  - Column Name: IS_VAT_PAYER
+  - Column Name: IS_VAT_PAYER_LABEL
     - Label: Платник ПДВ
-    - Datatype: boolean
+    - Datatype: varchar2
     - Render As: plainText
 - Links:
   - Link:
