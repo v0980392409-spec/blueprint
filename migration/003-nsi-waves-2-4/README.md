@@ -1,0 +1,125 @@
+# Батч 003 — довідники НСІ (хвилі 2,3,4)
+
+Механічно згенеровано `bas2apex/tools/gen_catalog_batch.py` — не редагувати руками.
+Імена таблиць/колонок транслітеровані (латиниця), підписи (uk) — у COMMENT.
+Виключені (вже мігровані батчем 001): Catalog.RSD_Секции, Catalog.Организации, Catalog.RSD_Дома.
+
+## Підсумок
+- Таблиць: **137** (з них дочірніх ТЧ: 59)
+- Колонок: 745
+- FK встановлено: 223; відкладено (EXTERNAL/цикли поза батчем): 61
+- Композитних реквізитів (REF_TYPE/REF_ID): 16
+- Нетипізованих (характеристики, колонку не створено): 28
+- Seed-рядків (предопределённые): 180
+
+## §9 — на ревю архітектора
+- RSD_NASTROI_KAUVEDOMLENII_ONACHISLENIIBALLOV.POLUCHATEL (Получатель) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_NASTROI_KIRABOCHIKHMESTPOLZOVATELEI_DOKUMENTY.KLYUCHTIPA (КлючТипа) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_PODPISISHTAMPY.TIPOBEKTA (ТипОбъекта) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_POLUCHATELIOTCHETOVSTATISTIKIZAPROSOVNADOKUMENTATSIYU: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ПередЗаписью
+- RSD_POLUCHATELIREESTRAPODPISANNYKHSDELOK.POLUCHATEL (Получатель) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_RASPREDELENIEOTVETSTVENNYKHZABYUDZHETYPOSTATYAMRGK.OTVETSTVENNYY (Ответственный) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_ADRESATYPOCHTOVYKHSOOBSHCHENII: обробники BSL (імена) — ПередЗаписью
+- RSD_BANKOVSKIESCHETA_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_VALYUTY: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_VARIANTYOTCHETOV.OTCHET (Отчет) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_VARIANTYOTCHETOV.PREDOPREDELENNYYVARIANT (ПредопределенныйВариант) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_VARIANTYOTCHETOV.AVTOR (Автор) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_VARIANTYOTCHETOV_RAZMESHCHENIE.PODSISTEMA (Подсистема) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_VARIANTYOTCHETOV: обробники BSL (імена) — ЗаполнитьРодителя, НеЗаполненоПоле, ОбработкаПроверкиЗаполнения, ПередЗаписью, ПроверитьЗаполнениеПредопределенного, ПроиндексироватьНастройки
+- RSD_VERSIIFAI_LOV: обробники BSL (імена) — ПередЗаписью, ПередУдалением, ПометкаУдаленияВИБ, ПриЗаписи
+- RSD_VIDYBIZNESSOBYTII: обробники BSL (імена) — ОбработкаЗаполнения
+- RSD_VIDYVNUTRENNIKHDOKUMENTOV: обробники BSL (імена) — НайтиШаблонЗадачЧекЛистаИСохраненныеЧекЛисты, ПередЗаписью, ПриЗаписи, ПриКопировании
+- RSD_VIDYVKHODYASHCHIKHDOKUMENTOV: обробники BSL (імена) — НайтиШаблонЗадачЧекЛистаИСохраненныеЧекЛисты, ПередЗаписью, ПриЗаписи, ПриКопировании
+- RSD_VIDYISKHODYASHCHIKHDOKUMENTOV: обробники BSL (імена) — НайтиШаблонЗадачЧекЛистаИСохраненныеЧекЛисты, ПередЗаписью, ПриЗаписи, ПриКопировании
+- RSD_VIDYMEROPRIYATII: обробники BSL (імена) — ПередЗаписью, ПриЗаписи
+- RSD_VIDYRABOT_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_VNESHNIEPOLZOVATELI.OBEKTAVTORIZATSII (ОбъектАвторизации) — нетипізований (характеристика), колонку не створено
+- RSD_VNESHNIEPOLZOVATELI_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_VNESHNIEPOLZOVATELI: обробники BSL (імена) — ОбщиеДействияПередУдалениемВОбычномРежимеИПриОбменеДанными, ПередЗаписью, ПередУдалением, ПриЗаписи, ПриКопировании
+- RSD_VOPROSYDEYATELNOSTI: обробники BSL (імена) — ПриЗаписи
+- RSD_GRIFYDOSTUPA: обробники BSL (імена) — ОбработкаЗаполнения, ПриЗаписи
+- RSD_GRUPPYVNESHNIKHPOLZOVATELEI.UDALITTIPOBEKTOVAVTORIZATSII (УдалитьТипОбъектовАвторизации) — нетипізований (характеристика), колонку не створено
+- RSD_GRUPPYVNESHNIKHPOLZOVATELEI_NAZNACHENIE.TIPPOLZOVATELEY (ТипПользователей) — нетипізований (характеристика), колонку не створено
+- RSD_GRUPPYVNESHNIKHPOLZOVATELEI: обробники BSL (імена) — ЗаполнитьНазначениеВсемиТипамиВнешнихПользователей, ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_GRUPPYDOSTUPA.POLZOVATEL (Пользователь) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_GRUPPYDOSTUPA_POLZOVATELI.POLZOVATEL (Пользователь) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_GRUPPYDOSTUPA_ZNACHENIYADOSTUPA.ZNACHENIEDOSTUPA (ЗначениеДоступа) — нетипізований (характеристика), колонку не створено
+- RSD_GRUPPYDOSTUPA: обробники BSL (імена) — ОбновитьРолиПользователей, ПередЗаписью, ПриЗаписи
+- RSD_GRUPPYDOSTUPAKONTRAGENTOV: обробники BSL (імена) — ПриЗаписи
+- RSD_GRUPPYDOSTUPAFIZICHESKIKHLITS: обробники BSL (імена) — ПриЗаписи
+- RSD_GRUPPYKONTROLNYKHTOCHEK.OBEKTKT (ОбъектКТ) — нетипізований (характеристика), колонку не створено
+- RSD_GRUPPYKONTROLNYKHTOCHEK: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью
+- RSD_GRUPPYLICHNYKHADRESATOV: обробники BSL (імена) — ПередЗаписью, ПриЗаписи
+- RSD_DELEGIROVANIEPRAV_UDALITROLI.OSNOVNOYOBEKTADRESATSII (ОсновнойОбъектАдресации) — нетипізований (характеристика), колонку не створено
+- RSD_DELEGIROVANIEPRAV_UDALITROLI.DOPOLNITELNYYOBEKTADRESATSII (ДополнительныйОбъектАдресации) — нетипізований (характеристика), колонку не створено
+- RSD_DELEGIROVANIEPRAV: обробники BSL (імена) — ВыполнитьПеререгистрациюЭлемента, НеобходимаПереРегистрацияРаздела, ОбработкаЗаполнения, ПередЗаписью, ПравилоДелегированияПравДействует, ПриЗаписи
+- RSD_DETEKTORYBIZNESSOBYTII: обробники BSL (імена) — ОбработкаЗаполнения, ПриКопировании
+- RSD_DOLZHNOSTI_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_DOLZHNOSTI: обробники BSL (імена) — ПередЗаписью, ПриЗаписи
+- RSD_DOPOLNITELNYEOTCHETYIOBRABOTKI: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ПередЗаписью, ПередЗаписьюГлобальнойОбработки, ПередЗаписьюНазначаемойОбработки, ПередУдалением, ПередУдалениемГлобальнойОбработки, ПравоНастройкиРасписания, ПредставлениеЗадания, ПриЗаписи, ПриЗаписиГлобальнойОбработки, ПриЗаписиНазначаемойОбработки, ПриЗаписиОтчета, РасписаниеЗадано, ЭтоГлобальнаяОбработка
+- RSD_ZAMETKIDOKUMENTOOBOROTA: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью
+- RSD_ZNACHENIYASVOI_STVOBEKTOV: обробники BSL (імена) — ПередЗаписью
+- RSD_ZNACHENIYASVOI_STVOBEKTOVIERARKHIYA: обробники BSL (імена) — ПередЗаписью
+- RSD_KATEGORIIDANNYKH_DOSTUP.POLZOVATEL (Пользователь) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_KATEGORIIDANNYKH: обробники BSL (імена) — ПриЗаписи
+- RSD_KLYUCHEVYEOPERATSII: обробники BSL (імена) — ПередЗаписью, ПроверитьПриоритет
+- RSD_KONTRAGENTY_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_KONTRAGENTY: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью, ПриЗаписи, ПриКопировании
+- RSD_KONTROLNYETOCHKI.OBEKTKT (ОбъектКТ) — нетипізований (характеристика), колонку не створено
+- RSD_KONTROLNYETOCHKI: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_LICHNYEADRESATY: обробники BSL (імена) — ПередЗаписью, ПриЗаписи
+- RSD_NABORYDOPOLNITELNYKHREKVIZITOVISVEDENII: обробники BSL (імена) — ПередЗаписью, ПриЗаписи
+- RSD_NASTROI_KIVARIANTOVOTCHETOVDOKUMENTOOBOROT.OTCHET (Отчет) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_NASTROI_KIVARIANTOVOTCHETOVDOKUMENTOOBOROT_RAZMESHCHENIE.RAZDEL (Раздел) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_NASTROI_KIVARIANTOVOTCHETOVDOKUMENTOOBOROT: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ОшибкаПоВарианту, ПередЗаписью
+- RSD_NOMENKLATURA_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_NUMERATORY: обробники BSL (імена) — ОбработкаЗаполнения, ОбработкаПроверкиЗаполнения
+- RSD_PAPKIVNUTRENNIKHDOKUMENTOV: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью
+- RSD_PAPKIMEROPRIYATII: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_PAPKIPISEM: обробники BSL (імена) — ЗаполнитьОбъектЗначениямиПоУмолчанию, ОбработкаЗаполнения, ПередЗаписью, ПолучитьПолныйПутьПапки, ПолучитьСвязаннуюУчетнуюЗапись, ПриКопировании
+- RSD_PAPKIPOISKA: обробники BSL (імена) — ПолучитьПредставлениеСпискаЗначенийДляУсловия, ПриКопировании
+- RSD_PAPKIPROEKTOV: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_PAPKIFAI_LOV_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_PAPKIFAI_LOV: обробники BSL (імена) — ОбработкаЗаполнения, ОбработкаПроверкиЗаполнения, ПередЗаписью, ПометкаУдаленияВИБ, ПриЗаписи
+- RSD_PAPKIFORUMA: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью, ПриКопировании
+- RSD_POLZOVATELI.PODRAZDELENIE (Подразделение) — нетипізований (характеристика), колонку не створено
+- RSD_POLZOVATELI.FIZICHESKOELITSO (ФизическоеЛицо) — нетипізований (характеристика), колонку не створено
+- RSD_POLZOVATELI_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_POLZOVATELI: обробники BSL (імена) — ОбщиеДействияПередУдалениемВОбычномРежимеИПриОбменеДанными, ПередЗаписью, ПередУдалением, ПриЗаписи, ПриКопировании
+- RSD_POLZOVATELSKIEOBRABOTCHIKIBIZNESSOBYTII: обробники BSL (імена) — ОбработкаЗаполнения
+- RSD_PRAVILAAVTOZAPOLNENIYAFAI_LOV.VLADELETSFAYLA (ВладелецФайла) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_PRAVILAAVTOZAPOLNENIYAFAI_LOV: обробники BSL (імена) — ОбработкаПроверкиЗаполнения
+- RSD_PREDOPREDELENNYEVARIANTYOTCHETOV: обробники BSL (імена) — НеЗаполненоПоле, ПередЗаписью, ПроверитьЗаполнениеПредопределенного
+- RSD_PREDOPREDELENNYEVARIANTYOTCHETOVRASSHIRENII_RAZMESHCHENIE.PODSISTEMA (Подсистема) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_PREDOPREDELENNYEVARIANTYOTCHETOVRASSHIRENII: обробники BSL (імена) — ПередЗаписью, ПроверитьЗаполнениеПредопределенного
+- RSD_PROFILIGRUPPDOSTUPA_ZNACHENIYADOSTUPA.ZNACHENIEDOSTUPA (ЗначениеДоступа) — нетипізований (характеристика), колонку не створено
+- RSD_PROFILIGRUPPDOSTUPA_NAZNACHENIE.TIPPOLZOVATELEY (ТипПользователей) — нетипізований (характеристика), колонку не створено
+- RSD_PROFILIGRUPPDOSTUPA: обробники BSL (імена) — ПередЗаписью, ПриЗаписи, ПриКопировании
+- RSD_RABOCHIEGRUPPY: обробники BSL (імена) — ОбновитьНедействительностьПодчиненныхГрупп, ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_ROLIISPOLNITELEI.UZELOBMENA (УзелОбмена) — нетипізований (характеристика), колонку не створено
+- RSD_ROLIISPOLNITELEI: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_SERTIFIKATYKLYUCHEI_ELEKTRONNOI_PODPISIISHIFROVANIYA.ORGANIZATSIYA (Организация) — нетипізований (характеристика), колонку не створено
+- RSD_SERTIFIKATYKLYUCHEI_ELEKTRONNOI_PODPISIISHIFROVANIYA: обробники BSL (імена) — ПередЗаписью, ПриКопировании
+- RSD_SOOBSHCHENIYAOBSUZHDENII: обробники BSL (імена) — ЕстьПервоеСообщенияТемы, ИзменитьАвтораТемы, ОбработкаЗаполнения, ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи, ТекстСообщенияВИБ, УстановитьТекстСписка
+- RSD_STRUKTURAPREDPRIYATIYA_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
+- RSD_STRUKTURAPREDPRIYATIYA: обробники BSL (імена) — ПередЗаписью, ПриЗаписи
+- RSD_TEMYZAMETOK: обробники BSL (імена) — ПередЗаписью
+- RSD_TERRITORIIIPOMESHCHENIYA: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_UVEDOMLENIYAPROGRAMMY.OBEKT (Объект) — нетипізований (характеристика), колонку не створено
+- RSD_UVEDOMLENIYAPROGRAMMY: обробники BSL (імена) — ПередЗаписью
+- RSD_UDALITPOMESHCHENIYA: обробники BSL (імена) — ОбработкаПроверкиЗаполнения
+- RSD_UDALITPROIZOSHEDSHIEBIZNESSOBYTIYA.ISTOCHNIK (Источник) — нетипізований (характеристика), колонку не створено
+- RSD_UDALITSHABLONYTEKSTOVPISEM: обробники BSL (імена) — ОбработкаЗаполнения
+- RSD_USLOVIYAMARSHRUTIZATSII: обробники BSL (імена) — ПередЗаписью
+- RSD_UCHETNYEZAPISIELEKTRONNOI_POCHTY: обробники BSL (імена) — ЗаполнитьОбъектЗначениямиПоУмолчанию, ОбновитьАдресатовПриИзмененииУчетнойЗаписи, ОбработкаЗаполнения, ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи, УдалитьЗаписиПисемВПроцессеОтправки
+- RSD_FIZICHESKIELITSA: обробники BSL (імена) — ПередЗаписью, ПриЗаписи
+- RSD_SHABLONYGRUPPKONTROLNYKHTOCHEK.OBEKTKT (ОбъектКТ) — нетипізований (характеристика), колонку не створено
+- RSD_SHABLONYGRUPPKONTROLNYKHTOCHEK: обробники BSL (імена) — ПередЗаписью
+- RSD_SHABLONYKONTROLNYKHTOCHEK.OBEKTKT (ОбъектКТ) — нетипізований (характеристика), колонку не створено
+- RSD_SHABLONYKONTROLNYKHTOCHEK: обробники BSL (імена) — ОбработкаЗаполнения, ПередЗаписью, ПриЗаписи
+- RSD_SHABLONYTEKSTOV_POLZOVATELI.POLZOVATELILIGRUPPA (ПользовательИлиГруппа) — нетипізований (характеристика), колонку не створено
+- RSD_SHABLONYTEKSTOV: обробники BSL (імена) — ОбработкаЗаполнения, ОбработкаПроверкиЗаполнения, ПередЗаписью, УстановитьСодержаниеШаблонаПисьма
+
+## Встановлення
+`ddl.sql` → стенд (NLS_LANG=.AL32UTF8). EnumRef-колонки посилаються на RSD_ENUMS (батч 002).

@@ -23,11 +23,11 @@ CREATE TABLE RSD_ORGANIZATIONS (
     EDRPOU_CODE          VARCHAR2(12 CHAR),
     COMMENT_TEXT         CLOB,
     FULL_NAME            CLOB,
-    MAIN_BANK_ACCOUNT_ID NUMBER,  -- FK deferred: Catalog.БанковскиеСчета is EXTERNAL (майбутній батч)
+    MAIN_BANK_ACCOUNT_ID NUMBER,  -- FK → RSD_BANKOVSKIESCHETA; замкнуто migration/003-nsi-waves-2-4/close-deferred-fks.sql
     DOC_PREFIX           VARCHAR2(2 CHAR),
     ENTITY_KIND_ID       NUMBER             NOT NULL,  -- FK → RSD_ENUMS(ID) enum_type='ЮрФизЛицо'; замикається migration/002-enums-wave-1/close-deferred-fks.sql (був §9.5)
     IS_VAT_PAYER         BOOLEAN DEFAULT FALSE NOT NULL,
-    DEVELOPER_ID         NUMBER,  -- FK deferred: Catalog.Контрагенты is EXTERNAL
+    DEVELOPER_ID         NUMBER,  -- FK → RSD_KONTRAGENTY; замкнуто migration/003-nsi-waves-2-4/close-deferred-fks.sql
     IS_DELETED           BOOLEAN DEFAULT FALSE NOT NULL,
     CREATED_AT           TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
     CREATED_BY           VARCHAR2(255 CHAR) DEFAULT COALESCE(SYS_CONTEXT('APEX$SESSION','APP_USER'), USER) NOT NULL,

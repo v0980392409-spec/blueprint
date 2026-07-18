@@ -139,6 +139,7 @@ def parse_predefined(obj_dir: Path):
     for it in ET.parse(p).getroot().iter():
         if lc(it.tag) == "Item":
             items.append({
+                "id": it.get("id", ""),  # UUID предопределённого — XML-атрибут <Item id="...">
                 "name": text(it, "Name"),
                 "code": text(it, "Code"),
                 "description": text(it, "Description"),
