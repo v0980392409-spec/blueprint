@@ -531,10 +531,16 @@ page 5 (
     )
 
     pageItem P5_ENTITY_KIND_ID (
-        type: numberField
+        type: selectList
         label {
             label: Вид організації
             alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-entity-kinds
+            displayExtraValues: false
+            displayNullValue: false
         }
         layout {
             sequence: 70
@@ -545,7 +551,6 @@ page 5 (
         appearance {
             template: @/required-floating
             templateOptions: #DEFAULT#
-            width: 32
         }
         validation {
             valueRequired: true

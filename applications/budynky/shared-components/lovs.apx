@@ -36,6 +36,26 @@ lov lov-organizations (
     }
 )
 
+lov lov-entity-kinds (
+    name: LOV_ENTITY_KINDS
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select e.name as display
+                 , e.id as return
+            from rsd_enums e
+            where e.enum_type = 'ЮрФизЛицо'
+              and e.is_deleted = false
+            order by e.sort_order
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+
 lov lov-yes-no (
     name: LOV_YES_NO
     source {

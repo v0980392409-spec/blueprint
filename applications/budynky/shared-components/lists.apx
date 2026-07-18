@@ -98,5 +98,23 @@ list navigation-menu (
         }
     )
 
+    entry перечислення (
+        label: Перечислення
+        icon {
+            imageIconCssClasses: fa-list
+        }
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 8
+            }
+        }
+        security {
+            authorizationScheme: @admin
+        }
+    )
+
 )
 

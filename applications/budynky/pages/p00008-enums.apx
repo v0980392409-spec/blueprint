@@ -1,0 +1,192 @@
+page 8 (
+    name: Перечислення
+    alias: ENUMS
+    title: Перечислення
+    pageGroup: @адміністрування
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Read-only browser over RSD_ENUMS (unified enum values, batch 002). Admin only; native interactive report filtering by ENUM_TYPE.
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 5
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region перечислення (
+        name: Перечислення
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select e.id as id
+                     , e.enum_type as enum_type
+                     , e.value_key as value_key
+                     , e.name as name
+                     , e.sort_order as sort_order
+                from rsd_enums e
+                where e.is_deleted = false
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/interactive-report
+            templateOptions: [
+                #DEFAULT#
+                t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        advanced {
+            htmlDomId: перечислення
+        }
+        comments {
+            comments: Read-only interactive report over RSD_ENUMS; group/filter by ENUM_TYPE using the native toolbar.
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+
+        column ID (
+            type: hidden
+            heading {
+                heading: ІД
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: A
+            }
+        )
+
+        column ENUM_TYPE (
+            type: plainText
+            heading {
+                heading: Перечислення (1С)
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: B
+            }
+        )
+
+        column VALUE_KEY (
+            type: plainText
+            heading {
+                heading: Ключ значення (1С)
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        column NAME (
+            type: plainText
+            heading {
+                heading: Підпис
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: D
+            }
+        )
+
+        column SORT_ORDER (
+            type: plainText
+            heading {
+                heading: Порядок
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: E
+            }
+        )
+
+        savedReport enums_primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+
+            displayColumn ENUM_TYPE (
+                sequence: 1
+            )
+
+            displayColumn VALUE_KEY (
+                sequence: 2
+            )
+
+            displayColumn NAME (
+                sequence: 3
+            )
+
+            displayColumn SORT_ORDER (
+                sequence: 4
+            )
+
+        )
+
+    )
+
+)

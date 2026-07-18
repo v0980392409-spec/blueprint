@@ -12,3 +12,10 @@ pageGroup організації (
     }
 )
 
+pageGroup адміністрування (
+    name: Адміністрування
+    description {
+        description: Admin/reference pages: unified enum values browser (RSD_ENUMS).
+    }
+)
+

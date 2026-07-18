@@ -27,5 +27,18 @@ breadcrumb breadcrumb (
         }
     )
 
+    entry перечислення (
+        name: Перечислення
+        pageNumber: 8
+        execution {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 8
+            }
+        }
+    )
+
 )
 
