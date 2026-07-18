@@ -234,11 +234,35 @@ def parse_object(src: Path, ref: str):
     return obj, all_refs
 
 
+def find_subordinates(src: Path, root_ref: str):
+    """Справочники, подчинённые корню кластера: Catalogs/*.xml, у которых
+    <Owners> содержит root_ref. Дёшево: текстовый фильтр, затем точная
+    проверка, что ссылка стоит именно внутри блока Owners."""
+    found = []
+    cat_dir = src / "Catalogs"
+    if not cat_dir.is_dir():
+        return found
+    marker = f">{root_ref}<"
+    for p in sorted(cat_dir.glob("*.xml")):
+        try:
+            txt = p.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        if "<Owners>" not in txt or marker not in txt:
+            continue
+        m = re.search(r"<Owners>(.*?)</Owners>", txt, re.S)
+        if m and marker in m.group(0):
+            found.append(f"Catalog.{p.stem}")
+    return found
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--source", type=Path, required=True, help="каталог XML-дампа")
     ap.add_argument("--object", required=True, help="корень кластера: Тип.Имя")
     ap.add_argument("--out", type=Path, default=None, help="выходной JSON (default: stdout)")
+    ap.add_argument("--no-subordinates", action="store_true",
+                    help="не искать справочники, подчинённые корню (<Owners>)")
     args = ap.parse_args()
 
     if not args.source.is_dir():
@@ -251,9 +275,22 @@ def main():
         sys.exit(f"Объект не найден в дампе: {args.object}")
     root_obj, refs = result
 
+    # Подчинённые справочники — часть ядра кластера (у владельца это фактически
+    # его «табличная часть»): грузим полностью, их ссылки — в общий пул глубины 1.
+    subordinates = {}
+    if not args.no_subordinates:
+        for sub_ref in find_subordinates(args.source, args.object):
+            r = parse_object(args.source, sub_ref)
+            if r is None:
+                continue
+            sub_obj, sub_refs = r
+            subordinates[sub_ref] = sub_obj
+            refs += sub_refs
+
+    core_refs = {args.object, *subordinates}
     referenced, external = {}, []
     for ref in sorted(set(refs)):
-        if ref == args.object:
+        if ref in core_refs:
             continue
         r = parse_object(args.source, ref)
         if r is None:
@@ -262,7 +299,7 @@ def main():
         ref_obj, second_refs = r
         # глубина 1: ссылки ссылок не грузим, только помечаем
         outward = sorted({s for s in second_refs
-                          if s != args.object and s not in set(refs)})
+                          if s not in core_refs and s not in set(refs)})
         if outward:
             ref_obj["outward_refs"] = outward
         referenced[ref] = ref_obj
@@ -270,6 +307,7 @@ def main():
     cluster = {
         "source_dump": str(args.source),
         "root": root_obj,
+        "subordinates": subordinates,    # справочники, подчинённые корню (<Owners>)
         "referenced": referenced,        # глубина 1, с реквизитами
         "external": sorted(external),    # не найдены/не грузим — FK-цели EXTERNAL
     }
@@ -278,8 +316,8 @@ def main():
         args.out.write_text(out_json, encoding="utf-8")
         n_attrs = len(root_obj.get("attributes", []))
         print(f"{args.out}: корень {args.object} ({n_attrs} реквизитов), "
-              f"ссылочных {len(referenced)}, external {len(external)}, "
-              f"{len(out_json)//1024} КБ")
+              f"подчинённых {len(subordinates)}, ссылочных {len(referenced)}, "
+              f"external {len(external)}, {len(out_json)//1024} КБ")
     else:
         print(out_json)
 

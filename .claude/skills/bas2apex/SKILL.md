@@ -69,9 +69,13 @@ python3 .claude/skills/bas2apex/tools/extract_cluster.py \
   `InformationRegister.X`, `AccumulationRegister.X`, …).
 - Output: root object with full attribute detail (types, qualifiers,
   FillChecking, ru/uk synonyms, tooltips, tabular sections, predefined items,
-  module handler names), referenced objects at depth 1, `external` list for
-  refs that could not be loaded. Referenced objects' own outward refs are in
-  `outward_refs` — they become EXTERNAL in the spec.
+  module handler names), `subordinates` — catalogs owned by the root via
+  `<Owners>` (loaded fully: a subordinate catalog is effectively the owner's
+  detail table; disable with `--no-subordinates`), referenced objects at
+  depth 1, `external` list for refs that could not be loaded. Referenced
+  objects' own outward refs are in `outward_refs` — they become EXTERNAL in
+  the spec. Subordinates map per mapping-rules.md: detail table with
+  `OWNER_ID` FK.
 
 If the cluster JSON exceeds ~150 KB, the cluster is too big: split it
 (reference-heavy catalogs like Пользователи/Организации stay depth-1 stubs by
