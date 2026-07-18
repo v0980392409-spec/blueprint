@@ -82,22 +82,9 @@ page 8 (
         pagination {
             type: rowRangesXToY
         }
-
-        column ID (
-            type: hidden
-            heading {
-                heading: ІД
-            }
-            layout {
-                sequence: 10
-            }
-            source {
-                dataType: NUMBER
-            }
-            advanced {
-                endUserAlias: A
-            }
-        )
+        advanced {
+            savedReportMappingIdentifier: 9353002520351905
+        }
 
         column ENUM_TYPE (
             type: plainText
@@ -115,19 +102,19 @@ page 8 (
             }
         )
 
-        column VALUE_KEY (
-            type: plainText
+        column ID (
+            type: hidden
             heading {
-                heading: Ключ значення (1С)
+                heading: ІД
             }
             layout {
-                sequence: 30
+                sequence: 10
             }
             source {
-                dataType: STRING
+                dataType: NUMBER
             }
             advanced {
-                endUserAlias: C
+                endUserAlias: A
             }
         )
 
@@ -163,6 +150,27 @@ page 8 (
             }
         )
 
+        column VALUE_KEY (
+            type: plainText
+            heading {
+                heading: Ключ значення (1С)
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
         savedReport enums_primary (
             visibility: primaryDefault
             view {
@@ -173,10 +181,6 @@ page 8 (
                 sequence: 1
             )
 
-            displayColumn VALUE_KEY (
-                sequence: 2
-            )
-
             displayColumn NAME (
                 sequence: 3
             )
@@ -185,8 +189,13 @@ page 8 (
                 sequence: 4
             )
 
+            displayColumn VALUE_KEY (
+                sequence: 2
+            )
+
         )
 
     )
 
 )
+

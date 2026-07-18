@@ -1,3 +1,10 @@
+pageGroup адміністрування (
+    name: Адміністрування
+    description {
+        description: Admin/reference pages: unified enum values browser (RSD_ENUMS).
+    }
+)
+
 pageGroup будинки (
     name: Будинки
     description {
@@ -9,13 +16,6 @@ pageGroup організації (
     name: Організації
     description {
         description: Organization workflow: faceted organization list, organization form, and child row forms for contact info and additional attributes.
-    }
-)
-
-pageGroup адміністрування (
-    name: Адміністрування
-    description {
-        description: Admin/reference pages: unified enum values browser (RSD_ENUMS).
     }
 )
 
