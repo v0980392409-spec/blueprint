@@ -1,0 +1,10 @@
+.DS_Store
+*.env
+.env*
+!.env.example
+apex-credentials.txt
+*.rar
+*.zip
+tools/build/
+artifacts/
+.apexlang/
