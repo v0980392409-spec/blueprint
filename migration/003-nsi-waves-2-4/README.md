@@ -2,7 +2,7 @@
 
 Механічно згенеровано `bas2apex/tools/gen_catalog_batch.py` — не редагувати руками.
 Імена таблиць/колонок транслітеровані (латиниця), підписи (uk) — у COMMENT.
-Виключені (вже мігровані батчем 001): Catalog.RSD_Секции, Catalog.Организации, Catalog.RSD_Дома.
+Виключені (вже мігровані батчем 001): Catalog.RSD_Секции, Catalog.RSD_Дома, Catalog.Организации.
 
 ## Підсумок
 - Таблиць: **137** (з них дочірніх ТЧ: 59)
@@ -14,12 +14,14 @@
 
 ## §9 — на ревю архітектора
 - RSD_NASTROI_KAUVEDOMLENII_ONACHISLENIIBALLOV.POLUCHATEL (Получатель) — композитний тип: REF_TYPE/REF_ID, без FK
+- RSD_NASTROI_KIRABOCHIKHMESTPOLZOVATELEI.OWNER_ID — поліморфний власник (2 типів: Catalog.Пользователи, Catalog.РолиИсполнителей) → рішення архітектора
 - RSD_NASTROI_KIRABOCHIKHMESTPOLZOVATELEI_DOKUMENTY.KLYUCHTIPA (КлючТипа) — композитний тип: REF_TYPE/REF_ID, без FK
 - RSD_PODPISISHTAMPY.TIPOBEKTA (ТипОбъекта) — композитний тип: REF_TYPE/REF_ID, без FK
 - RSD_POLUCHATELIOTCHETOVSTATISTIKIZAPROSOVNADOKUMENTATSIYU: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ПередЗаписью
 - RSD_POLUCHATELIREESTRAPODPISANNYKHSDELOK.POLUCHATEL (Получатель) — композитний тип: REF_TYPE/REF_ID, без FK
 - RSD_RASPREDELENIEOTVETSTVENNYKHZABYUDZHETYPOSTATYAMRGK.OTVETSTVENNYY (Ответственный) — композитний тип: REF_TYPE/REF_ID, без FK
 - RSD_ADRESATYPOCHTOVYKHSOOBSHCHENII: обробники BSL (імена) — ПередЗаписью
+- RSD_BANKOVSKIESCHETA.OWNER_ID — поліморфний власник (2 типів: Catalog.Контрагенты, Catalog.Организации) → рішення архітектора
 - RSD_BANKOVSKIESCHETA_DOPOLNITELNYEREKVIZITY.ZNACHENIE (Значение) — нетипізований (характеристика), колонку не створено
 - RSD_VALYUTY: обробники BSL (імена) — ОбработкаПроверкиЗаполнения, ПередЗаписью, ПриЗаписи
 - RSD_VARIANTYOTCHETOV.OTCHET (Отчет) — композитний тип: REF_TYPE/REF_ID, без FK

@@ -138,6 +138,7 @@ class Gen:
         self.open_q = []                  # рядки §9
         self.stats = {"tables": 0, "cols": 0, "fk": 0, "fk_deferred": 0,
                       "composite": 0, "untyped": 0, "child": 0, "seed": 0}
+        self.field_map = {}   # table → {"entity": Тип.Имя, "fields": [{odata, col, kind, target}]}
         self.tables = []                  # (name, cols[], pk, uks[], checks[])
         self.fks = []                     # (table, col, target_table)
         self.seed_rows = []               # (table, code, name, legacy)
@@ -165,43 +166,67 @@ class Gen:
         req = attr.get("fill_checking") == "ShowError"
         if req:
             extra_note = (extra_note + "; " if extra_note else "") + "обовʼязкове (FillChecking, enforce в APEX)"
+        fm = {"odata": attr["name"], "col": cname, "kind": kind, "otype": otype}
         if kind in ("ref", "enum", "ref-ext"):
             cname = uniq(re.sub(r'_ID$', '', cname) + "_ID", used) if not cname.endswith("_ID") else cname
+            fm["col"] = cname
             if kind == "enum":
                 self.fks.append((table, cname, "RSD_ENUMS")); self.stats["fk"] += 1
+                fm["enum_type"] = target.split(".", 1)[1] if target else None
             elif kind == "ref" and target in self.in_batch:
                 self.fks.append((table, cname, self.in_batch[target])); self.stats["fk"] += 1
+                fm["odata"] = attr["name"] + "_Key"; fm["target"] = self.in_batch[target]
             else:
                 self.stats["fk_deferred"] += 1
                 extra_note = (extra_note + "; " if extra_note else "") + f"FK deferred: {target} EXTERNAL"
+                fm["odata"] = attr["name"] + "_Key"; fm["target"] = None
+        if table in self.field_map:
+            self.field_map[table]["fields"].append(fm)
         return [(cname, otype, None, label_of(attr), extra_note)]
 
     def catalog(self, ref, obj):
         tbl = table_name(ref)
         self.glossary.append((obj["name"], tbl, label_of(obj), "Catalog"))
         props = obj.get("properties", {})
+        fmap = [{"odata": "Ref_Key", "col": "LEGACY_REF", "kind": "legacy"},
+                {"odata": "DeletionMark", "col": "IS_DELETED", "kind": "bool"}]
+        if props.get("CodeLength"):
+            fmap.append({"odata": "Code", "col": "CODE", "kind": "scalar"})
+        if props.get("DescriptionLength"):
+            fmap.append({"odata": "Description", "col": "NAME", "kind": "scalar"})
+        self.field_map[tbl] = {"entity": ref, "fields": fmap}
         used = set()
         cols = [("ID", "NUMBER GENERATED ALWAYS AS IDENTITY", None, "Сурогатний ключ", ""),
                 ("LEGACY_REF", "VARCHAR2(36)", "NOT NULL", "UUID 1С — звірка", "")]
         used |= {"ID", "LEGACY_REF"}
         uks = ["LEGACY_REF"]
+        # CODE/NAME nullable: реальні дані OData мають порожні Code/Description,
+        # а MERGE атомарний (один поганий рядок валить усю вставку). Унікальність
+        # коду лишаємо (UNIQUE допускає кілька NULL); NOT NULL — рівня UI.
         if props.get("CodeLength"):
             cl = props["CodeLength"]
-            cols.append(("CODE", f"VARCHAR2({cl} CHAR)", "NOT NULL", "Код 1С", ""))
+            cols.append(("CODE", f"VARCHAR2({cl} CHAR)", None, "Код 1С", ""))
             used.add("CODE")
             if props.get("CheckUnique") == "true":
                 uks.append("CODE")
         if props.get("DescriptionLength"):
-            cols.append(("NAME", f"VARCHAR2({props['DescriptionLength']} CHAR)", "NOT NULL",
+            cols.append(("NAME", f"VARCHAR2({props['DescriptionLength']} CHAR)", None,
                          "Найменування", "")); used.add("NAME")
         if props.get("Hierarchical") == "true":
             cols.append(("PARENT_ID", "NUMBER", None, "Батьківський елемент (ієрархія)", "self"))
             used.add("PARENT_ID")
             self.fks.append((tbl, "PARENT_ID", tbl)); self.stats["fk"] += 1
-        for owner in obj.get("owners", []):
+        owners = obj.get("owners", [])
+        for owner in owners:
             oref = owner if owner.startswith("Catalog.") else f"Catalog.{owner.split('.',1)[-1]}"
-            cols.append(("OWNER_ID", "NUMBER", "NOT NULL", "Власник", ""))
+            # OWNER_ID nullable: власник у 1С може бути поліморфним (Owner_Type) —
+            # для >1 власника резолвиться не завжди; NOT NULL валив би завантаження.
+            note = "поліморфний власник (Owner_Type) → §9" if len(owners) > 1 else ""
+            cols.append(("OWNER_ID", "NUMBER", None, "Власник", note))
             used.add("OWNER_ID")
+            if len(owners) > 1:
+                self.open_q.append(f"- {tbl}.OWNER_ID — поліморфний власник "
+                                   f"({len(owners)} типів: {', '.join(owners)}) → рішення архітектора")
             if oref in self.in_batch:
                 self.fks.append((tbl, "OWNER_ID", self.in_batch[oref])); self.stats["fk"] += 1
             else:
@@ -358,6 +383,8 @@ def main():
             seen.add((ru, en)); rows.append(f"| {ru} | {en} | {uk} | {kind} |")
     (args.out_dir / "glossary-rows.md").write_text("\n".join(rows) + "\n", encoding="utf-8")
     (args.out_dir / "stats.json").write_text(json.dumps(g.stats, ensure_ascii=False, indent=1), encoding="utf-8")
+    (args.out_dir / "field-map.json").write_text(
+        json.dumps(g.field_map, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{args.out_dir}: {g.stats['tables']} таблиць, {g.stats['cols']} колонок, "
           f"FK {g.stats['fk']}(+{g.stats['fk_deferred']} відкл.), "
           f"composite {g.stats['composite']}, untyped {g.stats['untyped']}, seed {g.stats['seed']}")

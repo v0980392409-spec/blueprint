@@ -1,0 +1,5164 @@
+{
+ "RSD_NAPRAVLENIYADEYATELNOSTI": {
+  "entity": "Catalog.RSD_НаправленияДеятельности",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Статус",
+    "col": "STATUS_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "RSD_СтатусыНаправленияДеятельности"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "УчетДоходов",
+    "col": "UCHETDOKHODOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчетЗатрат",
+    "col": "UCHETZATRAT",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчетДенежныхСредствРаздельно",
+    "col": "UCHETDENEZHNYKHSREDSTVRAZDELNO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчетДенежныхСредствПоКорреспонденции",
+    "col": "UCHETDENEZHNYKHSREDSTVPOKORRESPONDENTSII",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчетВнеоборотныхАктивов",
+    "col": "UCHETVNEOBOROTNYKHAKTIVOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_NASTROI_KAUVEDOMLENII_ONACHISLENIIBALLOV": {
+  "entity": "Catalog.RSD_НастройкаУведомленийОНачисленииБаллов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ТекстСообщения",
+    "col": "TEKSTSOOBSHCHENIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(500 CHAR)"
+   }
+  ]
+ },
+ "RSD_NASTROI_KIRABOCHIKHMESTPOLZOVATELEI": {
+  "entity": "Catalog.RSD_НастройкиРабочихМестПользователей",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   }
+  ]
+ },
+ "RSD_PODPISISHTAMPY": {
+  "entity": "Catalog.RSD_ПодписиШтампы",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ПодписьШтамп",
+    "col": "PODPISSHTAMP_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "RSD_ТипыПодписейШтампов"
+   },
+   {
+    "odata": "СмещениеГоризонтальное",
+    "col": "SMESHCHENIEGORIZONTALNOE",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "СмещениеВертикальное",
+    "col": "SMESHCHENIEVERTIKALNOE",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Качество",
+    "col": "KACHESTVO",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СмещениеГоризонтальноеШтамп",
+    "col": "SMESHCHENIEGORIZONTALNOESHTAMP",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "СмещениеВертикальноеШтамп",
+    "col": "SMESHCHENIEVERTIKALNOESHTAMP",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   }
+  ]
+ },
+ "RSD_POLUCHATELIOTCHETOVSTATISTIKIZAPROSOVNADOKUMENTATSIYU": {
+  "entity": "Catalog.RSD_ПолучателиОтчетовСтатистикиЗапросовНаДокументацию",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Получатель_Key",
+    "col": "POLUCHATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ПериодичностьРассылки",
+    "col": "PERIODICHNOSTRASSYLKI_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "RSD_ПериодичностьРассылкиОтчетовСтатистикиЗапросовНаДокументацию"
+   }
+  ]
+ },
+ "RSD_POLUCHATELIREESTRAPODPISANNYKHSDELOK": {
+  "entity": "Catalog.RSD_ПолучателиРеестраПодписанныхСделок",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "НеУчитыватьСпецПродажи",
+    "col": "NEUCHITYVATSPETSPRODAZHI",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_RASPREDELENIEOTVETSTVENNYKHZABYUDZHETYPOSTATYAMRGK": {
+  "entity": "Catalog.RSD_РаспределениеОтветственныхЗаБюджетыПоСтатьямРГК",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Отбор",
+    "col": "OTBOR",
+    "kind": "scalar",
+    "otype": "BLOB"
+   }
+  ]
+ },
+ "RSD_ADRESATYPOCHTOVYKHSOOBSHCHENII": {
+  "entity": "Catalog.АдресатыПочтовыхСообщений",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Адрес",
+    "col": "ADRES",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "ВидМаршрутизации",
+    "col": "VIDMARSHRUTIZATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыМаршрутизацииПисем"
+   }
+  ]
+ },
+ "RSD_BANKOVSKIESCHETA": {
+  "entity": "Catalog.БанковскиеСчета",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "НомерСчета",
+    "col": "NOMERSCHETA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(20 CHAR)"
+   },
+   {
+    "odata": "Банк_Key",
+    "col": "BANK_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ТекстКорреспондента",
+    "col": "TEKSTKORRESPONDENTA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ТекстНазначения",
+    "col": "TEKSTNAZNACHENIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ВидСчета",
+    "col": "VIDSCHETA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(15 CHAR)"
+   },
+   {
+    "odata": "ВалютаДенежныхСредств_Key",
+    "col": "VALYUTADENEZHNYKHSREDSTV_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_VALYUTY"
+   },
+   {
+    "odata": "НомерИДатаРазрешения",
+    "col": "NOMERIDATARAZRESHENIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(30 CHAR)"
+   },
+   {
+    "odata": "ДатаОткрытия",
+    "col": "DATAOTKRYTIYA",
+    "kind": "scalar",
+    "otype": "DATE"
+   },
+   {
+    "odata": "ДатаЗакрытия",
+    "col": "DATAZAKRYTIYA",
+    "kind": "scalar",
+    "otype": "DATE"
+   },
+   {
+    "odata": "МесяцПрописью",
+    "col": "MESYATSPROPISYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_VALYUTY": {
+  "entity": "Catalog.Валюты",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ЗагружаетсяИзИнтернета",
+    "col": "ZAGRUZHAETSYAIZINTERNETA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НаименованиеПолное",
+    "col": "NAIMENOVANIEPOLNOE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(50 CHAR)"
+   },
+   {
+    "odata": "Наценка",
+    "col": "NATSENKA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ОсновнаяВалюта_Key",
+    "col": "OSNOVNAYAVALYUTA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_VALYUTY"
+   },
+   {
+    "odata": "ПараметрыПрописиНаРусском",
+    "col": "PARAMETRYPROPISINARUSSKOM",
+    "kind": "scalar",
+    "otype": "VARCHAR2(200 CHAR)"
+   },
+   {
+    "odata": "ПараметрыПрописиНаУкраинском",
+    "col": "PARAMETRYPROPISINAUKRAINSKOM",
+    "kind": "scalar",
+    "otype": "VARCHAR2(200 CHAR)"
+   },
+   {
+    "odata": "ФормулаРасчетаКурса",
+    "col": "FORMULARASCHETAKURSA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "СпособУстановкиКурса",
+    "col": "SPOSOBUSTANOVKIKURSA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыУстановкиКурсаВалюты"
+   }
+  ]
+ },
+ "RSD_VARIANTYOTCHETOV": {
+  "entity": "Catalog.ВариантыОтчетов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ТипОтчета",
+    "col": "TIPOTCHETA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипыОтчетов"
+   },
+   {
+    "odata": "КлючВарианта",
+    "col": "KLYUCHVARIANTA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(256 CHAR)"
+   },
+   {
+    "odata": "Пользовательский",
+    "col": "POLZOVATELSKIY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ТолькоДляАвтора",
+    "col": "TOLKODLYAAVTORA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВидимостьПоУмолчанию",
+    "col": "VIDIMOSTPOUMOLCHANIYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВидимостьПоУмолчаниюПереопределена",
+    "col": "VIDIMOSTPOUMOLCHANIYUPEREOPREDELENA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Настройки",
+    "col": "NASTROYKI",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "УдалитьКлючОбъекта",
+    "col": "UDALITKLYUCHOBEKTA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "УдалитьПредставлениеОбъекта",
+    "col": "UDALITPREDSTAVLENIEOBEKTA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(256 CHAR)"
+   },
+   {
+    "odata": "ХешНастроек",
+    "col": "KHESHNASTROEK",
+    "kind": "scalar",
+    "otype": "VARCHAR2(32 CHAR)"
+   },
+   {
+    "odata": "НаименованияПолей",
+    "col": "NAIMENOVANIYAPOLEY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НаименованияПараметровИОтборов",
+    "col": "NAIMENOVANIYAPARAMETROVIOTBOROV",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "КлючевыеСлова",
+    "col": "KLYUCHEVYESLOVA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_VERSIIFAI_LOV": {
+  "entity": "Catalog.ВерсииФайлов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ДатаМодификацииУниверсальная",
+    "col": "DATAMODIFIKATSIIUNIVERSALNAYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаМодификацииФайла",
+    "col": "DATAMODIFIKATSIIFAYLA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Зашифрован",
+    "col": "ZASHIFROVAN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИзвлеченныйТекст",
+    "col": "IZVLECHENNYYTEKST",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ИндексКартинки",
+    "col": "INDEKSKARTINKI",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НомерВерсии",
+    "col": "NOMERVERSII",
+    "kind": "scalar",
+    "otype": "NUMBER(5)"
+   },
+   {
+    "odata": "ПодписанЭП",
+    "col": "PODPISANEP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПолноеНаименование",
+    "col": "POLNOENAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(256 CHAR)"
+   },
+   {
+    "odata": "ПутьКФайлу",
+    "col": "PUTKFAYLU",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Размер",
+    "col": "RAZMER",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "РаспознанныйТекст",
+    "col": "RASPOZNANNYYTEKST",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Расширение",
+    "col": "RASSHIRENIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(10 CHAR)"
+   },
+   {
+    "odata": "РодительскаяВерсия_Key",
+    "col": "RODITELSKAYAVERSIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "СтатусИзвлеченияТекста",
+    "col": "STATUSIZVLECHENIYATEKSTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СтатусыИзвлеченияТекстаФайлов"
+   },
+   {
+    "odata": "СтатусРаспознаванияТекста",
+    "col": "STATUSRASPOZNAVANIYATEKSTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СтатусыРаспознаванияТекста"
+   },
+   {
+    "odata": "ТекстХранилище",
+    "col": "TEKSTKHRANILISHCHE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ТипХраненияФайла",
+    "col": "TIPKHRANENIYAFAYLA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипыХраненияФайлов"
+   },
+   {
+    "odata": "Том_Key",
+    "col": "TOM_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ФайлУдален",
+    "col": "FAYLUDALEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ФайлХранилище",
+    "col": "FAYLKHRANILISHCHE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   }
+  ]
+ },
+ "RSD_VIDYBIZNESSOBYTII": {
+  "entity": "Catalog.ВидыБизнесСобытий",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "DATE"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(255 CHAR)"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_VIDYVNUTRENNIKHDOKUMENTOV": {
+  "entity": "Catalog.ВидыВнутреннихДокументов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "RSD_ВестиУчетПоНомеруИДатеСозданияДокумента",
+    "col": "RSD_VESTIUCHETPONOMERUIDATESOZDANIYADOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ВестиУчетУчасниковТендера",
+    "col": "RSD_VESTIUCHETUCHASNIKOVTENDERA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ВывестиДомИСекцию",
+    "col": "RSD_VYVESTIDOMISEKTSIYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ИспользоватьДанныеСтруктурыОбъектаСтроительства",
+    "col": "RSD_ISPOLZOVATDANNYESTRUKTURYOBEKTASTROITELSTVA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ИспользоватьКлассификаторРазделов",
+    "col": "RSD_ISPOLZOVATKLASSIFIKATORRAZDELOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ОграничениеПоБюджетуИспользовать",
+    "col": "RSD_OGRANICHENIEPOBYUDZHETUISPOLZOVAT",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_СтатусERP",
+    "col": "RSD_STATUSERP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ТипДокумента",
+    "col": "RSD_TIPDOKUMENTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "RSD_ТипДокумента"
+   },
+   {
+    "odata": "RSD_УчетПодрядчиковВЧерномСписке",
+    "col": "RSD_UCHETPODRYADCHIKOVVCHERNOMSPISKE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "АвтоматическиВестиСоставУчастниковРабочейГруппы",
+    "col": "AVTOMATICHESKIVESTISOSTAVUCHASTNIKOVRABOCHEYGRUPPY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВариантПодписания",
+    "col": "VARIANTPODPISANIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыПодписания"
+   },
+   {
+    "odata": "ВестиУчетВыдачиИзАрхива",
+    "col": "VESTIUCHETVYDACHIIZARKHIVA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетЗапросовКурьера",
+    "col": "VESTIUCHETZAPROSOVKURERA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетПоАдресатам",
+    "col": "VESTIUCHETPOADRESATAM",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетПоКонтрагентам",
+    "col": "VESTIUCHETPOKONTRAGENTAM",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетПоНоменклатуреДел",
+    "col": "VESTIUCHETPONOMENKLATUREDEL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетПоОрганизациям",
+    "col": "VESTIUCHETPOORGANIZATSIYAM",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетПоСтатьямДДС",
+    "col": "VESTIUCHETPOSTATYAMDDS",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетСторон",
+    "col": "VESTIUCHETSTORON",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетТоваровИУслуг",
+    "col": "VESTIUCHETTOVAROVIUSLUG",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВключенУчетПоНоменклатуреДел",
+    "col": "VKLYUCHENUCHETPONOMENKLATUREDEL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ЗапретитьСозданиеДокументовНеПоШаблону",
+    "col": "ZAPRETITSOZDANIEDOKUMENTOVNEPOSHABLONU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьПодписание",
+    "col": "ISPOLZOVATPODPISANIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьСрокИсполнения",
+    "col": "ISPOLZOVATSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьУтверждение",
+    "col": "ISPOLZOVATUTVERZHDENIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьЭтапыОбработкиДокумента",
+    "col": "ISPOLZOVATETAPYOBRABOTKIDOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НаборСвойств_Key",
+    "col": "NABORSVOYSTV_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "НеобходимаПечатьШтрихкода",
+    "col": "NEOBKHODIMAPECHATSHTRIKHKODA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбязателенФайлОригинала",
+    "col": "OBYAZATELENFAYLORIGINALA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбязательноеЗаполнениеРабочихГруппДокументов",
+    "col": "OBYAZATELNOEZAPOLNENIERABOCHIKHGRUPPDOKUMENTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбязательноеУказаниеОтветственного",
+    "col": "OBYAZATELNOEUKAZANIEOTVETSTVENNOGO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПодписыватьРезолюцииЭП",
+    "col": "PODPISYVATREZOLYUTSIIEP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "УдалитьНумератор_Key",
+    "col": "UDALITNUMERATOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_NUMERATORY"
+   },
+   {
+    "odata": "УдалитьСпособНумерации",
+    "col": "UDALITSPOSOBNUMERATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыНумерации"
+   },
+   {
+    "odata": "УчитыватьНедействующиеДокументы",
+    "col": "UCHITYVATNEDEYSTVUYUSHCHIEDOKUMENTY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчитыватьСрокДействия",
+    "col": "UCHITYVATSROKDEYSTVIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчитыватьСуммуДокумента",
+    "col": "UCHITYVATSUMMUDOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ЯвляетсяДоговором",
+    "col": "YAVLYAETSYADOGOVOROM",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ЯвляетсяКомплектомДокументов",
+    "col": "YAVLYAETSYAKOMPLEKTOMDOKUMENTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ПрикреплениеФайловСШаблона",
+    "col": "RSD_PRIKREPLENIEFAYLOVSSHABLONA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_УчитыватьСтруктуруДокументов",
+    "col": "RSD_UCHITYVATSTRUKTURUDOKUMENTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_СтруктураДокумента",
+    "col": "RSD_STRUKTURADOKUMENTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "RSD_СтруктураДокумента"
+   },
+   {
+    "odata": "RSD_ВестиУчетПоГруппамДомов",
+    "col": "RSD_VESTIUCHETPOGRUPPAMDOMOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ВестиУчетКомментариевКЗадачамБП",
+    "col": "RSD_VESTIUCHETKOMMENTARIEVKZADACHAMBP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ВыводитьРабочуюГруппуВДокументе",
+    "col": "RSD_VYVODITRABOCHUYUGRUPPUVDOKUMENTE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_VIDYVKHODYASHCHIKHDOKUMENTOV": {
+  "entity": "Catalog.ВидыВходящихДокументов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "АвтоматическиВестиСоставУчастниковРабочейГруппы",
+    "col": "AVTOMATICHESKIVESTISOSTAVUCHASTNIKOVRABOCHEYGRUPPY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетПоНоменклатуреДел",
+    "col": "VESTIUCHETPONOMENKLATUREDEL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВключенУчетПоНоменклатуреДел",
+    "col": "VKLYUCHENUCHETPONOMENKLATUREDEL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ЗапретитьСозданиеДокументовНеПоШаблону",
+    "col": "ZAPRETITSOZDANIEDOKUMENTOVNEPOSHABLONU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьСрокИсполнения",
+    "col": "ISPOLZOVATSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьЭтапыОбработкиДокумента",
+    "col": "ISPOLZOVATETAPYOBRABOTKIDOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НаборСвойств_Key",
+    "col": "NABORSVOYSTV_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "НеобходимаПечатьШтрихкода",
+    "col": "NEOBKHODIMAPECHATSHTRIKHKODA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УдалитьНумератор_Key",
+    "col": "UDALITNUMERATOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_NUMERATORY"
+   },
+   {
+    "odata": "ОбязательноеЗаполнениеРабочихГруппДокументов",
+    "col": "OBYAZATELNOEZAPOLNENIERABOCHIKHGRUPPDOKUMENTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбязателенФайлОригинала",
+    "col": "OBYAZATELENFAYLORIGINALA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбязательноеУказаниеОтветственного",
+    "col": "OBYAZATELNOEUKAZANIEOTVETSTVENNOGO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПодписыватьРезолюцииЭП",
+    "col": "PODPISYVATREZOLYUTSIIEP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УдалитьСпособНумерации",
+    "col": "UDALITSPOSOBNUMERATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыНумерации"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "УчитыватьКакОбращениеГраждан",
+    "col": "UCHITYVATKAKOBRASHCHENIEGRAZHDAN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчитыватьСуммуДокумента",
+    "col": "UCHITYVATSUMMUDOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ЯвляетсяОбращениемОтГраждан",
+    "col": "YAVLYAETSYAOBRASHCHENIEMOTGRAZHDAN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_СтатусERP",
+    "col": "RSD_STATUSERP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ВестиУчетПоНомеруИДатеСозданияДокумента",
+    "col": "RSD_VESTIUCHETPONOMERUIDATESOZDANIYADOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ТипДокумента",
+    "col": "RSD_TIPDOKUMENTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "RSD_ТипДокумента"
+   },
+   {
+    "odata": "RSD_ИспользоватьУчетОтветаНаВходящийДокумент",
+    "col": "RSD_ISPOLZOVATUCHETOTVETANAVKHODYASHCHIYDOKUMENT",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ВестиУчетПоЮридическомуЛицу",
+    "col": "RSD_VESTIUCHETPOYURIDICHESKOMULITSU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ПрикреплениеФайловСШаблона",
+    "col": "RSD_PRIKREPLENIEFAYLOVSSHABLONA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_VIDYISKHODYASHCHIKHDOKUMENTOV": {
+  "entity": "Catalog.ВидыИсходящихДокументов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "АвтоматическиВестиСоставУчастниковРабочейГруппы",
+    "col": "AVTOMATICHESKIVESTISOSTAVUCHASTNIKOVRABOCHEYGRUPPY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВестиУчетПоНоменклатуреДел",
+    "col": "VESTIUCHETPONOMENKLATUREDEL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВключенУчетПоНоменклатуреДел",
+    "col": "VKLYUCHENUCHETPONOMENKLATUREDEL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ЗапретитьСозданиеДокументовНеПоШаблону",
+    "col": "ZAPRETITSOZDANIEDOKUMENTOVNEPOSHABLONU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьСрокИсполнения",
+    "col": "ISPOLZOVATSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьЭтапыОбработкиДокумента",
+    "col": "ISPOLZOVATETAPYOBRABOTKIDOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НаборСвойств_Key",
+    "col": "NABORSVOYSTV_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "НеобходимаПечатьШтрихкода",
+    "col": "NEOBKHODIMAPECHATSHTRIKHKODA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УдалитьНумератор_Key",
+    "col": "UDALITNUMERATOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_NUMERATORY"
+   },
+   {
+    "odata": "ОбязательноеЗаполнениеРабочихГруппДокументов",
+    "col": "OBYAZATELNOEZAPOLNENIERABOCHIKHGRUPPDOKUMENTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбязателенФайлОригинала",
+    "col": "OBYAZATELENFAYLORIGINALA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбязательноеУказаниеОтветственного",
+    "col": "OBYAZATELNOEUKAZANIEOTVETSTVENNOGO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УдалитьСпособНумерации",
+    "col": "UDALITSPOSOBNUMERATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыНумерации"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "УчитыватьВходящийНомерИДатуПолучателя",
+    "col": "UCHITYVATVKHODYASHCHIYNOMERIDATUPOLUCHATELYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчитыватьСуммуДокумента",
+    "col": "UCHITYVATSUMMUDOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_СтатусERP",
+    "col": "RSD_STATUSERP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ВестиУчетПоНомеруИДатеСозданияДокумента",
+    "col": "RSD_VESTIUCHETPONOMERUIDATESOZDANIYADOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ТипДокумента",
+    "col": "RSD_TIPDOKUMENTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "RSD_ТипДокумента"
+   },
+   {
+    "odata": "RSD_ВестиУчетПоЮридическомуЛицу",
+    "col": "RSD_VESTIUCHETPOYURIDICHESKOMULITSU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "RSD_ПрикреплениеФайловСШаблона",
+    "col": "RSD_PRIKREPLENIEFAYLOVSSHABLONA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_VIDYMEROPRIYATII": {
+  "entity": "Catalog.ВидыМероприятий",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "АвтоматическиВестиСоставУчастниковРабочейГруппы",
+    "col": "AVTOMATICHESKIVESTISOSTAVUCHASTNIKOVRABOCHEYGRUPPY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВедетКуратор",
+    "col": "VEDETKURATOR",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Длительность",
+    "col": "DLITELNOST",
+    "kind": "scalar",
+    "otype": "NUMBER(4)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Куратор_Key",
+    "col": "KURATOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "НаборСвойств_Key",
+    "col": "NABORSVOYSTV_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ОбязательноеЗаполнениеРабочихГруппДокументов",
+    "col": "OBYAZATELNOEZAPOLNENIERABOCHIKHGRUPPDOKUMENTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Помещение_Key",
+    "col": "POMESHCHENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_TERRITORIIIPOMESHCHENIYA"
+   },
+   {
+    "odata": "ПротокольноеМероприятие",
+    "col": "PROTOKOLNOEMEROPRIYATIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_VIDYRABOT": {
+  "entity": "Catalog.ВидыРабот",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ВидВремени",
+    "col": "VIDVREMENI_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыВремени"
+   }
+  ]
+ },
+ "RSD_VNESHNIEPOLZOVATELI": {
+  "entity": "Catalog.ВнешниеПользователи",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Недействителен",
+    "col": "NEDEYSTVITELEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УстановитьРолиНепосредственно",
+    "col": "USTANOVITROLINEPOSREDSTVENNO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Подготовлен",
+    "col": "PODGOTOVLEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИдентификаторПользователяИБ",
+    "col": "IDENTIFIKATORPOLZOVATELYAIB",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "ИдентификаторПользователяСервиса",
+    "col": "IDENTIFIKATORPOLZOVATELYASERVISA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "СвойстваПользователяИБ",
+    "col": "SVOYSTVAPOLZOVATELYAIB",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "УдалитьПароль",
+    "col": "UDALITPAROL",
+    "kind": "scalar",
+    "otype": "VARCHAR2(30 CHAR)"
+   }
+  ]
+ },
+ "RSD_VOPROSYDEYATELNOSTI": {
+  "entity": "Catalog.ВопросыДеятельности",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_GRAFIKIRABOTY": {
+  "entity": "Catalog.ГрафикиРаботы",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Календарь_Key",
+    "col": "KALENDAR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "КоличествоРабочихЧасовВДне",
+    "col": "KOLICHESTVORABOCHIKHCHASOVVDNE",
+    "kind": "scalar",
+    "otype": "NUMBER(4,2)"
+   },
+   {
+    "odata": "КоличествоРабочихЧасовВНеделе",
+    "col": "KOLICHESTVORABOCHIKHCHASOVVNEDELE",
+    "kind": "scalar",
+    "otype": "NUMBER(5,2)"
+   },
+   {
+    "odata": "КоличествоРабочихДнейВМесяце",
+    "col": "KOLICHESTVORABOCHIKHDNEYVMESYATSE",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   }
+  ]
+ },
+ "RSD_GRIFYDOSTUPA": {
+  "entity": "Catalog.ГрифыДоступа",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_GRUPPYVNESHNIKHPOLZOVATELEI": {
+  "entity": "Catalog.ГруппыВнешнихПользователей",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ВсеОбъектыАвторизации",
+    "col": "VSEOBEKTYAVTORIZATSII",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_GRUPPYDOSTUPA": {
+  "entity": "Catalog.ГруппыДоступа",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Профиль_Key",
+    "col": "PROFIL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_PROFILIGRUPPDOSTUPA"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Администратор_Key",
+    "col": "ADMINISTRATOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ОсновнаяГруппаДоступаПоставляемогоПрофиля",
+    "col": "OSNOVNAYAGRUPPADOSTUPAPOSTAVLYAEMOGOPROFILYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ТипПользователей_Key",
+    "col": "TIPPOLZOVATELEY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_GRUPPYDOSTUPAKONTRAGENTOV": {
+  "entity": "Catalog.ГруппыДоступаКонтрагентов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_GRUPPYDOSTUPAFIZICHESKIKHLITS": {
+  "entity": "Catalog.ГруппыДоступаФизическихЛиц",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_GRUPPYKONTROLNYKHTOCHEK": {
+  "entity": "Catalog.ГруппыКонтрольныхТочек",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_GRUPPYLICHNYKHADRESATOV": {
+  "entity": "Catalog.ГруппыЛичныхАдресатов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_DELEGIROVANIEPRAV": {
+  "entity": "Catalog.ДелегированиеПрав",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ВариантДелегирования",
+    "col": "VARIANTDELEGIROVANIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыДелегированияПрав"
+   },
+   {
+    "odata": "ДатаНачалаДействия",
+    "col": "DATANACHALADEYSTVIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаОкончанияДействия",
+    "col": "DATAOKONCHANIYADEYSTVIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Действует",
+    "col": "DEYSTVUET",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "Кому_Key",
+    "col": "KOMU_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ОтКого_Key",
+    "col": "OTKOGO_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "УдалитьДатаПередачи",
+    "col": "UDALITDATAPEREDACHI",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_DETEKTORYBIZNESSOBYTII": {
+  "entity": "Catalog.ДетекторыБизнесСобытий",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ВидСобытия_Key",
+    "col": "VIDSOBYTIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Включен",
+    "col": "VKLYUCHEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВыполняемыйКод",
+    "col": "VYPOLNYAEMYYKOD",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(255 CHAR)"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_DOLZHNOSTI": {
+  "entity": "Catalog.Должности",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   }
+  ]
+ },
+ "RSD_DOPOLNITELNYEOTCHETYIOBRABOTKI": {
+  "entity": "Catalog.ДополнительныеОтчетыИОбработки",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "БезопасныйРежим",
+    "col": "BEZOPASNYYREZHIM",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Версия",
+    "col": "VERSIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(10 CHAR)"
+   },
+   {
+    "odata": "Вид",
+    "col": "VID_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыДополнительныхОтчетовИОбработок"
+   },
+   {
+    "odata": "ИмяОбъекта",
+    "col": "IMYAOBEKTA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(256 CHAR)"
+   },
+   {
+    "odata": "ИмяФайла",
+    "col": "IMYAFAYLA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(260 CHAR)"
+   },
+   {
+    "odata": "Информация",
+    "col": "INFORMATSIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(1024 CHAR)"
+   },
+   {
+    "odata": "ИспользоватьДляФормыОбъекта",
+    "col": "ISPOLZOVATDLYAFORMYOBEKTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьДляФормыСписка",
+    "col": "ISPOLZOVATDLYAFORMYSPISKA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Публикация",
+    "col": "PUBLIKATSIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыПубликацииДополнительныхОтчетовИОбработок"
+   },
+   {
+    "odata": "ХранилищеНастроек",
+    "col": "KHRANILISHCHENASTROEK",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ХранилищеОбработки",
+    "col": "KHRANILISHCHEOBRABOTKI",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ИспользуетХранилищеВариантов",
+    "col": "ISPOLZUETKHRANILISHCHEVARIANTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ТеснаяИнтеграцияСФормойОтчета",
+    "col": "TESNAYAINTEGRATSIYASFORMOYOTCHETA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "РежимСовместимостиРазрешений",
+    "col": "REZHIMSOVMESTIMOSTIRAZRESHENIY_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "РежимыСовместимостиРазрешенийДополнительныхОтчетовИОбработок"
+   }
+  ]
+ },
+ "RSD_ZAMETKIDOKUMENTOOBOROTA": {
+  "entity": "Catalog.ЗаметкиДокументооборота",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Изменена",
+    "col": "IZMENENA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Приоритет",
+    "col": "PRIORITET",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "Содержание",
+    "col": "SODERZHANIE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "СодержаниеТекст",
+    "col": "SODERZHANIETEKST",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Создана",
+    "col": "SOZDANA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_ZNACHENIYASVOI_STVOBEKTOV": {
+  "entity": "Catalog.ЗначенияСвойствОбъектов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Вес",
+    "col": "VES",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ПолноеНаименование",
+    "col": "POLNOENAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_ZNACHENIYASVOI_STVOBEKTOVIERARKHIYA": {
+  "entity": "Catalog.ЗначенияСвойствОбъектовИерархия",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Вес",
+    "col": "VES",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ПолноеНаименование",
+    "col": "POLNOENAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_KATEGORIIDANNYKH": {
+  "entity": "Catalog.КатегорииДанных",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Персональная",
+    "col": "PERSONALNAYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_KLYUCHEVYEOPERATSII": {
+  "entity": "Catalog.КлючевыеОперации",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Имя",
+    "col": "IMYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(1000 CHAR)"
+   },
+   {
+    "odata": "МинимальноДопустимыйУровень",
+    "col": "MINIMALNODOPUSTIMYYUROVEN_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "УровниПроизводительности"
+   },
+   {
+    "odata": "Приоритет",
+    "col": "PRIORITET",
+    "kind": "scalar",
+    "otype": "NUMBER(15)"
+   },
+   {
+    "odata": "ЦелевоеВремя",
+    "col": "TSELEVOEVREMYA",
+    "kind": "scalar",
+    "otype": "NUMBER(15,2)"
+   },
+   {
+    "odata": "ИмяХеш",
+    "col": "IMYAKHESH",
+    "kind": "scalar",
+    "otype": "VARCHAR2(40 CHAR)"
+   }
+  ]
+ },
+ "RSD_KONTRAGENTY": {
+  "entity": "Catalog.Контрагенты",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ГруппаДоступа_Key",
+    "col": "GRUPPADOSTUPA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_GRUPPYDOSTUPAKONTRAGENTOV"
+   },
+   {
+    "odata": "ИНН",
+    "col": "INN",
+    "kind": "scalar",
+    "otype": "VARCHAR2(12 CHAR)"
+   },
+   {
+    "odata": "КодПоЕДРПОУ",
+    "col": "KODPOEDRPOU",
+    "kind": "scalar",
+    "otype": "VARCHAR2(12 CHAR)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НаименованиеПолное",
+    "col": "NAIMENOVANIEPOLNOE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ОсновнойБанковскийСчет_Key",
+    "col": "OSNOVNOYBANKOVSKIYSCHET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_BANKOVSKIESCHETA"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ФизЛицо_Key",
+    "col": "FIZLITSO_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_FIZICHESKIELITSA"
+   },
+   {
+    "odata": "ЮрФизЛицо",
+    "col": "YURFIZLITSO_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ЮрФизЛицо"
+   }
+  ]
+ },
+ "RSD_KONTROLNYETOCHKI": {
+  "entity": "Catalog.КонтрольныеТочки",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ГруппаКТ_Key",
+    "col": "GRUPPAKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_GRUPPYKONTROLNYKHTOCHEK"
+   },
+   {
+    "odata": "ДатаПроверки",
+    "col": "DATAPROVERKI",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Пройдена",
+    "col": "PROYDENA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Исполнено",
+    "col": "ISPOLNENO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "КодКТ",
+    "col": "KODKT",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ПлановыйСрок",
+    "col": "PLANOVYYSROK",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Проверено",
+    "col": "PROVERENO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Проверяющий_Key",
+    "col": "PROVERYAYUSHCHIY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Результат",
+    "col": "REZULTAT",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Создал_Key",
+    "col": "SOZDAL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "УровеньКТ_Key",
+    "col": "UROVENKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ФактическийСрок",
+    "col": "FAKTICHESKIYSROK",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ЧисловойКод",
+    "col": "CHISLOVOYKOD",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   }
+  ]
+ },
+ "RSD_LICHNYEADRESATY": {
+  "entity": "Catalog.ЛичныеАдресаты",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Группа_Key",
+    "col": "GRUPPA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_GRUPPYLICHNYKHADRESATOV"
+   },
+   {
+    "odata": "Должность",
+    "col": "DOLZHNOST",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Организация",
+    "col": "ORGANIZATSIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ФайлФотографии",
+    "col": "FAYLFOTOGRAFII",
+    "kind": "scalar",
+    "otype": "BLOB"
+   }
+  ]
+ },
+ "RSD_NABORYDOPOLNITELNYKHREKVIZITOVISVEDENII": {
+  "entity": "Catalog.НаборыДополнительныхРеквизитовИСведений",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "КоличествоРеквизитов",
+    "col": "KOLICHESTVOREKVIZITOV",
+    "kind": "scalar",
+    "otype": "VARCHAR2(5 CHAR)"
+   },
+   {
+    "odata": "КоличествоСведений",
+    "col": "KOLICHESTVOSVEDENIY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(5 CHAR)"
+   },
+   {
+    "odata": "Используется",
+    "col": "ISPOLZUETSYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_NASTROI_KIVARIANTOVOTCHETOVDOKUMENTOOBOROT": {
+  "entity": "Catalog.НастройкиВариантовОтчетовДокументооборот",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Вспомогательный",
+    "col": "VSPOMOGATELNYY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "КлючВарианта",
+    "col": "KLYUCHVARIANTA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(256 CHAR)"
+   },
+   {
+    "odata": "Пользовательский",
+    "col": "POLZOVATELSKIY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "РедактируетсяВручную",
+    "col": "REDAKTIRUETSYAVRUCHNUYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ТолькоДляАвтора",
+    "col": "TOLKODLYAAVTORA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ХранилищеСнимокОтчета",
+    "col": "KHRANILISHCHESNIMOKOTCHETA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   }
+  ]
+ },
+ "RSD_NOMENKLATURA": {
+  "entity": "Catalog.Номенклатура",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Цена",
+    "col": "TSENA",
+    "kind": "scalar",
+    "otype": "NUMBER(15,2)"
+   },
+   {
+    "odata": "ЕдиницаИзмерения_Key",
+    "col": "EDINITSAIZMERENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "СтавкаНДС",
+    "col": "STAVKANDS_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СтавкиНДС"
+   },
+   {
+    "odata": "Артикул",
+    "col": "ARTIKUL",
+    "kind": "scalar",
+    "otype": "VARCHAR2(50 CHAR)"
+   }
+  ]
+ },
+ "RSD_NUMERATORY": {
+  "entity": "Catalog.Нумераторы",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Периодичность",
+    "col": "PERIODICHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ПериодичностьНумераторов"
+   },
+   {
+    "odata": "ФорматНомера",
+    "col": "FORMATNOMERA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НезависимаяНумерацияПоОрганизациям",
+    "col": "NEZAVISIMAYANUMERATSIYAPOORGANIZATSIYAM",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НезависимаяНумерацияПоСвязанномуДокументу",
+    "col": "NEZAVISIMAYANUMERATSIYAPOSVYAZANNOMUDOKUMENTU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НезависимаяНумерацияПоПодразделению",
+    "col": "NEZAVISIMAYANUMERATSIYAPOPODRAZDELENIYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НезависимаяНумерацияПоПроекту",
+    "col": "NEZAVISIMAYANUMERATSIYAPOPROEKTU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НезависимаяНумерацияПоВопросуДеятельности",
+    "col": "NEZAVISIMAYANUMERATSIYAPOVOPROSUDEYATELNOSTI",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НезависимаяНумерацияПоВидуДокумента",
+    "col": "NEZAVISIMAYANUMERATSIYAPOVIDUDOKUMENTA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ТипСвязи_Key",
+    "col": "TIPSVYAZI_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Пример",
+    "col": "PRIMER",
+    "kind": "scalar",
+    "otype": "VARCHAR2(120 CHAR)"
+   }
+  ]
+ },
+ "RSD_OBLASTIDELEGIROVANIYAPRAV": {
+  "entity": "Catalog.ОбластиДелегированияПрав",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_PAPKIVNUTRENNIKHDOKUMENTOV": {
+  "entity": "Catalog.ПапкиВнутреннихДокументов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_PAPKIMEROPRIYATII": {
+  "entity": "Catalog.ПапкиМероприятий",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_PAPKIPISEM": {
+  "entity": "Catalog.ПапкиПисем",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ВидПапки",
+    "col": "VIDPAPKI_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыПапокПисем"
+   },
+   {
+    "odata": "ВариантОтображенияКоличестваПисем",
+    "col": "VARIANTOTOBRAZHENIYAKOLICHESTVAPISEM_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыОтображенияКоличестваПисемВПапке"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_PAPKIPOISKA": {
+  "entity": "Catalog.ПапкиПоиска",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "НастройкаОтбора",
+    "col": "NASTROYKAOTBORA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "КоличествоОбъектов",
+    "col": "KOLICHESTVOOBEKTOV",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   }
+  ]
+ },
+ "RSD_PAPKIPROEKTOV": {
+  "entity": "Catalog.ПапкиПроектов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_PAPKIFAI_LOV": {
+  "entity": "Catalog.ПапкиФайлов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_PAPKIFORUMA": {
+  "entity": "Catalog.ПапкиФорума",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   }
+  ]
+ },
+ "RSD_POKAZATELIVIDZHETOV": {
+  "entity": "Catalog.ПоказателиВиджетов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ПороговоеЗначение",
+    "col": "POROGOVOEZNACHENIE",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "Виджет_Key",
+    "col": "VIDZHET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Порядок",
+    "col": "PORYADOK",
+    "kind": "scalar",
+    "otype": "NUMBER(1)"
+   }
+  ]
+ },
+ "RSD_POLZOVATELI": {
+  "entity": "Catalog.Пользователи",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Недействителен",
+    "col": "NEDEYSTVITELEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПредставлениеВДокументах",
+    "col": "PREDSTAVLENIEVDOKUMENTAKH",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "РазрешенныеВебСерверы",
+    "col": "RAZRESHENNYEVEBSERVERY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ФизЛицо_Key",
+    "col": "FIZLITSO_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_FIZICHESKIELITSA"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Служебный",
+    "col": "SLUZHEBNYY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Подготовлен",
+    "col": "PODGOTOVLEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИдентификаторПользователяИБ",
+    "col": "IDENTIFIKATORPOLZOVATELYAIB",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "ПредставлениеВПереписке",
+    "col": "PREDSTAVLENIEVPEREPISKE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПредставлениеВПерепискеСРангом",
+    "col": "PREDSTAVLENIEVPEREPISKESRANGOM",
+    "kind": "scalar",
+    "otype": "VARCHAR2(105 CHAR)"
+   },
+   {
+    "odata": "Помещение_Key",
+    "col": "POMESHCHENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_TERRITORIIIPOMESHCHENIYA"
+   },
+   {
+    "odata": "КодЯзыка",
+    "col": "KODYAZYKA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(2 CHAR)"
+   },
+   {
+    "odata": "ИдентификаторПользователяСервиса",
+    "col": "IDENTIFIKATORPOLZOVATELYASERVISA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "СвойстваПользователяИБ",
+    "col": "SVOYSTVAPOLZOVATELYAIB",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "RSD_ПаратнерыРаспределенияПомещений_Key",
+    "col": "RSD_PARATNERYRASPREDELENIYAPOMESHCHENIY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "RSD_НовыйИнтерфейсДляСпискаДокументов",
+    "col": "RSD_NOVYYINTERFEYSDLYASPISKADOKUMENTOV",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_POLZOVATELSKIEOBRABOTCHIKIBIZNESSOBYTII": {
+  "entity": "Catalog.ПользовательскиеОбработчикиБизнесСобытий",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Включен",
+    "col": "VKLYUCHEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВыполняемыйКод",
+    "col": "VYPOLNYAEMYYKOD",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ВыполняемыйКодОтменыОбработки",
+    "col": "VYPOLNYAEMYYKODOTMENYOBRABOTKI",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(255 CHAR)"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_PRAVILAAVTOZAPOLNENIYAFAI_LOV": {
+  "entity": "Catalog.ПравилаАвтозаполненияФайлов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ШаблонФайла_Key",
+    "col": "SHABLONFAYLA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_PRAVILARAZMESHCHENIYAFAI_LOVVTOMAKH": {
+  "entity": "Catalog.ПравилаРазмещенияФайловВТомах",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ГруппаТомов_Key",
+    "col": "GRUPPATOMOV_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(255 CHAR)"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Порядок",
+    "col": "PORYADOK",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "ПоУмолчанию",
+    "col": "POUMOLCHANIYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПредставлениеУсловия",
+    "col": "PREDSTAVLENIEUSLOVIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(255 CHAR)"
+   },
+   {
+    "odata": "Условие",
+    "col": "USLOVIE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   }
+  ]
+ },
+ "RSD_PREDOPREDELENNYEVARIANTYOTCHETOV": {
+  "entity": "Catalog.ПредопределенныеВариантыОтчетов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Отчет_Key",
+    "col": "OTCHET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "КлючВарианта",
+    "col": "KLYUCHVARIANTA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(256 CHAR)"
+   },
+   {
+    "odata": "Включен",
+    "col": "VKLYUCHEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВидимостьПоУмолчанию",
+    "col": "VIDIMOSTPOUMOLCHANIYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ГруппироватьПоОтчету",
+    "col": "GRUPPIROVATPOOTCHETU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ХешНастроек",
+    "col": "KHESHNASTROEK",
+    "kind": "scalar",
+    "otype": "VARCHAR2(32 CHAR)"
+   },
+   {
+    "odata": "НаименованияПолей",
+    "col": "NAIMENOVANIYAPOLEY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НаименованияПараметровИОтборов",
+    "col": "NAIMENOVANIYAPARAMETROVIOTBOROV",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "КлючевыеСлова",
+    "col": "KLYUCHEVYESLOVA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "КлючЗамеров",
+    "col": "KLYUCHZAMEROV",
+    "kind": "scalar",
+    "otype": "VARCHAR2(135 CHAR)"
+   }
+  ]
+ },
+ "RSD_PREDOPREDELENNYEVARIANTYOTCHETOVRASSHIRENII": {
+  "entity": "Catalog.ПредопределенныеВариантыОтчетовРасширений",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Отчет_Key",
+    "col": "OTCHET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "КлючВарианта",
+    "col": "KLYUCHVARIANTA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(256 CHAR)"
+   },
+   {
+    "odata": "Включен",
+    "col": "VKLYUCHEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ГруппироватьПоОтчету",
+    "col": "GRUPPIROVATPOOTCHETU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВидимостьПоУмолчанию",
+    "col": "VIDIMOSTPOUMOLCHANIYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ХешНастроек",
+    "col": "KHESHNASTROEK",
+    "kind": "scalar",
+    "otype": "VARCHAR2(32 CHAR)"
+   },
+   {
+    "odata": "НаименованияПолей",
+    "col": "NAIMENOVANIYAPOLEY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НаименованияПараметровИОтборов",
+    "col": "NAIMENOVANIYAPARAMETROVIOTBOROV",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "КлючевыеСлова",
+    "col": "KLYUCHEVYESLOVA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "КлючЗамеров",
+    "col": "KLYUCHZAMEROV",
+    "kind": "scalar",
+    "otype": "VARCHAR2(135 CHAR)"
+   }
+  ]
+ },
+ "RSD_PROFILIGRUPPDOSTUPA": {
+  "entity": "Catalog.ПрофилиГруппДоступа",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ИдентификаторПоставляемыхДанных",
+    "col": "IDENTIFIKATORPOSTAVLYAEMYKHDANNYKH",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "ПоставляемыйПрофильИзменен",
+    "col": "POSTAVLYAEMYYPROFILIZMENEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_RABOCHIEGRUPPY": {
+  "entity": "Catalog.РабочиеГруппы",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Недействительна",
+    "col": "NEDEYSTVITELNA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_ROLIISPOLNITELEI": {
+  "entity": "Catalog.РолиИсполнителей",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ИспользуетсяБезОбъектовАдресации",
+    "col": "ISPOLZUETSYABEZOBEKTOVADRESATSII",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "КраткоеПредставление",
+    "col": "KRATKOEPREDSTAVLENIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(9 CHAR)"
+   },
+   {
+    "odata": "ИспользуетсяСОбъектамиАдресации",
+    "col": "ISPOLZUETSYASOBEKTAMIADRESATSII",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ТипыДополнительногоОбъектаАдресации_Key",
+    "col": "TIPYDOPOLNITELNOGOOBEKTAADRESATSII_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ТипыОсновногоОбъектаАдресации_Key",
+    "col": "TIPYOSNOVNOGOOBEKTAADRESATSII_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ВнешняяРоль",
+    "col": "VNESHNYAYAROL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_SERTIFIKATYKLYUCHEI_ELEKTRONNOI_PODPISIISHIFROVANIYA": {
+  "entity": "Catalog.СертификатыКлючейЭлектроннойПодписиИШифрования",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "КомуВыдан",
+    "col": "KOMUVYDAN",
+    "kind": "scalar",
+    "otype": "VARCHAR2(430 CHAR)"
+   },
+   {
+    "odata": "Фирма",
+    "col": "FIRMA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Фамилия",
+    "col": "FAMILIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Имя",
+    "col": "IMYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Отчество",
+    "col": "OTCHESTVO",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Должность",
+    "col": "DOLZHNOST",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "КемВыдан",
+    "col": "KEMVYDAN",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "ДействителенДо",
+    "col": "DEYSTVITELENDO",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Подписание",
+    "col": "PODPISANIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Шифрование",
+    "col": "SHIFROVANIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Отпечаток",
+    "col": "OTPECHATOK",
+    "kind": "scalar",
+    "otype": "VARCHAR2(28 CHAR)"
+   },
+   {
+    "odata": "ДанныеСертификата",
+    "col": "DANNYESERTIFIKATA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Программа_Key",
+    "col": "PROGRAMMA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Отозван",
+    "col": "OTOZVAN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УсиленнаяЗащитаЗакрытогоКлюча",
+    "col": "USILENNAYAZASHCHITAZAKRYTOGOKLYUCHA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ПользовательОповещенОСрокеДействия",
+    "col": "POLZOVATELOPOVESHCHENOSROKEDEYSTVIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Добавил_Key",
+    "col": "DOBAVIL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "СостояниеЗаявления",
+    "col": "SOSTOYANIEZAYAVLENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияЗаявленияНаВыпускСертификата"
+   },
+   {
+    "odata": "СодержаниеЗаявления",
+    "col": "SODERZHANIEZAYAVLENIYA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ОбязательныйДляШифрования",
+    "col": "OBYAZATELNYYDLYASHIFROVANIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_SOOBSHCHENIYAOBSUZHDENII": {
+  "entity": "Catalog.СообщенияОбсуждений",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ВладелецСообщения_Key",
+    "col": "VLADELETSSOOBSHCHENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ВопросГолосования",
+    "col": "VOPROSGOLOSOVANIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ДатаИзменения",
+    "col": "DATAIZMENENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаСоздания",
+    "col": "DATASOZDANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДобавленоГолосование",
+    "col": "DOBAVLENOGOLOSOVANIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НомерСообщения",
+    "col": "NOMERSOOBSHCHENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "ПервоеСообщениеТемы",
+    "col": "PERVOESOOBSHCHENIETEMY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ТекстСообщения",
+    "col": "TEKSTSOOBSHCHENIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ТекстСообщенияСписок",
+    "col": "TEKSTSOOBSHCHENIYASPISOK",
+    "kind": "scalar",
+    "otype": "VARCHAR2(1024 CHAR)"
+   },
+   {
+    "odata": "СокращенТекстСписка",
+    "col": "SOKRASHCHENTEKSTSPISKA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_STRUKTURAPREDPRIYATIYA": {
+  "entity": "Catalog.СтруктураПредприятия",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Руководитель_Key",
+    "col": "RUKOVODITEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ГрафикРаботы_Key",
+    "col": "GRAFIKRABOTY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_GRAFIKIRABOTY"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_TEMYZAMETOK": {
+  "entity": "Catalog.ТемыЗаметок",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ЧислоЗаметок",
+    "col": "CHISLOZAMETOK",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "ЧислоЗаметокВсего",
+    "col": "CHISLOZAMETOKVSEGO",
+    "kind": "scalar",
+    "otype": "VARCHAR2(10 CHAR)"
+   }
+  ]
+ },
+ "RSD_TERRITORIIIPOMESHCHENIYA": {
+  "entity": "Catalog.ТерриторииИПомещения",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "БрониВводитОтветственный",
+    "col": "BRONIVVODITOTVETSTVENNYY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Вместимость",
+    "col": "VMESTIMOST",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "ДоступнаСхема",
+    "col": "DOSTUPNASKHEMA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ДоступноБронирование",
+    "col": "DOSTUPNOBRONIROVANIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ОтветственныйТехническоеОбеспечение_Key",
+    "col": "OTVETSTVENNYYTEKHNICHESKOEOBESPECHENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ОтветственныйХозяйственноеОбеспечение_Key",
+    "col": "OTVETSTVENNYYKHOZYAYSTVENNOEOBESPECHENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ФайлФотографии",
+    "col": "FAYLFOTOGRAFII",
+    "kind": "scalar",
+    "otype": "BLOB"
+   }
+  ]
+ },
+ "RSD_UVEDOMLENIYAPROGRAMMY": {
+  "entity": "Catalog.УведомленияПрограммы",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "ВидУведомления",
+    "col": "VIDUVEDOMLENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыУведомленийПрограммы"
+   },
+   {
+    "odata": "Дата",
+    "col": "DATA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "КраткоеОписание",
+    "col": "KRATKOEOPISANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(300 CHAR)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Просмотрено",
+    "col": "PROSMOTRENO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   }
+  ]
+ },
+ "RSD_UDALITPOMESHCHENIYA": {
+  "entity": "Catalog.УдалитьПомещения",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "БрониВводитОтветственный",
+    "col": "BRONIVVODITOTVETSTVENNYY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Вместимость",
+    "col": "VMESTIMOST",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Расположение_Key",
+    "col": "RASPOLOZHENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_TERRITORIIIPOMESHCHENIYA"
+   }
+  ]
+ },
+ "RSD_UDALITPROIZOSHEDSHIEBIZNESSOBYTIYA": {
+  "entity": "Catalog.УдалитьПроизошедшиеБизнесСобытия",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ВидСобытия_Key",
+    "col": "VIDSOBYTIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Дата",
+    "col": "DATA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "КонтекстСобытия",
+    "col": "KONTEKSTSOBYTIYA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Обработано",
+    "col": "OBRABOTANO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ЧислоПопытокОбработки",
+    "col": "CHISLOPOPYTOKOBRABOTKI",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   }
+  ]
+ },
+ "RSD_UDALITSHABLONYTEKSTOVPISEM": {
+  "entity": "Catalog.УдалитьШаблоныТекстовПисем",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Шаблон",
+    "col": "SHABLON",
+    "kind": "scalar",
+    "otype": "CLOB"
+   }
+  ]
+ },
+ "RSD_USLOVIYAZADACH": {
+  "entity": "Catalog.УсловияЗадач",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ВыражениеУсловия",
+    "col": "VYRAZHENIEUSLOVIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НастройкаКомбинацииУсловий",
+    "col": "NASTROYKAKOMBINATSIIUSLOVIY",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "НастройкаУсловия",
+    "col": "NASTROYKAUSLOVIYA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "СпособЗаданияУсловия",
+    "col": "SPOSOBZADANIYAUSLOVIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыЗаданияУсловия"
+   }
+  ]
+ },
+ "RSD_USLOVIYAMARSHRUTIZATSII": {
+  "entity": "Catalog.УсловияМаршрутизации",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ВыражениеУсловия",
+    "col": "VYRAZHENIEUSLOVIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НастройкаКомбинацииУсловий",
+    "col": "NASTROYKAKOMBINATSIIUSLOVIY",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "НастройкаУсловия",
+    "col": "NASTROYKAUSLOVIYA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ПредставлениеОтбора",
+    "col": "PREDSTAVLENIEOTBORA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "СпособЗаданияУсловия",
+    "col": "SPOSOBZADANIYAUSLOVIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыЗаданияУсловия"
+   },
+   {
+    "odata": "ТипОбъекта",
+    "col": "TIPOBEKTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипыОбъектов"
+   }
+  ]
+ },
+ "RSD_UCHETNYEZAPISIELEKTRONNOI_POCHTY": {
+  "entity": "Catalog.УчетныеЗаписиЭлектроннойПочты",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "SMTPАутентификация",
+    "col": "SMTPAUTENTIFIKATSIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыSMTPАутентификации"
+   },
+   {
+    "odata": "АдресЭлектроннойПочты",
+    "col": "ADRESELEKTRONNOYPOCHTY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(255 CHAR)"
+   },
+   {
+    "odata": "ВариантИспользования",
+    "col": "VARIANTISPOLZOVANIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыИспользованияПочты"
+   },
+   {
+    "odata": "ВремяОжидания",
+    "col": "VREMYAOZHIDANIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "ИмяПользователя",
+    "col": "IMYAPOLZOVATELYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "ИспользоватьБезопасныйВходНаСерверВходящейПочты",
+    "col": "ISPOLZOVATBEZOPASNYYVKHODNASERVERVKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьБезопасныйВходНаСерверИсходящейПочты",
+    "col": "ISPOLZOVATBEZOPASNYYVKHODNASERVERISKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьДляОтправки",
+    "col": "ISPOLZOVATDLYAOTPRAVKI",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьДляПолучения",
+    "col": "ISPOLZOVATDLYAPOLUCHENIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьЗащищенноеСоединениеДляВходящейПочты",
+    "col": "ISPOLZOVATZASHCHISHCHENNOESOEDINENIEDLYAVKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИспользоватьЗащищенноеСоединениеДляИсходящейПочты",
+    "col": "ISPOLZOVATZASHCHISHCHENNOESOEDINENIEDLYAISKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "НеИспользоватьВнутреннююМаршрутизациюДляВходящихПисем",
+    "col": "NEISPOLZOVATVNUTRENNYUYUMARSHRUTIZATSIYUDLYAVKHODYASHCHIKHPISEM",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОставлятьКопииСообщенийНаСервере",
+    "col": "OSTAVLYATKOPIISOOBSHCHENIYNASERVERE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПериодХраненияСообщенийНаСервере",
+    "col": "PERIODKHRANENIYASOOBSHCHENIYNASERVERE",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "Пользователь",
+    "col": "POLZOVATEL",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "ПользовательSMTP",
+    "col": "POLZOVATELSMTP",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "ПортСервераВходящейПочты",
+    "col": "PORTSERVERAVKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "NUMBER(5)"
+   },
+   {
+    "odata": "ПортСервераИсходящейПочты",
+    "col": "PORTSERVERAISKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "NUMBER(5)"
+   },
+   {
+    "odata": "ПротоколВходящейПочты",
+    "col": "PROTOKOLVKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(4 CHAR)"
+   },
+   {
+    "odata": "СерверВходящейПочты",
+    "col": "SERVERVKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(300 CHAR)"
+   },
+   {
+    "odata": "СерверИсходящейПочты",
+    "col": "SERVERISKHODYASHCHEYPOCHTY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(300 CHAR)"
+   },
+   {
+    "odata": "СпособPOP3Аутентификации",
+    "col": "SPOSOBPOP3AUTENTIFIKATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыPOP3Аутентификации"
+   },
+   {
+    "odata": "СохранятьКопиюВОтправленные",
+    "col": "SOKHRANYATKOPIYUVOTPRAVLENNYE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "СпособSMTPАутентификации",
+    "col": "SPOSOBSMTPAUTENTIFIKATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыSMTPАутентификации"
+   },
+   {
+    "odata": "ТребуетсяВходНаСерверПередОтправкой",
+    "col": "TREBUETSYAVKHODNASERVERPEREDOTPRAVKOY",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УдалитьОтветственныйЗаОбработкуПисем_Key",
+    "col": "UDALITOTVETSTVENNYYZAOBRABOTKUPISEM_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "УдалитьПароль",
+    "col": "UDALITPAROL",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "УдалитьПарольSMTP",
+    "col": "UDALITPAROLSMTP",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   }
+  ]
+ },
+ "RSD_FIZICHESKIELITSA": {
+  "entity": "Catalog.ФизическиеЛица",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ДатаРождения",
+    "col": "DATAROZHDENIYA",
+    "kind": "scalar",
+    "otype": "DATE"
+   },
+   {
+    "odata": "Пол",
+    "col": "POL_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ПолФизическогоЛица"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ГруппаДоступа_Key",
+    "col": "GRUPPADOSTUPA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_GRUPPYDOSTUPAFIZICHESKIKHLITS"
+   },
+   {
+    "odata": "ФайлФотографии",
+    "col": "FAYLFOTOGRAFII",
+    "kind": "scalar",
+    "otype": "BLOB"
+   }
+  ]
+ },
+ "RSD_SHABLONYGRUPPKONTROLNYKHTOCHEK": {
+  "entity": "Catalog.ШаблоныГруппКонтрольныхТочек",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_SHABLONYKONTROLNYKHTOCHEK": {
+  "entity": "Catalog.ШаблоныКонтрольныхТочек",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "ГруппаКТ_Key",
+    "col": "GRUPPAKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_SHABLONYGRUPPKONTROLNYKHTOCHEK"
+   },
+   {
+    "odata": "ДлительностьДней",
+    "col": "DLITELNOSTDNEY",
+    "kind": "scalar",
+    "otype": "NUMBER(4)"
+   },
+   {
+    "odata": "ДлительностьМинут",
+    "col": "DLITELNOSTMINUT",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "ДлительностьЧасов",
+    "col": "DLITELNOSTCHASOV",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "КодКТ",
+    "col": "KODKT",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Проверяющий_Key",
+    "col": "PROVERYAYUSHCHIY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Результат",
+    "col": "REZULTAT",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "УровеньКТ_Key",
+    "col": "UROVENKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ЧисловойКод",
+    "col": "CHISLOVOYKOD",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   }
+  ]
+ },
+ "RSD_SHABLONYTEKSTOV": {
+  "entity": "Catalog.ШаблоныТекстов",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Code",
+    "col": "CODE",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Description",
+    "col": "NAME",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Шаблон",
+    "col": "SHABLON",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ОбщийШаблон",
+    "col": "OBSHCHIYSHABLON",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОбластьПрименения",
+    "col": "OBLASTPRIMENENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ОбластиПримененияШаблоновТекстов"
+   },
+   {
+    "odata": "ТипТекста",
+    "col": "TIPTEKSTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипыТекстовПочтовыхСообщений"
+   }
+  ]
+ }
+}
