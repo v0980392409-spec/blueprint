@@ -1,0 +1,943 @@
+# Provenance
+- Source Prompt: blueprint-prompt.md (v26.1.220)
+- Functional Requirements: fr.md
+- Schema Metadata: schema-metadata.md
+- UX Patterns: Built-in
+# Application Definition
+- Name: Будинки
+- Description: Будинки application for RSD_HOUSES, RSD_HOUSE_SECTIONS, RSD_ORGANIZATIONS, RSD_ORGANIZATIONS_ADD_ATTRS, RSD_ORGANIZATIONS_CONTACT_INFO maintenance, hierarchy browsing, reporting, and KPI analytics.
+- Comments: Uses RSD_HOUSES, RSD_HOUSE_SECTIONS, RSD_ORGANIZATIONS, RSD_ORGANIZATIONS_ADD_ATTRS, RSD_ORGANIZATIONS_CONTACT_INFO only for maintenance, hierarchy browsing, reporting, and KPI analytics.
+- Primary Application Language: uk
+- Home Page: Page 1
+- Access Controls:
+  - Roles:
+    - Role: ADMIN
+      - Description: Full access to all pages and actions, including delete operations.
+    - Role: CONTRIBUTOR
+      - Description: Create and edit access on houses, sections, and organizations; no delete.
+    - Role: READER
+      - Description: Read-only access to the list pages and reports.
+- List of Values:
+  - LOV
+    - Name: LOV_ORGANIZATIONS
+    - Type: SQL
+    - SQL:
+```sql
+select o.name as display
+     , o.id as return
+from rsd_organizations o
+where o.is_deleted = false
+order by 1
+```
+    - Display: display
+    - Return: return
+  - LOV
+    - Name: LOV_HOUSES
+    - Type: SQL
+    - SQL:
+```sql
+select h.name as display
+     , h.id as return
+from rsd_houses h
+where h.is_deleted = false
+order by 1
+```
+    - Display: display
+    - Return: return
+  - LOV
+    - Name: LOV_YES_NO
+    - Type: Static
+    - Entries:
+      - Entry:
+        - Display: Так
+        - Return: true
+      - Entry:
+        - Display: Ні
+        - Return: false
+- Page Groups
+  - Page Group
+    - Name: Будинки
+    - Description: House registry workflow: house list, house form, and section form.
+  - Page Group
+    - Name: Організації
+    - Description: Organization workflow: faceted organization list, organization form, and child row forms for contact info and additional attributes.
+- Menu
+  - Menu Name: Navigation Menu
+  - Entries:
+    - Entry
+      - Label: Будинки
+      - Icon: fa-home
+      - Action: Navigate
+      - Target: Page 1
+      - Authorized Roles: ADMIN, CONTRIBUTOR, READER
+    - Entry
+      - Label: Організації
+      - Icon: fa-building
+      - Action: Navigate
+      - Target: Page 4
+      - Authorized Roles: ADMIN, CONTRIBUTOR, READER
+- Breadcrumb
+  - Name: Breadcrumb
+  - Entries:
+    - Entry
+      - Name: Будинки
+      - Page: Page 1
+    - Entry
+      - Name: Організації
+      - Page: Page 4
+## Pages
+### Page 1: Будинки
+- Description: Interactive report listing houses with the owning organization name.
+- Comments: Entry list of the house registry; row edit link and the create action open the modal house form for CONTRIBUTOR and ADMIN, while READER may only browse.
+- Pattern: vertical-stack
+- Page Mode: standard
+- Menu: true
+- Page Group: Будинки
+- Security Requirements:
+  - Authorized Roles: ADMIN, CONTRIBUTOR, READER
+#### Regions
+##### Region: Будинки
+- Comments: Interactive report over RSD_HOUSES joined to RSD_ORGANIZATIONS; required filtering on Організація and Активність is provided by the interactive report native filter toolbar; soft-deleted rows are excluded.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Interactive Report
+- Report Context: Будинки (Catalog.RSD_Дома): реєстр будинків забудовника
+- Data Source:
+  - Type: SQL
+  - Primary Keys: ID
+  - SQL:
+```sql
+select h.id as id
+     , h.code as code
+     , h.name as name
+     , h.organization_id as organization_id
+     , o.name as organization_name
+     , h.house_address as house_address
+     , h.item_no as item_no
+     , h.is_active as is_active
+     , h.is_house_zero as is_house_zero
+from rsd_houses h
+left join rsd_organizations o
+    on o.id = h.organization_id
+where h.is_deleted = false
+```
+  - Summary: Non-deleted houses with the owning organization name resolved for display.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Render As: hidden
+    - Visible: false
+    - Column Context: Сурогатний первинний ключ
+  - Column Name: CODE
+    - Label: Код
+    - Datatype: varchar2
+    - Render As: plainText
+    - Visible: true
+    - Column Context: Код з 1С, унікальний
+  - Column Name: NAME
+    - Label: Найменування
+    - Datatype: varchar2
+    - Render As: plainText
+    - Visible: true
+    - Column Context: Найменування будинку
+  - Column Name: ORGANIZATION_ID
+    - Label: Організація ІД
+    - Datatype: number
+    - Render As: hidden
+    - Visible: false
+    - Column Context: Організація-власник
+  - Column Name: ORGANIZATION_NAME
+    - Label: Організація
+    - Datatype: varchar2
+    - Render As: plainText
+    - Visible: true
+    - Column Context: Найменування організації
+  - Column Name: HOUSE_ADDRESS
+    - Label: Адреса будинку
+    - Datatype: varchar2
+    - Render As: plainText
+    - Visible: true
+    - Column Context: Адреса будинку
+  - Column Name: ITEM_NO
+    - Label: Номер
+    - Datatype: varchar2
+    - Render As: plainText
+    - Visible: true
+    - Column Context: Номер будинку
+  - Column Name: IS_ACTIVE
+    - Label: Активність
+    - Datatype: boolean
+    - Render As: plainText
+    - Visible: true
+    - Column Context: Ознака активності будинку
+  - Column Name: IS_HOUSE_ZERO
+    - Label: Будинок 0 (LOT 100)
+    - Datatype: boolean
+    - Render As: plainText
+    - Visible: true
+    - Column Context: Ознака «Будинок 0 (LOT 100)»
+- Links:
+  - Link:
+    - Link To: Page 2
+    - Link Passing: ID
+    - Link Target Items: P2_ID
+    - Label: Редагувати
+    - Link Icon: fa-edit
+    - Authorized Roles: ADMIN, CONTRIBUTOR
+- Actions:
+  - Action
+    - Label: Створити будинок
+    - Link To: Page 2
+    - slot: CREATE
+    - Action Type: navigate
+    - Authorized Roles: ADMIN, CONTRIBUTOR
+### Page 2: Будинок
+- Description: Modal form for creating and editing a house together with its sections list.
+- Comments: House create/edit dialog launched from Page 1; save or cancel returns to the launching page; delete is limited to ADMIN and is blocked by RSD_HOUSE_SECTIONS_FK_OWNER while dependent sections exist, so dependent rows must be removed first.
+- Pattern: modal-drawer
+- Page Mode: modalDialog
+- Menu: false
+- Page Group: Будинки
+- Security Requirements:
+  - Authorized Roles: ADMIN, CONTRIBUTOR
+#### Regions
+##### Region: Будинок
+- Comments: Single-record form over RSD_HOUSES for create and edit; Найменування and Адреса будинку are mandatory inputs.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Form
+- Data Source:
+  - Type: Table
+  - Name: RSD_HOUSES
+  - Primary Keys: ID
+  - Summary: Single house row addressed by the ID primary key item.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Page Item Name: P2_ID
+    - Render As: hidden
+  - Column Name: CODE
+    - Label: Код
+    - Datatype: varchar2
+    - Page Item Name: P2_CODE
+    - Render As: textField
+    - Required: true
+    - MaxLength: 9
+  - Column Name: NAME
+    - Label: Найменування
+    - Datatype: varchar2
+    - Page Item Name: P2_NAME
+    - Render As: textField
+    - Required: true
+    - MaxLength: 150
+  - Column Name: ORGANIZATION_ID
+    - Label: Організація
+    - Datatype: number
+    - Page Item Name: P2_ORGANIZATION_ID
+    - Render As: selectList
+    - LOV: LOV_ORGANIZATIONS
+  - Column Name: HOUSE_ADDRESS
+    - Label: Адреса будинку
+    - Datatype: varchar2
+    - Page Item Name: P2_HOUSE_ADDRESS
+    - Render As: textField
+    - Required: true
+    - MaxLength: 300
+  - Column Name: ITEM_NO
+    - Label: Номер
+    - Datatype: varchar2
+    - Page Item Name: P2_ITEM_NO
+    - Render As: textField
+    - MaxLength: 30
+  - Column Name: IS_ACTIVE
+    - Label: Активність
+    - Datatype: boolean
+    - Page Item Name: P2_IS_ACTIVE
+    - Render As: checkbox
+    - Required: true
+  - Column Name: IS_HOUSE_ZERO
+    - Label: Будинок 0 (LOT 100)
+    - Datatype: boolean
+    - Page Item Name: P2_IS_HOUSE_ZERO
+    - Render As: checkbox
+    - Required: true
+- Actions:
+  - Action
+    - Label: Create
+    - slot: CREATE
+    - Action Type: submit
+    - Process: Create
+  - Action
+    - Label: Apply Changes
+    - slot: CHANGE
+    - Action Type: submit
+    - Process: Apply
+  - Action
+    - Label: Delete
+    - slot: DELETE
+    - Action Type: submit
+    - Process: Delete
+    - Authorized Roles: ADMIN
+  - Action
+    - Label: Cancel
+    - slot: CLOSE
+    - Action Type: navigate
+    - Process: cancelDialog
+##### Region: Секції
+- Comments: Child list of house sections filtered by the current house; realizes the editable grid requirement through row edit links and a create action into the section form; Номер is non-negative per RSD_HOUSE_SECTIONS_CK_ITEM_NO.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Classic Report
+  - Qualifier: Standard
+- Data Source:
+  - Type: Table
+  - Name: RSD_HOUSE_SECTIONS
+  - Primary Keys: ID
+  - Where: owner_id = to_number(:P2_ID) and is_deleted = false
+  - Order By: ITEM_NO asc
+  - Summary: Sections of the current house ordered by section number; soft-deleted rows excluded.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Render As: hidden
+  - Column Name: CODE
+    - Label: Код
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: NAME
+    - Label: Найменування
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: ITEM_NO
+    - Label: Номер
+    - Datatype: number
+    - Render As: plainText
+  - Column Name: IS_ACTIVE
+    - Label: Активність
+    - Datatype: boolean
+    - Render As: plainText
+- Links:
+  - Link:
+    - Link To: Page 3
+    - Link Passing: ID
+    - Link Target Items: P3_ID
+    - Label: Редагувати
+    - Link Icon: fa-edit
+- Actions:
+  - Action
+    - Label: Створити секцію
+    - Link To: Page 3
+    - slot: CREATE
+    - Action Type: navigate
+### Page 3: Секція
+- Description: Modal form for creating and editing a house section.
+- Comments: Section create/edit dialog launched from the Секції list on Page 2; Найменування and Номер are mandatory, Номер rejects negative values per RSD_HOUSE_SECTIONS_CK_ITEM_NO, and delete is limited to ADMIN.
+- Pattern: modal-drawer
+- Page Mode: modalDialog
+- Menu: false
+- Page Group: Будинки
+- Security Requirements:
+  - Authorized Roles: ADMIN, CONTRIBUTOR
+#### Regions
+##### Region: Секція
+- Comments: Single-record form over RSD_HOUSE_SECTIONS with the owning house selected from the houses lookup.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Form
+- Data Source:
+  - Type: Table
+  - Name: RSD_HOUSE_SECTIONS
+  - Primary Keys: ID
+  - Summary: Single house section row addressed by the ID primary key item.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Page Item Name: P3_ID
+    - Render As: hidden
+  - Column Name: OWNER_ID
+    - Label: Будинок
+    - Datatype: number
+    - Page Item Name: P3_OWNER_ID
+    - Render As: selectList
+    - LOV: LOV_HOUSES
+    - Required: true
+  - Column Name: CODE
+    - Label: Код
+    - Datatype: varchar2
+    - Page Item Name: P3_CODE
+    - Render As: textField
+    - Required: true
+    - MaxLength: 9
+  - Column Name: NAME
+    - Label: Найменування
+    - Datatype: varchar2
+    - Page Item Name: P3_NAME
+    - Render As: textField
+    - Required: true
+    - MaxLength: 150
+  - Column Name: ITEM_NO
+    - Label: Номер
+    - Datatype: number
+    - Page Item Name: P3_ITEM_NO
+    - Render As: numberField
+    - Required: true
+  - Column Name: IS_ACTIVE
+    - Label: Активність
+    - Datatype: boolean
+    - Page Item Name: P3_IS_ACTIVE
+    - Render As: checkbox
+    - Required: true
+- Actions:
+  - Action
+    - Label: Create
+    - slot: CREATE
+    - Action Type: submit
+    - Process: Create
+  - Action
+    - Label: Apply Changes
+    - slot: CHANGE
+    - Action Type: submit
+    - Process: Apply
+  - Action
+    - Label: Delete
+    - slot: DELETE
+    - Action Type: submit
+    - Process: Delete
+    - Authorized Roles: ADMIN
+  - Action
+    - Label: Cancel
+    - slot: CLOSE
+    - Action Type: navigate
+    - Process: cancelDialog
+### Page 4: Організації
+- Description: Faceted search over organizations with a filterable classic report.
+- Comments: Entry list of organizations with sidebar facets; row edit link and the create action open the modal organization form for CONTRIBUTOR and ADMIN, while READER may only browse.
+- Pattern: faceted-search
+- Page Mode: standard
+- Menu: true
+- Page Group: Організації
+- Security Requirements:
+  - Authorized Roles: ADMIN, CONTRIBUTOR, READER
+#### Regions
+##### Region: Фільтри організацій
+- Comments: Sidebar facets for the organization report; the Платник ПДВ facet narrows the list, and the faceted search built-in search input covers text search over Найменування, ІПН, and Код за ЄДРПОУ.
+- Position: left-column
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Faceted Search
+- Filtered Region: Результати пошуку організацій
+- Filters:
+  - Filter
+    - Name: P4_F_IS_VAT_PAYER
+    - Label: Платник ПДВ
+    - Render As: checkboxGroup
+    - LOV: LOV_YES_NO
+    - Database Column: IS_VAT_PAYER
+    - Datatype: boolean
+##### Region: Результати пошуку організацій
+- Comments: Classic report over RSD_ORGANIZATIONS serving as the faceted search target; soft-deleted rows are excluded and each row links to the organization form.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Classic Report
+  - Qualifier: Standard
+- Data Source:
+  - Type: Table
+  - Name: RSD_ORGANIZATIONS
+  - Primary Keys: ID
+  - Where: is_deleted = false
+  - Summary: Non-deleted organizations available for faceted filtering.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Render As: hidden
+  - Column Name: CODE
+    - Label: Код
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: NAME
+    - Label: Найменування
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: TAX_ID
+    - Label: ІПН
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: EDRPOU_CODE
+    - Label: Код за ЄДРПОУ
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: DOC_PREFIX
+    - Label: Префікс
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: IS_VAT_PAYER
+    - Label: Платник ПДВ
+    - Datatype: boolean
+    - Render As: plainText
+- Links:
+  - Link:
+    - Link To: Page 5
+    - Link Passing: ID
+    - Link Target Items: P5_ID
+    - Label: Редагувати
+    - Link Icon: fa-edit
+    - Authorized Roles: ADMIN, CONTRIBUTOR
+- Actions:
+  - Action
+    - Label: Створити організацію
+    - Link To: Page 5
+    - slot: CREATE
+    - Action Type: navigate
+    - Authorized Roles: ADMIN, CONTRIBUTOR
+### Page 5: Організація
+- Description: Modal form for creating and editing an organization with its contact info and additional attribute lists.
+- Comments: Organization create/edit dialog launched from Page 4; save or cancel returns to the launching page; delete is limited to ADMIN, and child contact info and additional attribute rows are removed with the organization by ON DELETE CASCADE.
+- Pattern: modal-drawer
+- Page Mode: modalDialog
+- Menu: false
+- Page Group: Організації
+- Security Requirements:
+  - Authorized Roles: ADMIN, CONTRIBUTOR
+#### Regions
+##### Region: Організація
+- Comments: Single-record form over RSD_ORGANIZATIONS; Найменування and Вид організації are mandatory, and ENTITY_KIND_ID, MAIN_BANK_ACCOUNT_ID, and DEVELOPER_ID stay plain numeric inputs because their reference tables are not migrated yet.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Form
+- Data Source:
+  - Type: Table
+  - Name: RSD_ORGANIZATIONS
+  - Primary Keys: ID
+  - Summary: Single organization row addressed by the ID primary key item.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Page Item Name: P5_ID
+    - Render As: hidden
+  - Column Name: CODE
+    - Label: Код
+    - Datatype: varchar2
+    - Page Item Name: P5_CODE
+    - Render As: textField
+    - Required: true
+    - MaxLength: 9
+  - Column Name: NAME
+    - Label: Найменування
+    - Datatype: varchar2
+    - Page Item Name: P5_NAME
+    - Render As: textField
+    - Required: true
+    - MaxLength: 150
+  - Column Name: FULL_NAME
+    - Label: Повне найменування
+    - Datatype: clob
+    - Page Item Name: P5_FULL_NAME
+    - Render As: textarea
+  - Column Name: TAX_ID
+    - Label: ІПН
+    - Datatype: varchar2
+    - Page Item Name: P5_TAX_ID
+    - Render As: textField
+    - MaxLength: 12
+  - Column Name: EDRPOU_CODE
+    - Label: Код за ЄДРПОУ
+    - Datatype: varchar2
+    - Page Item Name: P5_EDRPOU_CODE
+    - Render As: textField
+    - MaxLength: 12
+  - Column Name: ENTITY_KIND_ID
+    - Label: Вид організації
+    - Datatype: number
+    - Page Item Name: P5_ENTITY_KIND_ID
+    - Render As: numberField
+    - Required: true
+  - Column Name: IS_VAT_PAYER
+    - Label: Платник ПДВ
+    - Datatype: boolean
+    - Page Item Name: P5_IS_VAT_PAYER
+    - Render As: checkbox
+    - Required: true
+  - Column Name: DOC_PREFIX
+    - Label: Префікс
+    - Datatype: varchar2
+    - Page Item Name: P5_DOC_PREFIX
+    - Render As: textField
+    - MaxLength: 2
+  - Column Name: MAIN_BANK_ACCOUNT_ID
+    - Label: Основний банківський рахунок
+    - Datatype: number
+    - Page Item Name: P5_MAIN_BANK_ACCOUNT_ID
+    - Render As: numberField
+  - Column Name: DEVELOPER_ID
+    - Label: Забудовник
+    - Datatype: number
+    - Page Item Name: P5_DEVELOPER_ID
+    - Render As: numberField
+  - Column Name: COMMENT_TEXT
+    - Label: Коментар
+    - Datatype: clob
+    - Page Item Name: P5_COMMENT_TEXT
+    - Render As: textarea
+- Actions:
+  - Action
+    - Label: Create
+    - slot: CREATE
+    - Action Type: submit
+    - Process: Create
+  - Action
+    - Label: Apply Changes
+    - slot: CHANGE
+    - Action Type: submit
+    - Process: Apply
+  - Action
+    - Label: Delete
+    - slot: DELETE
+    - Action Type: submit
+    - Process: Delete
+    - Authorized Roles: ADMIN
+  - Action
+    - Label: Cancel
+    - slot: CLOSE
+    - Action Type: navigate
+    - Process: cancelDialog
+##### Region: Контактна інформація
+- Comments: Child list of organization contact info rows filtered by the current organization; realizes the editable grid requirement through row edit links and a create action into the contact info form.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Classic Report
+  - Qualifier: Standard
+- Data Source:
+  - Type: Table
+  - Name: RSD_ORGANIZATIONS_CONTACT_INFO
+  - Primary Keys: ID
+  - Where: organization_id = to_number(:P5_ID)
+  - Summary: Contact info rows of the current organization.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Render As: hidden
+  - Column Name: LINE_NO
+    - Label: № рядка
+    - Datatype: number
+    - Render As: plainText
+  - Column Name: TYPE_ID
+    - Label: Тип
+    - Datatype: number
+    - Render As: plainText
+  - Column Name: KIND_ID
+    - Label: Вид
+    - Datatype: number
+    - Render As: plainText
+  - Column Name: PRESENTATION
+    - Label: Представлення
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: COUNTRY
+    - Label: Країна
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: REGION
+    - Label: Регіон
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: CITY
+    - Label: Місто
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: EMAIL_ADDRESS
+    - Label: Адреса ЕП
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: PHONE_NUMBER
+    - Label: Номер телефону
+    - Datatype: varchar2
+    - Render As: plainText
+  - Column Name: VALID_FROM
+    - Label: Діє з
+    - Datatype: date
+    - Render As: plainText
+    - Format Mask: DD.MM.YYYY
+- Links:
+  - Link:
+    - Link To: Page 6
+    - Link Passing: ID
+    - Link Target Items: P6_ID
+    - Label: Редагувати
+    - Link Icon: fa-edit
+- Actions:
+  - Action
+    - Label: Створити контакт
+    - Link To: Page 6
+    - slot: CREATE
+    - Action Type: navigate
+##### Region: Додаткові реквізити
+- Comments: Child list of organization additional attribute rows filtered by the current organization; realizes the editable grid requirement through row edit links and a create action into the additional attribute form.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Classic Report
+  - Qualifier: Standard
+- Data Source:
+  - Type: Table
+  - Name: RSD_ORGANIZATIONS_ADD_ATTRS
+  - Primary Keys: ID
+  - Where: organization_id = to_number(:P5_ID)
+  - Summary: Additional attribute rows of the current organization.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Render As: hidden
+  - Column Name: LINE_NO
+    - Label: № рядка
+    - Datatype: number
+    - Render As: plainText
+  - Column Name: PROPERTY_ID
+    - Label: Властивість
+    - Datatype: number
+    - Render As: plainText
+  - Column Name: TEXT_VALUE
+    - Label: Текстовий рядок
+    - Datatype: clob
+    - Render As: plainText
+- Links:
+  - Link:
+    - Link To: Page 7
+    - Link Passing: ID
+    - Link Target Items: P7_ID
+    - Label: Редагувати
+    - Link Icon: fa-edit
+- Actions:
+  - Action
+    - Label: Створити реквізит
+    - Link To: Page 7
+    - slot: CREATE
+    - Action Type: navigate
+### Page 6: Контактна інформація
+- Description: Modal form for creating and editing an organization contact info row.
+- Comments: Contact info row create/edit dialog launched from the Контактна інформація list on Page 5; TYPE_ID, KIND_ID, and LIST_KIND_ID stay plain numeric inputs because their reference tables are not migrated yet, and delete is limited to ADMIN.
+- Pattern: modal-drawer
+- Page Mode: modalDialog
+- Menu: false
+- Page Group: Організації
+- Security Requirements:
+  - Authorized Roles: ADMIN, CONTRIBUTOR
+#### Regions
+##### Region: Контактна інформація
+- Comments: Single-record form over RSD_ORGANIZATIONS_CONTACT_INFO; the technical FIELD_VALUES column is excluded from editing.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Form
+- Data Source:
+  - Type: Table
+  - Name: RSD_ORGANIZATIONS_CONTACT_INFO
+  - Primary Keys: ID
+  - Summary: Single contact info row addressed by the ID primary key item.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Page Item Name: P6_ID
+    - Render As: hidden
+  - Column Name: ORGANIZATION_ID
+    - Label: Організація
+    - Datatype: number
+    - Page Item Name: P6_ORGANIZATION_ID
+    - Render As: selectList
+    - LOV: LOV_ORGANIZATIONS
+    - Required: true
+  - Column Name: LINE_NO
+    - Label: № рядка
+    - Datatype: number
+    - Page Item Name: P6_LINE_NO
+    - Render As: numberField
+    - Required: true
+  - Column Name: TYPE_ID
+    - Label: Тип
+    - Datatype: number
+    - Page Item Name: P6_TYPE_ID
+    - Render As: numberField
+  - Column Name: KIND_ID
+    - Label: Вид
+    - Datatype: number
+    - Page Item Name: P6_KIND_ID
+    - Render As: numberField
+  - Column Name: PRESENTATION
+    - Label: Представлення
+    - Datatype: varchar2
+    - Page Item Name: P6_PRESENTATION
+    - Render As: textField
+    - MaxLength: 500
+  - Column Name: COUNTRY
+    - Label: Країна
+    - Datatype: varchar2
+    - Page Item Name: P6_COUNTRY
+    - Render As: textField
+    - MaxLength: 100
+  - Column Name: REGION
+    - Label: Регіон
+    - Datatype: varchar2
+    - Page Item Name: P6_REGION
+    - Render As: textField
+    - MaxLength: 50
+  - Column Name: CITY
+    - Label: Місто
+    - Datatype: varchar2
+    - Page Item Name: P6_CITY
+    - Render As: textField
+    - MaxLength: 50
+  - Column Name: EMAIL_ADDRESS
+    - Label: Адреса ЕП
+    - Datatype: varchar2
+    - Page Item Name: P6_EMAIL_ADDRESS
+    - Render As: textField
+    - MaxLength: 100
+  - Column Name: SERVER_DOMAIN
+    - Label: Доменне імʼя сервера
+    - Datatype: varchar2
+    - Page Item Name: P6_SERVER_DOMAIN
+    - Render As: textField
+    - MaxLength: 100
+  - Column Name: PHONE_NUMBER
+    - Label: Номер телефону
+    - Datatype: varchar2
+    - Page Item Name: P6_PHONE_NUMBER
+    - Render As: textField
+    - MaxLength: 20
+  - Column Name: PHONE_NUMBER_LOCAL
+    - Label: Номер без кодів
+    - Datatype: varchar2
+    - Page Item Name: P6_PHONE_NUMBER_LOCAL
+    - Render As: textField
+    - MaxLength: 20
+  - Column Name: LIST_KIND_ID
+    - Label: Вид для списку
+    - Datatype: number
+    - Page Item Name: P6_LIST_KIND_ID
+    - Render As: numberField
+  - Column Name: VALID_FROM
+    - Label: Діє з
+    - Datatype: date
+    - Page Item Name: P6_VALID_FROM
+    - Render As: datePicker
+    - Format Mask: DD.MM.YYYY
+- Actions:
+  - Action
+    - Label: Create
+    - slot: CREATE
+    - Action Type: submit
+    - Process: Create
+  - Action
+    - Label: Apply Changes
+    - slot: CHANGE
+    - Action Type: submit
+    - Process: Apply
+  - Action
+    - Label: Delete
+    - slot: DELETE
+    - Action Type: submit
+    - Process: Delete
+    - Authorized Roles: ADMIN
+  - Action
+    - Label: Cancel
+    - slot: CLOSE
+    - Action Type: navigate
+    - Process: cancelDialog
+### Page 7: Додатковий реквізит
+- Description: Modal form for creating and editing an organization additional attribute row.
+- Comments: Additional attribute row create/edit dialog launched from the Додаткові реквізити list on Page 5; PROPERTY_ID stays a plain numeric input because its reference table is not migrated yet, and delete is limited to ADMIN.
+- Pattern: modal-drawer
+- Page Mode: modalDialog
+- Menu: false
+- Page Group: Організації
+- Security Requirements:
+  - Authorized Roles: ADMIN, CONTRIBUTOR
+#### Regions
+##### Region: Додатковий реквізит
+- Comments: Single-record form over RSD_ORGANIZATIONS_ADD_ATTRS for one additional attribute line of an organization.
+- Position: body
+- Colstart: 1
+- Colspan: 12
+- Component:
+  - Component Type: Form
+- Data Source:
+  - Type: Table
+  - Name: RSD_ORGANIZATIONS_ADD_ATTRS
+  - Primary Keys: ID
+  - Summary: Single additional attribute row addressed by the ID primary key item.
+- Columns:
+  - Column Name: ID
+    - Label: ІД
+    - Datatype: number
+    - Page Item Name: P7_ID
+    - Render As: hidden
+  - Column Name: ORGANIZATION_ID
+    - Label: Організація
+    - Datatype: number
+    - Page Item Name: P7_ORGANIZATION_ID
+    - Render As: selectList
+    - LOV: LOV_ORGANIZATIONS
+    - Required: true
+  - Column Name: LINE_NO
+    - Label: № рядка
+    - Datatype: number
+    - Page Item Name: P7_LINE_NO
+    - Render As: numberField
+    - Required: true
+  - Column Name: PROPERTY_ID
+    - Label: Властивість
+    - Datatype: number
+    - Page Item Name: P7_PROPERTY_ID
+    - Render As: numberField
+  - Column Name: TEXT_VALUE
+    - Label: Текстовий рядок
+    - Datatype: clob
+    - Page Item Name: P7_TEXT_VALUE
+    - Render As: textarea
+- Actions:
+  - Action
+    - Label: Create
+    - slot: CREATE
+    - Action Type: submit
+    - Process: Create
+  - Action
+    - Label: Apply Changes
+    - slot: CHANGE
+    - Action Type: submit
+    - Process: Apply
+  - Action
+    - Label: Delete
+    - slot: DELETE
+    - Action Type: submit
+    - Process: Delete
+    - Authorized Roles: ADMIN
+  - Action
+    - Label: Cancel
+    - slot: CLOSE
+    - Action Type: navigate
+    - Process: cancelDialog
