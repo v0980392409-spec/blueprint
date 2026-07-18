@@ -198,6 +198,35 @@ so it stays the source of truth:
 apex export -applicationid <id> -exptype APEXLANG -dir /tmp/apx-export
 ```
 
+## Incremental edits to an existing app (APEXlang)
+
+To add/change a page, LOV, or item on an already-imported app, edit the
+`.apx` files under `applications/<alias>/` (repo = source of truth), then:
+
+1. **Validate**: `apex validate -input <dir>` in the ords container (LANG=C.utf8).
+2. **Import in place**: `apex import -input <dir> -id <id> -alias <ASCII> -workspace BAS_REVERSE`.
+3. **Re-grant roles** — import replaces the app and wipes ACL assignments (see above).
+4. **Re-export** back to the repo (round-trip; APEX normalizes ordering + adds
+   savedReport ids — commit that version so repo matches the stand).
+
+New pages: ASCII filename (`p00008-enums.apx`) avoids the Cyrillic-filename
+JVM crash; add matching entries to `breadcrumbs.apx` and the nav `list` in
+`lists.apx`, and a `pageGroup`. Reference existing schemes (`@admin`) and
+LOVs (`@lov-...`) by their apx identifiers. Clone a plain-IR page (not a
+faceted one) as the template for a simple report.
+
+**Transfer pitfall (macOS → stand).** `scp -r` and `docker cp` of a macOS
+directory materialize AppleDouble `._*` files inside the ords container
+(`com.apple.provenance` xattr) — the APEXlang compiler then reads them as
+source and fails with `token recognition error at: 'Mac OS X'`. `find -delete`
+does not clear them reliably. Bulletproof: pipe a **git archive** stream
+straight into the container's tar — no xattrs, no `._*`, no docker cp:
+
+```bash
+git archive --format=tar HEAD:applications/<alias> | \
+  ssh apex-vps 'docker exec -i apex-ords bash -c "rm -rf /tmp/app && mkdir /tmp/app && tar -C /tmp/app -xf -"'
+```
+
 ## Failure modes worth knowing
 
 - **Spec drops attributes silently** — recompute Coverage against
