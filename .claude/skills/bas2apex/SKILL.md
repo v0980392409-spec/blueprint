@@ -237,11 +237,16 @@ experiment-1 framework rejects RSD_ uppercase/long names via its
 - `apex_web_service.make_rest_request(p_url, p_credential_static_id => 'BAS_DOC_CRED')`
   inside `apex_session.create_session(...)` (credential needs an APEX session).
 - Entity set `Catalog_<Name>`, Cyrillic percent-encoded in the URL; `$format=json`.
-- **Page with keyset, not `$skip`.** Deep `$skip` on large 1C OData entities
-  times out through `apex_web_service` (~3000-row cap, though curl gets all).
-  Use `$orderby=Ref_Key%20asc&$filter=Ref_Key%20gt%20%27<cursor>%27`, cursor =
-  `max(Ref_Key)` of the page. 1C filter wants a bare uuid in quotes, no `guid`
-  prefix. Two-phase (stage all into RAW, then project) also survives cycles.
+- **Paging large entities (>~3000 rows).** Deep `$skip` caps ~3000 rows via
+  `apex_web_service` (timeout; curl gets all). Keyset by `Ref_Key` fails too —
+  1C orders GUIDs in BINARY order but a string cursor compares lexically, and
+  `$orderby` is ignored (asc=desc). **Working solution: partition by `Code`
+  prefix with `startswith`** (`stage-kontragenty-by-code.sql`). This 1C
+  publication forbids `eq/gt/ge/lt` on Code but allows
+  `startswith(Code,'<pfx>')%20eq%20true`; sequential codes (`ДО-NNNNNN`) →
+  prefixes `ДО-000`…`ДО-0NN`, each ≤1000 rows fetched in one request, no
+  cursor. Verify partitions sum to the entity's `$count`. Two-phase (RAW →
+  project) also survives cycles.
 - `JSON_TABLE(l_clob, '$.value[*]' columns(...))`, Cyrillic field paths quoted
   (`'$."ИНН"'`).
 - `MERGE ON (t.LEGACY_REF = s.Ref_Key)` — idempotent reconciliation on the 1C UUID.
