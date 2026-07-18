@@ -9,3 +9,5 @@ tools/build/
 artifacts/
 .apexlang/
 .claude/skills/bas2apex-workspace/
+__pycache__/
+*.pyc
