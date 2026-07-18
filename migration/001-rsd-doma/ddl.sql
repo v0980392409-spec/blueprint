@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS RSD_ORGANIZATIONS CASCADE CONSTRAINTS;
 CREATE TABLE RSD_ORGANIZATIONS (
     ID                   NUMBER GENERATED ALWAYS AS IDENTITY,
     LEGACY_REF           VARCHAR2(36)       NOT NULL,
-    CODE                 VARCHAR2(9 CHAR)   NOT NULL,
+    CODE                 VARCHAR2(9 CHAR),  -- nullable: реальні дані OData мають порожній Code (батч 004)
     NAME                 VARCHAR2(150 CHAR) NOT NULL,
     TAX_ID               VARCHAR2(12 CHAR),
     EDRPOU_CODE          VARCHAR2(12 CHAR),
@@ -25,7 +25,7 @@ CREATE TABLE RSD_ORGANIZATIONS (
     FULL_NAME            CLOB,
     MAIN_BANK_ACCOUNT_ID NUMBER,  -- FK → RSD_BANKOVSKIESCHETA; замкнуто migration/003-nsi-waves-2-4/close-deferred-fks.sql
     DOC_PREFIX           VARCHAR2(2 CHAR),
-    ENTITY_KIND_ID       NUMBER             NOT NULL,  -- FK → RSD_ENUMS(ID) enum_type='ЮрФизЛицо'; замикається migration/002-enums-wave-1/close-deferred-fks.sql (був §9.5)
+    ENTITY_KIND_ID       NUMBER,  -- FK → RSD_ENUMS(ID) enum_type='ЮрФизЛицо' (migration/002); nullable — FillChecking це UI-правило (enforce в APEX)
     IS_VAT_PAYER         BOOLEAN DEFAULT FALSE NOT NULL,
     DEVELOPER_ID         NUMBER,  -- FK → RSD_KONTRAGENTY; замкнуто migration/003-nsi-waves-2-4/close-deferred-fks.sql
     IS_DELETED           BOOLEAN DEFAULT FALSE NOT NULL,

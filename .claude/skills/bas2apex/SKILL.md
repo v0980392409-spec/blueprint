@@ -227,6 +227,27 @@ git archive --format=tar HEAD:applications/<alias> | \
   ssh apex-vps 'docker exec -i apex-ords bash -c "rm -rf /tmp/app && mkdir /tmp/app && tar -C /tmp/app -xf -"'
 ```
 
+## Data track — live OData load (separate from structure)
+
+Once NSI structure exists, fill it from BAS OData (see
+`migration/004-data-nsi/` for the working pattern). Not `bas_sync_pkg` (the
+experiment-1 framework rejects RSD_ uppercase/long names via its
+`^[a-z]{,30}$` checks) — load directly:
+
+- `apex_web_service.make_rest_request(p_url, p_credential_static_id => 'BAS_DOC_CRED')`
+  inside `apex_session.create_session(...)` (credential needs an APEX session).
+- Entity set `Catalog_<Name>`, Cyrillic percent-encoded in the URL; `$format=json`.
+- `JSON_TABLE(l_clob, '$.value[*]' columns(...))`, Cyrillic field paths quoted
+  (`'$."ИНН"'`).
+- `MERGE ON (t.LEGACY_REF = s.Ref_Key)` — idempotent reconciliation on the 1C UUID.
+- Enum-typed source fields (string value) → `<X>_ID` via subquery to `RSD_ENUMS`
+  (`where enum_type=... and value_key=<val>`).
+- Ref fields (`X_Key` UUIDs) stay NULL until the referenced catalog is loaded +
+  a UUID→ID reconciliation pass.
+- **Relax NOT NULL / UNIQUE before loading real data**: source has empty `Code`,
+  unfilled required fields (`''` = NULL in Oracle). 1C constraints are UI-level,
+  not DB guarantees for historical data — enforce them in APEX, not the table.
+
 ## Failure modes worth knowing
 
 - **Spec drops attributes silently** — recompute Coverage against
