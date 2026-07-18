@@ -176,6 +176,20 @@ Known converter/compiler pitfalls (all hit on batch 001):
   gives an illegal static id (`будинки-primary`). After unzip, rename such ids
   to ASCII (`sed`) before `apex import`.
 - FILENAME_MISMATCH warnings from transliterated filenames are harmless.
+- The imported app has Access Control roles but NO user role assignments —
+  every login gets «Немає доступу» (ACCESS_DENIED_SIMPLE). Grant roles right
+  after import (inside `apex_session.create_session`); note that
+  `apex_acl.add_user_role` with `p_role_static_id` fails with ORA-01403 —
+  use the `p_role_id` overload with the id from `apex_appl_acl_roles`:
+  ```sql
+  begin
+      apex_session.create_session(p_app_id => <id>, p_page_id => 1, p_username => 'CLAUDE');
+      select role_id into l_role_id from apex_appl_acl_roles
+       where application_id = <id> and role_static_id = 'admin';
+      apex_acl.add_user_role(p_application_id => <id>, p_user_name => 'CLAUDE', p_role_id => l_role_id);
+      commit;
+  end;
+  ```
 
 After import, export the result back into the repo (`applications/<alias>/`)
 so it stays the source of truth:
