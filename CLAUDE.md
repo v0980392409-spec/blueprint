@@ -35,6 +35,7 @@ ssh apex-vps 'docker exec -it apex-ords /opt/oracle/sqlcl/bin/sql BAS_REVERSE@//
 - `.claude/skills/apexlang/` — офіційний скіл Oracle ([oracle/skills](https://github.com/oracle/skills)) для генерації/редагування `.apx`. Його `SKILL.md` — власна точка входу з жорсткими контрактами (start order, app-location, runtime через `node tools/apexctl.mjs`) — при роботі з APEXLang слідувати йому, не імпровізувати.
 - `reference/ords/`, `reference/sqlcl/` — доки з oracle/skills (vendored, не редагувати).
 - `reference/apexlang-sample/apextogo/` — повний приклад застосунку в `.apx` (структура: `application.apx`, `pages/pNNNNN-*.apx`, `shared-components/*.apx`, `deployments/default.json`, `.apex/apexlang.json`).
+- `applications/erp/` — **робочий APEXLang-експорт цільового застосунку 122 «ERP»** зі стенду (SQLcl: `apex export -applicationid 122 -exptype APEXLANG`). Це і є артефакт міграції: редагується тут, валідується `apex validate -input`, імпортується назад `apex import`. Після імпорту в APEX — переекспортувати, щоб репо лишався джерелом правди.
 - `docs/` — рукописні доки цього експерименту (`stand.md` — стенд/доступи/цільовий застосунок).
 
 ## Суміжні локальні репо (контекст, не залежності)

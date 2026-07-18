@@ -13,6 +13,7 @@
 | `reference/ords/` | доки з ORDS: архітектура, інсталяція, auto-REST, автентифікація, безпека, REST API design тощо | [oracle/skills/db/ords](https://github.com/oracle/skills/tree/main/db/ords) |
 | `reference/sqlcl/` | доки з SQLcl: basics, CI/CD, diff, liquibase, MCP server тощо (`apex validate` живе у SQLcl) | [oracle/skills/db/sqlcl](https://github.com/oracle/skills/tree/main/db/sqlcl) |
 | `reference/apexlang-sample/apextogo/` | повний приклад застосунку в форматі APEXLang (`.apx`) — референс структури | [oracle/apex@26.1 sample-apps](https://github.com/oracle/apex/tree/26.1/sample-apps) |
+| `applications/erp/` | APEXLang-експорт цільового застосунку 122 «ERP» зі стенду (робочий артефакт міграції) | стенд, `apex export -exptype APEXLANG` |
 | `docs/stand.md` | стенд (VPS, ORDS, БД), доступи, цільовий застосунок 122, OData-джерела BAS | цей репо |
 
 ## Швидкий старт
