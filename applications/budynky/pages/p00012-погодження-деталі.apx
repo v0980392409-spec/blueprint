@@ -1,0 +1,350 @@
+page 12 (
+    name: Погодження — деталі
+    alias: ПОГОДЖЕННЯ-ДЕТАЛІ
+    title: Погодження — деталі
+    pageGroup: @процеси
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor-or-reader
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Master-Detail for one approval process (RSD_SOGLASOVANIE, P12_ID from page 11): master classic report shows the header with enum/author labels; detail Interactive Grid lists approvers (RSD_SOGLASOVANIE_ISPOLNITELI) with порядок, resolved погоджувач (user name or Роль), пройдено, строк. Read-only browse over live BAS data.
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 5
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region погоджувачі (
+        name: Погоджувачі
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select i.id                                            as id
+                     , i.line_no                                       as line_no
+                     , pr.name                                         as poryadok
+                     , case i.ispolnitel_ref_type
+                           when 'Catalog.Пользователи' then u.name
+                           when 'Catalog.ПолныеРоли'   then 'Роль'
+                           else i.ispolnitel_ref_type end              as pogodzhuvach
+                     , case when i.proyden then 'Так' else 'Ні' end    as proyden
+                     , to_char(i.srokispolneniya, 'DD.MM.YYYY')        as srok
+                from rsd_soglasovanie_ispolniteli i
+                     left join rsd_enums pr on pr.id = i.poryadoksoglasovaniya_id
+                     left join rsd_polzovateli u on u.id = i.ispolnitel_ref_id
+                where i.owner_id = to_number(:P12_ID)
+                order by i.line_no
+                ```
+            pageItemsToSubmit: P12_ID
+        }
+        layout {
+            sequence: 20
+            slot: body
+        }
+        appearance {
+            template: @/interactive-report
+            templateOptions: [
+                #DEFAULT#
+                t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        advanced {
+            htmlDomId: pogodzhuvachi
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+        advanced {
+            savedReportMappingIdentifier: 10358195320938748
+        }
+
+        column ID (
+            type: hidden
+            heading {
+                heading: ІД
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: A
+            }
+        )
+
+        column LINE_NO (
+            type: plainText
+            heading {
+                heading: №
+                alignment: end
+            }
+            layout {
+                sequence: 20
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: B
+            }
+        )
+
+        column POGODZHUVACH (
+            type: plainText
+            heading {
+                heading: Погоджувач
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: D
+            }
+        )
+
+        column PORYADOK (
+            type: plainText
+            heading {
+                heading: Порядок
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        column PROYDEN (
+            type: plainText
+            heading {
+                heading: Пройдено
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: E
+            }
+        )
+
+        column SROK (
+            type: plainText
+            heading {
+                heading: Строк
+            }
+            layout {
+                sequence: 60
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: F
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
+        savedReport pogodzhuvachi_primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+
+            displayColumn LINE_NO (
+                sequence: 1
+            )
+
+            displayColumn POGODZHUVACH (
+                sequence: 3
+            )
+
+            displayColumn PORYADOK (
+                sequence: 2
+            )
+
+            displayColumn PROYDEN (
+                sequence: 4
+            )
+
+            displayColumn SROK (
+                sequence: 5
+            )
+
+        )
+
+    )
+
+    region процес (
+        name: Процес
+        type: classicReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select s.naimenovanie                       as naimenovanie
+                     , to_char(s.doc_date, 'DD.MM.YYYY')     as data
+                     , st.name                               as sostoyanie
+                     , vr.name                               as variant
+                     , rz.name                               as rezultat
+                     , a.name                                as avtor
+                from rsd_soglasovanie s
+                     left join rsd_enums st on st.id = s.sostoyanie_id
+                     left join rsd_enums vr on vr.id = s.variantsoglasovaniya_id
+                     left join rsd_enums rz on rz.id = s.rezultatsoglasovaniya_id
+                     left join rsd_polzovateli a on a.id = s.avtor_id
+                where s.id = to_number(:P12_ID)
+                ```
+            pageItemsToSubmit: P12_ID
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+            ]
+        }
+        componentAppearance {
+            template: @/value-attribute-pairs-column
+            templateOptions: #DEFAULT#
+        }
+        pagination {
+            type: nextAndPreviousLinks
+        }
+
+        column AVTOR (
+            reportColumnQueryId: 6
+            derivedColumn: N
+            heading {
+                heading: Автор
+            }
+            layout {
+                sequence: 60
+            }
+        )
+
+        column DATA (
+            reportColumnQueryId: 2
+            derivedColumn: N
+            heading {
+                heading: Дата
+            }
+            layout {
+                sequence: 20
+            }
+        )
+
+        column NAIMENOVANIE (
+            reportColumnQueryId: 1
+            derivedColumn: N
+            heading {
+                heading: Найменування
+            }
+            layout {
+                sequence: 10
+            }
+        )
+
+        column REZULTAT (
+            reportColumnQueryId: 5
+            derivedColumn: N
+            heading {
+                heading: Результат
+            }
+            layout {
+                sequence: 50
+            }
+        )
+
+        column SOSTOYANIE (
+            reportColumnQueryId: 3
+            derivedColumn: N
+            heading {
+                heading: Стан
+            }
+            layout {
+                sequence: 30
+            }
+        )
+
+        column VARIANT (
+            reportColumnQueryId: 4
+            derivedColumn: N
+            heading {
+                heading: Варіант
+            }
+            layout {
+                sequence: 40
+            }
+        )
+
+    )
+
+    pageItem P12_ID (
+        type: hidden
+        layout {
+            sequence: 10
+            region: @процес
+            slot: regionBody
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+)
+

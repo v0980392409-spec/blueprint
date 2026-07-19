@@ -143,12 +143,21 @@ page 11 (
         )
 
         column NAIMENOVANIE (
-            type: plainText
+            type: link
             heading {
                 heading: Найменування
             }
             layout {
                 sequence: 20
+            }
+            link {
+                target: {
+                    page: 12
+                    items: {
+                        P12_ID: \#ID#\
+                    }
+                }
+                linkText: \#NAIMENOVANIE#\
             }
             source {
                 dataType: STRING
