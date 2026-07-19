@@ -17,6 +17,16 @@
 - `references/` — правила маппінгу, шаблон специфікації, derive-guide. `SKILL.md` — 7 етапів + пастки.
 
 **Батчі (артефакти в `migration/`, встановлено на стенд BAS_REVERSE):**
+- `014-blueprint-soglasovanie` — **Blueprint-track наскрізь для master-detail
+  кластера** (раніше лише для довідника, пілот 001). `BusinessProcess.Согласование`
+  (Погодження) на живих даних: 3 reporting-view'и (резолв поліморфного виконавця
+  Роль/Користувач + enum-підписи) → `schema-metadata.md`+`fr.md` (курований набір,
+  5 LOV над RSD_ENUMS/RSD_POLZOVATELI) → `blueprint.md` (638 рядків, 0 Validation
+  Findings) → `APEX_GENDEV.PROCESS_BLUEPRINT` (parsing log NULL) → apexlang.zip →
+  **app 201 «ПОГОДЖЕННЯ»** (Дашборд 4 KPI+3 графіки / Faceted-список / модальна
+  форма з 2 master-detail звітами). Перевірено: структура+дані течуть (KPI 500/
+  500/333/20; master-detail proc 17/18/19), логін-сторінка рендериться. Ролі
+  ADMIN→CLAUDE/VIKTOR. Джерело правди — `applications/pogodzhennya/`.
 - `001-rsd-doma` — пілот: RSD_HOUSES/HOUSE_SECTIONS/ORGANIZATIONS (+ ТЧ). Blueprint → **app 200 «BUDYNKY»** в APEX (7 сторінок + адмін-сторінка перечислень, LOV на формі організації). Ролі ADMIN видані CLAUDE/VIKTOR.
 - `002-enums-wave-1` — 241 перечислення → `RSD_ENUMS` (1326 значень). Замкнуто FK `ENTITY_KIND_ID`.
 - `003-nsi-waves-2-4` — 76 довідників НСІ → **137 таблиць / 223 FK / 180 seed**. Замкнуто цикли Контрагенти↔Організації↔Рахунки, Користувачі↔ФізОсоби. §9: 113 пунктів на ревю.
@@ -27,13 +37,16 @@
 - `012-bp-data-bounded` — **bounded-вибірка 5 великих процесів по 500** (+ТЧ): Согласование/КомплексныйПроцесс/Ознакомление/Исполнение/Утверждение → **2500 header** + ТЧ (напр. SOGLASOVANIE_ISPOLNITELI 843, _REZULTATYSOGLASOVANIYA 702), 0 ORA. Нове: `--limit N` (один `$top=N` без пагінації, для семплу великих; payload 500≈2.6MB ОК) + fix bounded-репортингу (`dbms_output` до `commit`). Повний архів (185k+) — Code-prefix за Number, за потреби.
 - `011-bp-data-small` — **дані ТЧ процесів з OData (капабіліті + демо)**: завантажено 3 малих процеси повністю (header+ТЧ: РешениеВопросов 19, Рассмотрение 4, ОбработкаВнутр 2 = OData $count, 0 ORA; ТЧ з OWNER_ID/LINE_NO/enum-FK). Розширено конвеєр: `gen_document_batch` кладе ТЧ у field-map (`sections`); `gen_odata_loaders` — проекція ТЧ (`section_block` через JSON_TABLE), `proj_expr(src=...)`, **виправлено `enc`** (префікс OData з типу — був баг: усі не-довідники як `Catalog_`→404). Документи ДО порожні (404). Великі процеси (Согласование 185k…) — за рішенням про обсяг (Code-prefix, мільйони ТЧ).
 - `010-bp-processes` — **Шар 1 решти 12 BusinessProcess**: Исполнение, КомплексныйПроцесс, Обработка{Внутр/Вх/Исх}Документа, Ознакомление, Поручение, Приглашение, Рассмотрение, Регистрация, РешениеВопросов, Утверждение → **72 таблиці** (12 шапок + 60 ТЧ) / 677 колонок / 143 FK (+141 відкл.). Тим самим `gen_document_batch`. Встановлено (**351 таблиця RSD_*, 0 INVALID**). Усі 13 BP на стенді. Шар 2 (маршрути) — за шаблоном Согласования (README батча 009), у Workflow Designer.
+- `013-workflow-soglasovanie-build` — **Шар 2, рецепт складання** пілота в APEX Workflow Designer (спосіб — рішення власника: складає власник, я готую значення+SQL). Знахідка, що уточнює 009: код-first **можливий** — на стенді підтверджено повний app-import API `wwv_flow_imp_shared.create_workflow*` (+ `create_task_def*`) і словник типів активностей (`NATIVE_CREATE_TASK` Human Task, `NATIVE_WORKFLOW_SWITCH` Switch, `NATIVE_INVOKE_API` Execute Code, `NATIVE_WORKFLOW_END`), АЛЕ APEXLang його **не тримає** → workflow це окремий **SQL-трек** (фіксація експортом app 200 в SQL, не в `applications/budynky/`). Артефакт: `README.md` (чек-лист Designer: Task Definition `TASK_SOGLASOVANIE` + Workflow `SOGLASOVANIE` 5 активностей + переходи + активація), `sql/build-blocks.sql` (PL/SQL/запити для полів — **DML провалідовано проти живої схеми з rollback**; Task Definition тип **Approval Task** → 2 результати `APPROVED`/`REJECTED`, пише REZULTAT 747/746, стани 768–770; 748 «із зауваженнями» — наступний виток), `sql/pilot-test.sql` (наскрізний headless: `apex_workflow.start_workflow` p_detail_pk=94 → `apex_approval.complete_task` p_outcome=APPROVED → очікуємо REZULTAT=747 + рядок ТЧ). **Пастка:** APEX підставляє кириличний Static ID → перезаписати латиницею (`TASK_SOGLASOVANIE`, `SOGLASOVANIE`). Учасники — пілотна заглушка CLAUDE/VIKTOR (ПолныеРоли не мігровано, немає identity-bridge). **Статус: рецепт готовий; складання в Designer + тест — крок власника (логін).**
 - `009-workflow-soglasovanie` — **пілот BP→Workflow (Согласование)**. Шар 1: 11 таблиць (RSD_SOGLASOVANIE +7 ТЧ, RSD_ZADACHAISPOLNITELYA +2 ТЧ; 279 таблиць RSD_*, 0 INVALID). Шар 2: маршрут реконструйовано (структура + РезультатыСогласования + BSL-імена — графічної карти в дампі немає) у **специфікацію APEX Workflow** (Старт→Human Task погодження→Switch за рішеннями→Погоджено/Ні; activities/transitions/participants у README + mermaid). APEX Workflow на стенді доступний (26.1). Межа: движок workflow не авториться APEXLang'ом (немає граматики) — складається у Workflow Designer за специфікацією (крок власника).
 - `006-data-nsi-2` — **живі дані решти НСІ**: **17 довідників / 1642 рядки** з OData, лічильники точно = `$count` (Умови маршрутизації 664, Види вх. док. 513, Структура підприємства 155 з ієрархією 144, Приміщення 30, Посади 2 тощо). Виправлено `gen_odata_loaders` (**$skip** замість зламаного keyset Ref_Key — тихо обривав >500). Нове: `relax-constraints` (UNIQUE(CODE) seed↔live), `dedup-seed` (−9 seed-дублів), `reconcile-parent` (self-FK ієрархії — gap gen_catalog_batch). Пропущено: УведомленияПрограммы (6478, без Code); 51/78 довідників — 404 (не опубліковані).
 
 ## Стан стенду (BAS_REVERSE)
 
-- app 100 MASTER (еталон), app 122 ERP (порожній цільовий), app 130 ВД, **app 200 BUDYNKY** (пілот; **13 сторінок**; браузери живих даних: Організації, Контрагенти, Користувачі, **Погодження** (стор. 11) + **Master-Detail стор. 12** (drill з стор.11: шапка процесу classic report + IR погоджувачів з резолвом Роль/Користувач)).
-- **351 таблиця `RSD_*`** + 7 view, **0 INVALID**: НСІ хвиль 1–4 (довідники) + **99 регістрів** + **8 документів** (25 табл.) + **13 BusinessProcess** (83 табл.).
+- app 100 MASTER (еталон), app 122 ERP (порожній цільовий), app 130 ВД, **app 200 BUDYNKY** (пілот; **13 сторінок**; браузери живих даних: Організації, Контрагенти, Користувачі, **Погодження** (стор. 11) + **Master-Detail стор. 12** (drill з стор.11: шапка процесу classic report + IR погоджувачів з резолвом Роль/Користувач)); **app 201 «ПОГОДЖЕННЯ»** — 2-й
+  blueprint-track (Согласование master-detail на живих даних, app-builder-free:
+  Дашборд 4 KPI+3 графіки / Faceted-список / модальна форма з 2 детальними звітами).
+- **351 таблиця `RSD_*`** + **10 view** (батч 014: +3 reporting-view), **0 INVALID**: НСІ хвиль 1–4 (довідники) + **99 регістрів** + **8 документів** (25 табл.) + **13 BusinessProcess** (83 табл.).
 - Живі дані: **23 довідники** (6 ядрових ~18k + 17 решти НСІ 1642) + **8 процесів** (3 малих повністю + 5 великих по 500 header + ТЧ; напр. Согласование 500 з погоджувачами/результатами).
 - Web Credential `BAS_DOC_CRED`, staging `RSD_ODATA_RAW` (сирий OData JSON довідників + процесів).
 
@@ -66,13 +79,17 @@ ref-poly, ТЧ-проекція `section_block`, `enc` за типом, `--limit
 2. **§9 група 4b** — ~19 нетипізованих ПОСИЛАНЬ (не «Значение»): по-атрибутний
    розбір — одиночний FK де ціль однозначна (Подразделение→Структура,
    ФизическоеЛицо→ФізОсоби), інакше REF_TYPE/REF_ID. Дрібний батч ALTER'ів+backfill.
-3. **BP Шар 2 — Workflow у Designer**: зібрати APEX Workflow «Согласование» за
-   специфікацією (README батча 009) в App Builder (потрібен логін), провалідувати
-   на 1 процесі, тиражувати шаблон на 12 інших. Опц.: редагований IG погоджувачів.
+3. **BP Шар 2 — Workflow у Designer**: **рецепт готовий** (батч 013 —
+   `migration/013-workflow-soglasovanie-build/`). Дія власника: скласти пілот
+   «Согласование» у Designer за чек-лістом (Task Def + 5 активностей + переходи +
+   активація; логін), прогнати `sql/pilot-test.sql` (наскрізний), зафіксувати
+   SQL-експортом app 200. Далі — тиражування шаблоном на 12 інших. Опц.: редагований
+   IG погоджувачів; продакшн-учасники (identity-bridge BAS→APEX).
 4. **ERP-контур `/Riverside`** — інше джерело OData (BAS ERP, 41 підсистема,
    реф-корпус `../BAS new/reference-erp/`): свій кластер/маппінг, більший обсяг.
-5. **Blueprint-track наскрізь** для нового кластера (FR+метадані→blueprint→app 122):
-   для регістрів/документів ще не проходили — поки DDL+дані+ручний APEXLang-UI.
+5. ✅ **Blueprint-track наскрізь — ЗРОБЛЕНО** (батч 014 → app 201 «ПОГОДЖЕННЯ»,
+   Согласование master-detail на живих даних). Далі за бажанням: track для регістра
+   (зріз-view) чи чистого документа; довести до app 122 як цільового, якщо треба.
 6. **Дрібне**: УведомленияПрограммы (6478, без Code — Code-alt пагінація); ~30 не-
    ядрових НСІ поза OData-публікуванням; довантажити ТЧ документів/процесів решти.
 
@@ -90,6 +107,17 @@ ref-poly, ТЧ-проекція `section_block`, `enc` за типом, `--limit
   структура **не задокументовані у скілі** (для read-only — IR замість IG). Re-export
   нормалізує (алфавіт колонок, `savedReportMappingIdentifier`, порядок записів);
   після import завжди переекспортувати під BAS_REVERSE → репо=стенд.
+- **APEX Workflow (26.1)** — уточнення межі 009: у APEXLang його НЕМАЄ (окремий
+  SQL-трек, фіксувати експортом `-expType APPLICATION_SOURCE`), але **код-first
+  можливий** через app-import `wwv_flow_imp_shared.create_workflow / _version /
+  _activity / _transition / _branch / _participant / _variable / _comp_param` +
+  `create_task_def*`. Типи активностей: `NATIVE_WORKFLOW_START/END`, `NATIVE_CREATE_TASK`
+  (Human Task), `NATIVE_WORKFLOW_SWITCH` (гілки), `NATIVE_INVOKE_API` (Execute Code),
+  `NATIVE_PARALLEL_WF`, `NATIVE_WORKFLOW_WAIT`, `NATIVE_SEND_EMAIL`. Рантайм:
+  `apex_workflow.start_workflow(p_static_id,p_detail_pk)`→instance; задачі —
+  `apex_approval.claim_task`/`complete_task(p_task_id,p_outcome,p_autoclaim)`; вью
+  `APEX_WORKFLOWS`/`APEX_WORKFLOW_AUDIT`/`APEX_TASKS`. Прогін headless — під BAS_REVERSE
+  з `apex_session.create_session(200,1,'CLAUDE')` (не sysdba: `ORA-06598`).
 - **Поліморфізм**: композитні реквізити/виміри/ТЧ-поля (Предмет/Исполнитель/владелец)
   лишаються §9 (REF_TYPE/REF_ID) і **не вантажаться авто** section_block'ом —
   дорезолв цільовим UPDATE з RAW (`_Type`+UUID), як для погоджувачів у стор. 12.
