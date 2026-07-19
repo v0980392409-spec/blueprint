@@ -1,0 +1,849 @@
+{
+ "RSD_BRON": {
+  "entity": "Document.Бронь",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Posted",
+    "col": "IS_POSTED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ВесьДень",
+    "col": "VESDEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачалаПовторения",
+    "col": "DATANACHALAPOVTORENIYA",
+    "kind": "scalar",
+    "otype": "DATE"
+   },
+   {
+    "odata": "ДатаОкончания",
+    "col": "DATAOKONCHANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаОкончанияПовторения",
+    "col": "DATAOKONCHANIYAPOVTORENIYA",
+    "kind": "scalar",
+    "otype": "DATE"
+   },
+   {
+    "odata": "ИнтервалПовторения",
+    "col": "INTERVALPOVTORENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "КоличествоПовторов",
+    "col": "KOLICHESTVOPOVTOROV",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "КоличествоЧеловек",
+    "col": "KOLICHESTVOCHELOVEK",
+    "kind": "scalar",
+    "otype": "NUMBER(5)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПовторениеПоДнямМесяца",
+    "col": "POVTORENIEPODNYAMMESYATSA",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "ПовторениеПоМесяцам",
+    "col": "POVTORENIEPOMESYATSAM",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Помещение_Key",
+    "col": "POMESHCHENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_TERRITORIIIPOMESHCHENIYA"
+   },
+   {
+    "odata": "ПравилоОкончанияПовторения",
+    "col": "PRAVILOOKONCHANIYAPOVTORENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ПравилаОкончанияПовторения"
+   },
+   {
+    "odata": "Предмет_Key",
+    "col": "PREDMET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "СпособСозданияБрони",
+    "col": "SPOSOBSOZDANIYABRONI_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыСозданияБрони"
+   },
+   {
+    "odata": "ТехническоеОбеспечение",
+    "col": "TEKHNICHESKOEOBESPECHENIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ТипЗаписи",
+    "col": "TIPZAPISI_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипЗаписиКалендаря"
+   },
+   {
+    "odata": "УдалитьПомещение_Key",
+    "col": "UDALITPOMESHCHENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_UDALITPOMESHCHENIYA"
+   },
+   {
+    "odata": "ХозяйственноеОбеспечение",
+    "col": "KHOZYAYSTVENNOEOBESPECHENIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ЧастотаПовторения",
+    "col": "CHASTOTAPOVTORENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ЧастотаПовторения"
+   }
+  ]
+ },
+ "RSD_VKHODYASHCHEEPISMO": {
+  "entity": "Document.ВходящееПисьмо",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВажностьПисем"
+   },
+   {
+    "odata": "ВидМаршрутизации",
+    "col": "VIDMARSHRUTIZATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыМаршрутизацииПисем"
+   },
+   {
+    "odata": "ВнутреннийЗаголовок",
+    "col": "VNUTRENNIYZAGOLOVOK",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ДатаОтправки",
+    "col": "DATAOTPRAVKI",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаПолучения",
+    "col": "DATAPOLUCHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ЕстьВложения",
+    "col": "ESTVLOZHENIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИдентификаторСообщения",
+    "col": "IDENTIFIKATORSOOBSHCHENIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(200 CHAR)"
+   },
+   {
+    "odata": "Кодировка",
+    "col": "KODIROVKA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(25 CHAR)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НомерСпособаАдресации",
+    "col": "NOMERSPOSOBAADRESATSII",
+    "kind": "scalar",
+    "otype": "NUMBER(1)"
+   },
+   {
+    "odata": "ОтправительАдресат_Key",
+    "col": "OTPRAVITELADRESAT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Папка_Key",
+    "col": "PAPKA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_PAPKIPISEM"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Размер",
+    "col": "RAZMER",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "ТекстПисьмаHTMLХранилище",
+    "col": "TEKSTPISMAHTMLKHRANILISHCHE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ТекстПисьмаПростойТекстХранилище",
+    "col": "TEKSTPISMAPROSTOYTEKSTKHRANILISHCHE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ТекстПисьмаРазмеченныйТекстХранилище",
+    "col": "TEKSTPISMARAZMECHENNYYTEKSTKHRANILISHCHE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Тема",
+    "col": "TEMA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(1024 CHAR)"
+   },
+   {
+    "odata": "ТипТекста",
+    "col": "TIPTEKSTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипыТекстовПочтовыхСообщений"
+   },
+   {
+    "odata": "УведомитьОДоставке",
+    "col": "UVEDOMITODOSTAVKE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УведомитьОПрочтении",
+    "col": "UVEDOMITOPROCHTENII",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчетнаяЗапись_Key",
+    "col": "UCHETNAYAZAPIS_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_EZHEDNEVNYI_OTCHET": {
+  "entity": "Document.ЕжедневныйОтчет",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Posted",
+    "col": "IS_POSTED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "ДлительностьРабот",
+    "col": "DLITELNOSTRABOT",
+    "kind": "scalar",
+    "otype": "VARCHAR2(5 CHAR)"
+   },
+   {
+    "odata": "НачалоДня",
+    "col": "NACHALODNYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "НекорректнаяДлительность",
+    "col": "NEKORREKTNAYADLITELNOST",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ОкончаниеДня",
+    "col": "OKONCHANIEDNYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Подразделение_Key",
+    "col": "PODRAZDELENIE_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_STRUKTURAPREDPRIYATIYA"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "СпособУказанияВремени",
+    "col": "SPOSOBUKAZANIYAVREMENI_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СпособыУказанияВремени"
+   }
+  ]
+ },
+ "RSD_ISKHODYASHCHEEPISMO": {
+  "entity": "Document.ИсходящееПисьмо",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВажностьПисем"
+   },
+   {
+    "odata": "ВидМаршрутизации",
+    "col": "VIDMARSHRUTIZATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыМаршрутизацииПисем"
+   },
+   {
+    "odata": "ДатаОтправки",
+    "col": "DATAOTPRAVKI",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ЕстьВложения",
+    "col": "ESTVLOZHENIYA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ИдентификаторСообщения",
+    "col": "IDENTIFIKATORSOOBSHCHENIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(200 CHAR)"
+   },
+   {
+    "odata": "Кодировка",
+    "col": "KODIROVKA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(25 CHAR)"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НомерСпособаАдресации",
+    "col": "NOMERSPOSOBAADRESATSII",
+    "kind": "scalar",
+    "otype": "NUMBER(1)"
+   },
+   {
+    "odata": "ОтправкаОтменена",
+    "col": "OTPRAVKAOTMENENA",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Папка_Key",
+    "col": "PAPKA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_PAPKIPISEM"
+   },
+   {
+    "odata": "ПодготовленоКОтправке",
+    "col": "PODGOTOVLENOKOTPRAVKE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ПолучателиПисьмаСтрокой",
+    "col": "POLUCHATELIPISMASTROKOY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(1024 CHAR)"
+   },
+   {
+    "odata": "ПричинаВидаМаршрутизации",
+    "col": "PRICHINAVIDAMARSHRUTIZATSII",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Размер",
+    "col": "RAZMER",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "ТекстПисьмаHTMLХранилище",
+    "col": "TEKSTPISMAHTMLKHRANILISHCHE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "ТекстХранилище",
+    "col": "TEKSTKHRANILISHCHE",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Тема",
+    "col": "TEMA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(1024 CHAR)"
+   },
+   {
+    "odata": "ТипОтвета",
+    "col": "TIPOTVETA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипыОтвета"
+   },
+   {
+    "odata": "ТипТекста",
+    "col": "TIPTEKSTA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ТипыТекстовПочтовыхСообщений"
+   },
+   {
+    "odata": "УведомитьОДоставке",
+    "col": "UVEDOMITODOSTAVKE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УведомитьОПрочтении",
+    "col": "UVEDOMITOPROCHTENII",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "УчетнаяЗапись_Key",
+    "col": "UCHETNAYAZAPIS_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_OTSUTSTVIE": {
+  "entity": "Document.Отсутствие",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Posted",
+    "col": "IS_POSTED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "БудуРазбиратьЗадачи",
+    "col": "BUDURAZBIRATZADACHI",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВесьДень",
+    "col": "VESDEN",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ВидОтсутствия_Key",
+    "col": "VIDOTSUTSTVIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаОкончания",
+    "col": "DATAOKONCHANIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПериодСтрокой",
+    "col": "PERIODSTROKOY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Сотрудник_Key",
+    "col": "SOTRUDNIK_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_PEREDACHADELVARKHIV": {
+  "entity": "Document.ПередачаДелВАрхив",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Организация_Key",
+    "col": "ORGANIZATSIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_ORGANIZATIONS"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ },
+ "RSD_UVEDOMLENIEPOSMS": {
+  "entity": "Document.УведомлениеПоSMS",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Posted",
+    "col": "IS_POSTED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Идентификатор",
+    "col": "IDENTIFIKATOR",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Пользователь_Key",
+    "col": "POLZOVATEL_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Статус",
+    "col": "STATUS_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СтатусыДоставкиSMS"
+   },
+   {
+    "odata": "Текст",
+    "col": "TEKST",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Телефон",
+    "col": "TELEFON",
+    "kind": "scalar",
+    "otype": "VARCHAR2(12 CHAR)"
+   }
+  ]
+ },
+ "RSD_UNICHTOZHENIEDEL": {
+  "entity": "Document.УничтожениеДел",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Number",
+    "col": "DOC_NO",
+    "kind": "scalar"
+   },
+   {
+    "odata": "Комментарий",
+    "col": "KOMMENTARIY",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Организация_Key",
+    "col": "ORGANIZATSIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_ORGANIZATIONS"
+   },
+   {
+    "odata": "Основание",
+    "col": "OSNOVANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Ответственный_Key",
+    "col": "OTVETSTVENNYY_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   }
+  ]
+ }
+}

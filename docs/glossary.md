@@ -235,3 +235,13 @@
 | УдалитьСведенияОПросмотрах | RSD_UDALITSVEDENIYAOPROSMOTRAKH | Вилучити відомості про перегляди | InformationRegister |
 | УдалитьФайлыВРабочемКаталоге | RSD_UDALITFAI_LYVRABOCHEMKATALOGE | Вилучити файли в робочому каталозі | InformationRegister |
 | ФайлыВРабочемКаталогеКомпьютера | RSD_FAI_LYVRABOCHEMKATALOGEKOMPYUTERA | Файли в робочому каталозі комп'ютера | InformationRegister |
+
+<!-- батч 008: документи (Document → таблиці-транзакції; транслітерація детермінована) -->
+| Бронь | RSD_BRON | Бронь | Document |
+| ВходящееПисьмо | RSD_VKHODYASHCHEEPISMO | Вхідний лист | Document |
+| ЕжедневныйОтчет | RSD_EZHEDNEVNYI_OTCHET | Щоденний звіт | Document |
+| ИсходящееПисьмо | RSD_ISKHODYASHCHEEPISMO | Вихідний лист | Document |
+| Отсутствие | RSD_OTSUTSTVIE | Відсутність | Document |
+| ПередачаДелВАрхив | RSD_PEREDACHADELVARKHIV | Передача справ в архів | Document |
+| УведомлениеПоSMS | RSD_UVEDOMLENIEPOSMS | Оповіщення по SMS | Document |
+| УничтожениеДел | RSD_UNICHTOZHENIEDEL | Знищення справ | Document |

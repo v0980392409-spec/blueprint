@@ -1,0 +1,10 @@
+{
+ "tables": 25,
+ "cols": 150,
+ "fk": 49,
+ "fk_deferred": 23,
+ "composite": 7,
+ "untyped": 3,
+ "child": 17,
+ "seed": 0
+}
