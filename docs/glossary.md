@@ -249,3 +249,17 @@
 <!-- батч 009: пілот BP→Workflow (Согласование + Task ЗадачаИсполнителя як таблиці) -->
 | Согласование | RSD_SOGLASOVANIE | Погодження | BusinessProcess/Task |
 | ЗадачаИсполнителя | RSD_ZADACHAISPOLNITELYA | Задача | BusinessProcess/Task |
+
+<!-- батч 010: решта 12 BusinessProcess (Шар 1: header+ТЧ таблиці) -->
+| Исполнение | RSD_ISPOLNENIE | Виконання | BusinessProcess |
+| КомплексныйПроцесс | RSD_KOMPLEKSNYYPROTSESS | Комплексний процес | BusinessProcess |
+| ОбработкаВнутреннегоДокумента | RSD_OBRABOTKAVNUTRENNEGODOKUMENTA | Обробка внутрішнього документа | BusinessProcess |
+| ОбработкаВходящегоДокумента | RSD_OBRABOTKAVKHODYASHCHEGODOKUMENTA | Обробка вхідного документа | BusinessProcess |
+| ОбработкаИсходящегоДокумента | RSD_OBRABOTKAISKHODYASHCHEGODOKUMENTA | Обробка вихідного документа | BusinessProcess |
+| Ознакомление | RSD_OZNAKOMLENIE | Ознайомлення | BusinessProcess |
+| Поручение | RSD_PORUCHENIE | Доручення | BusinessProcess |
+| Приглашение | RSD_PRIGLASHENIE | Запрошення | BusinessProcess |
+| Рассмотрение | RSD_RASSMOTRENIE | Розгляд | BusinessProcess |
+| Регистрация | RSD_REGISTRATSIYA | Реєстрація | BusinessProcess |
+| РешениеВопросовВыполненияЗадач | RSD_RESHENIEVOPROSOVVYPOLNENIYAZADACH | Вирішення питань | BusinessProcess |
+| Утверждение | RSD_UTVERZHDENIE | Затвердження / Підписання | BusinessProcess |

@@ -1,0 +1,2282 @@
+{
+ "RSD_ISPOLNENIE": {
+  "entity": "BusinessProcess.Исполнение",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВариантИсполнения",
+    "col": "VARIANTISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыМаршрутизацииЗадач"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаОбработкиРезультатов",
+    "col": "VARIANTUSTANOVKISROKAOBRABOTKIREZULTATOV_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "КоличествоИтераций",
+    "col": "KOLICHESTVOITERATSIY",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "НомерИтерации",
+    "col": "NOMERITERATSII",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатов",
+    "col": "SROKOBRABOTKIREZULTATOV",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовДни",
+    "col": "SROKOBRABOTKIREZULTATOVDNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовМинуты",
+    "col": "SROKOBRABOTKIREZULTATOVMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовЧасы",
+    "col": "SROKOBRABOTKIREZULTATOVCHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "ТрудозатратыПланКонтролера",
+    "col": "TRUDOZATRATYPLANKONTROLERA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланПроверяющего",
+    "col": "TRUDOZATRATYPLANPROVERYAYUSHCHEGO",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ЭтапОбработкиПредмета",
+    "col": "ETAPOBRABOTKIPREDMETA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   }
+  ]
+ },
+ "RSD_KOMPLEKSNYYPROTSESS": {
+  "entity": "BusinessProcess.КомплексныйПроцесс",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "RSD_ПисьмоСЧернымСпискомОтправлено",
+    "col": "RSD_PISMOSCHERNYMSPISKOMOTPRAVLENO",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВариантМаршрутизации",
+    "col": "VARIANTMARSHRUTIZATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыМаршрутизацииЗадач"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ИдентификаторСсылки",
+    "col": "IDENTIFIKATORSSYLKI",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Схема_Key",
+    "col": "SKHEMA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ТрудозатратыПланКонтролера",
+    "col": "TRUDOZATRATYPLANKONTROLERA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_OBRABOTKAVNUTRENNEGODOKUMENTA": {
+  "entity": "BusinessProcess.ОбработкаВнутреннегоДокумента",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Рассмотрение_Key",
+    "col": "RASSMOTRENIE_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УдалитьПредмет_Key",
+    "col": "UDALITPREDMET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонПоручения_Key",
+    "col": "SHABLONPORUCHENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонРассмотрения_Key",
+    "col": "SHABLONRASSMOTRENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонРегистрации_Key",
+    "col": "SHABLONREGISTRATSII_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонСогласования_Key",
+    "col": "SHABLONSOGLASOVANIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонУтверждения_Key",
+    "col": "SHABLONUTVERZHDENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_OBRABOTKAVKHODYASHCHEGODOKUMENTA": {
+  "entity": "BusinessProcess.ОбработкаВходящегоДокумента",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Рассмотрение_Key",
+    "col": "RASSMOTRENIE_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УдалитьПредмет_Key",
+    "col": "UDALITPREDMET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонПоручения_Key",
+    "col": "SHABLONPORUCHENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонРассмотрения_Key",
+    "col": "SHABLONRASSMOTRENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_OBRABOTKAISKHODYASHCHEGODOKUMENTA": {
+  "entity": "BusinessProcess.ОбработкаИсходящегоДокумента",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УдалитьПредмет_Key",
+    "col": "UDALITPREDMET_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонРегистрации_Key",
+    "col": "SHABLONREGISTRATSII_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонСогласования_Key",
+    "col": "SHABLONSOGLASOVANIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонУтверждения_Key",
+    "col": "SHABLONUTVERZHDENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_OZNAKOMLENIE": {
+  "entity": "BusinessProcess.Ознакомление",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ТрудозатратыПланИсполнителя",
+    "col": "TRUDOZATRATYPLANISPOLNITELYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ЭтапОбработкиПредмета",
+    "col": "ETAPOBRABOTKIPREDMETA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   }
+  ]
+ },
+ "RSD_PORUCHENIE": {
+  "entity": "BusinessProcess.Поручение",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "АвторСтрокой",
+    "col": "AVTORSTROKOY",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаИсполнения",
+    "col": "VARIANTUSTANOVKISROKAISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаОбработкиРезультатов",
+    "col": "VARIANTUSTANOVKISROKAOBRABOTKIREZULTATOV_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ВнешнееПоручение",
+    "col": "VNESHNEEPORUCHENIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ЗадачаИсточник_Key",
+    "col": "ZADACHAISTOCHNIK_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "СодержаниеПредмета",
+    "col": "SODERZHANIEPREDMETA",
+    "kind": "scalar",
+    "otype": "BLOB"
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияДни",
+    "col": "SROKISPOLNENIYADNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияМинуты",
+    "col": "SROKISPOLNENIYAMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияЧасы",
+    "col": "SROKISPOLNENIYACHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатов",
+    "col": "SROKOBRABOTKIREZULTATOV",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовДни",
+    "col": "SROKOBRABOTKIREZULTATOVDNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовМинуты",
+    "col": "SROKOBRABOTKIREZULTATOVMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовЧасы",
+    "col": "SROKOBRABOTKIREZULTATOVCHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "ТрудозатратыПланИсполнителя",
+    "col": "TRUDOZATRATYPLANISPOLNITELYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланКонтролера",
+    "col": "TRUDOZATRATYPLANKONTROLERA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланПроверяющего",
+    "col": "TRUDOZATRATYPLANPROVERYAYUSHCHEGO",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьРезультатВыполнения",
+    "col": "UDALITREZULTATVYPOLNENIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_PRIGLASHENIE": {
+  "entity": "BusinessProcess.Приглашение",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаОбработкиРезультатов",
+    "col": "VARIANTUSTANOVKISROKAOBRABOTKIREZULTATOV_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачалаМероприятия",
+    "col": "DATANACHALAMEROPRIYATIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаОкончанияМероприятия",
+    "col": "DATAOKONCHANIYAMEROPRIYATIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "КоличествоИтераций",
+    "col": "KOLICHESTVOITERATSIY",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "МестоПроведения",
+    "col": "MESTOPROVEDENIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(150 CHAR)"
+   },
+   {
+    "odata": "НомерИтерации",
+    "col": "NOMERITERATSII",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПовторитьПриглашение",
+    "col": "POVTORITPRIGLASHENIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "РезультатПриглашения",
+    "col": "REZULTATPRIGLASHENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ОбщиеРезультатыПриглашения"
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатов",
+    "col": "SROKOBRABOTKIREZULTATOV",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовДни",
+    "col": "SROKOBRABOTKIREZULTATOVDNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовМинуты",
+    "col": "SROKOBRABOTKIREZULTATOVMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовЧасы",
+    "col": "SROKOBRABOTKIREZULTATOVCHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "ТрудозатратыПланАвтора",
+    "col": "TRUDOZATRATYPLANAVTORA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланИсполнителя",
+    "col": "TRUDOZATRATYPLANISPOLNITELYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_RASSMOTRENIE": {
+  "entity": "BusinessProcess.Рассмотрение",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВажностьИсполнения",
+    "col": "VAZHNOSTISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВажностьОзнакомления",
+    "col": "VAZHNOSTOZNAKOMLENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВариантИсполнения",
+    "col": "VARIANTISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыМаршрутизацииЗадач"
+   },
+   {
+    "odata": "ВариантОбработкиРезолюции",
+    "col": "VARIANTOBRABOTKIREZOLYUTSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыОбработкиРезолюции"
+   },
+   {
+    "odata": "ВариантРассмотрения",
+    "col": "VARIANTRASSMOTRENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыРассмотрения"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаИсполнения",
+    "col": "VARIANTUSTANOVKISROKAISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаОбработкиРезультатов",
+    "col": "VARIANTUSTANOVKISROKAOBRABOTKIREZULTATOV_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаОбработкиРезультатовИсполнения",
+    "col": "VARIANTUSTANOVKISROKAOBRABOTKIREZULTATOVISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "КоличествоИтерацийИсполнения",
+    "col": "KOLICHESTVOITERATSIYISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "НаименованиеИсполнения",
+    "col": "NAIMENOVANIEISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "НаименованиеОзнакомления",
+    "col": "NAIMENOVANIEOZNAKOMLENIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ОписаниеИсполнения",
+    "col": "OPISANIEISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ОписаниеОзнакомления",
+    "col": "OPISANIEOZNAKOMLENIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПоставитьДокументНаКонтроль",
+    "col": "POSTAVITDOKUMENTNAKONTROL",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Резолюция",
+    "col": "REZOLYUTSIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияДни",
+    "col": "SROKISPOLNENIYADNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияМинуты",
+    "col": "SROKISPOLNENIYAMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияПроцессаИсполнения",
+    "col": "SROKISPOLNENIYAPROTSESSAISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияПроцессаОзнакомления",
+    "col": "SROKISPOLNENIYAPROTSESSAOZNAKOMLENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияЧасы",
+    "col": "SROKISPOLNENIYACHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатов",
+    "col": "SROKOBRABOTKIREZULTATOV",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовДни",
+    "col": "SROKOBRABOTKIREZULTATOVDNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовДниИсполнения",
+    "col": "SROKOBRABOTKIREZULTATOVDNIISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовИсполнения",
+    "col": "SROKOBRABOTKIREZULTATOVISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовМинуты",
+    "col": "SROKOBRABOTKIREZULTATOVMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовМинутыИсполнения",
+    "col": "SROKOBRABOTKIREZULTATOVMINUTYISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовЧасы",
+    "col": "SROKOBRABOTKIREZULTATOVCHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовЧасыИсполнения",
+    "col": "SROKOBRABOTKIREZULTATOVCHASYISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "ТрудозатратыПланАвтора",
+    "col": "TRUDOZATRATYPLANAVTORA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланИсполнителя",
+    "col": "TRUDOZATRATYPLANISPOLNITELYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланИсполнителяОзнакомления",
+    "col": "TRUDOZATRATYPLANISPOLNITELYAOZNAKOMLENIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланКонтролера",
+    "col": "TRUDOZATRATYPLANKONTROLERA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланПроверяющего",
+    "col": "TRUDOZATRATYPLANPROVERYAYUSHCHEGO",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УдалитьСрокИсполненияОбщий",
+    "col": "UDALITSROKISPOLNENIYAOBSHCHIY",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УдалитьСрокОзнакомления",
+    "col": "UDALITSROKOZNAKOMLENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонИсполнения_Key",
+    "col": "SHABLONISPOLNENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ШаблонОзнакомления_Key",
+    "col": "SHABLONOZNAKOMLENIYA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_REGISTRATSIYA": {
+  "entity": "BusinessProcess.Регистрация",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаИсполнения",
+    "col": "VARIANTUSTANOVKISROKAISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаОбработкиРезультатов",
+    "col": "VARIANTUSTANOVKISROKAOBRABOTKIREZULTATOV_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "КоличествоИтераций",
+    "col": "KOLICHESTVOITERATSIY",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "НомерИтерации",
+    "col": "NOMERITERATSII",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПовторитьРегистрацию",
+    "col": "POVTORITREGISTRATSIYU",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "РезультатРегистрации",
+    "col": "REZULTATREGISTRATSII_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "РезультатыРегистрации"
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияДни",
+    "col": "SROKISPOLNENIYADNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияМинуты",
+    "col": "SROKISPOLNENIYAMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияЧасы",
+    "col": "SROKISPOLNENIYACHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатов",
+    "col": "SROKOBRABOTKIREZULTATOV",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовДни",
+    "col": "SROKOBRABOTKIREZULTATOVDNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовМинуты",
+    "col": "SROKOBRABOTKIREZULTATOVMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовЧасы",
+    "col": "SROKOBRABOTKIREZULTATOVCHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "ТрудозатратыПланИсполнителя",
+    "col": "TRUDOZATRATYPLANISPOLNITELYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   }
+  ]
+ },
+ "RSD_RESHENIEVOPROSOVVYPOLNENIYAZADACH": {
+  "entity": "BusinessProcess.РешениеВопросовВыполненияЗадач",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВидВопроса",
+    "col": "VIDVOPROSA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыВопросовВыполненияЗадач"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Итерация",
+    "col": "ITERATSIYA",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(200 CHAR)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "НовыйСрок",
+    "col": "NOVYYSROK",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ОтправитьНаУточнение",
+    "col": "OTPRAVITNAUTOCHNENIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПредметРассмотрения_Key",
+    "col": "PREDMETRASSMOTRENIYA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПринятоеРешение",
+    "col": "PRINYATOERESHENIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "УдалитьРезультатВыполнения",
+    "col": "UDALITREZULTATVYPOLNENIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   }
+  ]
+ },
+ "RSD_UTVERZHDENIE": {
+  "entity": "BusinessProcess.Утверждение",
+  "fields": [
+   {
+    "odata": "Ref_Key",
+    "col": "LEGACY_REF",
+    "kind": "legacy"
+   },
+   {
+    "odata": "DeletionMark",
+    "col": "IS_DELETED",
+    "kind": "bool"
+   },
+   {
+    "odata": "Date",
+    "col": "DOC_DATE",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "Автор_Key",
+    "col": "AVTOR_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": "RSD_POLZOVATELI"
+   },
+   {
+    "odata": "Важность",
+    "col": "VAZHNOST_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыВажностиЗадачи"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаИсполнения",
+    "col": "VARIANTUSTANOVKISROKAISPOLNENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ВариантУстановкиСрокаОбработкиРезультатов",
+    "col": "VARIANTUSTANOVKISROKAOBRABOTKIREZULTATOV_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВариантыУстановкиСрокаИсполнения"
+   },
+   {
+    "odata": "ВидПроцесса",
+    "col": "VIDPROTSESSA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "ВидыБизнесПроцессаУтверждение"
+   },
+   {
+    "odata": "ГлавнаяЗадача_Key",
+    "col": "GLAVNAYAZADACHA_ID",
+    "kind": "ref-ext",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ДатаЗавершения",
+    "col": "DATAZAVERSHENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "ДатаНачала",
+    "col": "DATANACHALA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "КоличествоИтераций",
+    "col": "KOLICHESTVOITERATSIY",
+    "kind": "scalar",
+    "otype": "NUMBER(2)"
+   },
+   {
+    "odata": "Наименование",
+    "col": "NAIMENOVANIE",
+    "kind": "scalar",
+    "otype": "VARCHAR2(250 CHAR)"
+   },
+   {
+    "odata": "НомерИтерации",
+    "col": "NOMERITERATSII",
+    "kind": "scalar",
+    "otype": "NUMBER(10)"
+   },
+   {
+    "odata": "Описание",
+    "col": "OPISANIE",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "ПовторитьУтверждение",
+    "col": "POVTORITUTVERZHDENIE",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПодписыватьЭП",
+    "col": "PODPISYVATEP",
+    "kind": "scalar",
+    "otype": "BOOLEAN"
+   },
+   {
+    "odata": "ПричинаПрерывания",
+    "col": "PRICHINAPRERYVANIYA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   },
+   {
+    "odata": "Проект_Key",
+    "col": "PROEKT_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ПроектнаяЗадача_Key",
+    "col": "PROEKTNAYAZADACHA_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "РезультатУтверждения",
+    "col": "REZULTATUTVERZHDENIYA_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "РезультатыУтверждения"
+   },
+   {
+    "odata": "Состояние",
+    "col": "SOSTOYANIE_ID",
+    "kind": "enum",
+    "otype": "NUMBER",
+    "enum_type": "СостоянияБизнесПроцессов"
+   },
+   {
+    "odata": "СрокИсполнения",
+    "col": "SROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияДни",
+    "col": "SROKISPOLNENIYADNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияМинуты",
+    "col": "SROKISPOLNENIYAMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокИсполненияПроцесса",
+    "col": "SROKISPOLNENIYAPROTSESSA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокИсполненияЧасы",
+    "col": "SROKISPOLNENIYACHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатов",
+    "col": "SROKOBRABOTKIREZULTATOV",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовДни",
+    "col": "SROKOBRABOTKIREZULTATOVDNI",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовМинуты",
+    "col": "SROKOBRABOTKIREZULTATOVMINUTY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "СрокОбработкиРезультатовЧасы",
+    "col": "SROKOBRABOTKIREZULTATOVCHASY",
+    "kind": "scalar",
+    "otype": "NUMBER(3)"
+   },
+   {
+    "odata": "ТрудозатратыПланАвтора",
+    "col": "TRUDOZATRATYPLANAVTORA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "ТрудозатратыПланИсполнителя",
+    "col": "TRUDOZATRATYPLANISPOLNITELYA",
+    "kind": "scalar",
+    "otype": "NUMBER(10,2)"
+   },
+   {
+    "odata": "УдалитьРезультатВыполнения",
+    "col": "UDALITREZULTATVYPOLNENIYA",
+    "kind": "scalar",
+    "otype": "CLOB"
+   },
+   {
+    "odata": "УдалитьСрокИсполнения",
+    "col": "UDALITSROKISPOLNENIYA",
+    "kind": "scalar",
+    "otype": "TIMESTAMP"
+   },
+   {
+    "odata": "УзелОбмена",
+    "col": "UZELOBMENA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(36)"
+   },
+   {
+    "odata": "Шаблон_Key",
+    "col": "SHABLON_ID",
+    "kind": "ref",
+    "otype": "NUMBER",
+    "target": null
+   },
+   {
+    "odata": "ЭтапОбработкиПредмета",
+    "col": "ETAPOBRABOTKIPREDMETA",
+    "kind": "scalar",
+    "otype": "VARCHAR2(100 CHAR)"
+   }
+  ]
+ }
+}
