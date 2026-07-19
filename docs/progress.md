@@ -8,10 +8,12 @@
 **Скіл `bas2apex`** (`.claude/skills/bas2apex/`) — конвеєр міграції з інструментами:
 - `tools/extract_cluster.py` — вижимка кластера з XML-дампу (+ підпорядковані за `<Owners>`, UUID предопределённых).
 - `tools/build_migration_map.py` — карта залежностей усього дампу (граф, хвилі, цикли). Результат — `docs/migration-map.md`, [issue #1](https://github.com/v0980392409-spec/blueprint/issues/1).
-- `tools/gen_catalog_batch.py` — генератор DDL довідників (транслітерація, FK окремою секцією, `field-map.json`).
+- `tools/gen_catalog_batch.py` — генератор DDL довідників (транслітерація, FK окремою секцією, `field-map.json` з PARENT_ID/OWNER — ref/ref-poly+OWNER_TYPE).
+- `tools/gen_register_batch.py` — генератор регістрів відомостей (виміри→UNIQUE-ключ, ресурси/реквізити, періодичність→VALID_FROM+view зрізу, RecorderSubordinate, поліморфні виміри→REF_TYPE/REF_ID).
+- `tools/gen_document_batch.py` — генератор документів (підклас gc.Gen: DOC_NO/DATE/IS_POSTED+ТЧ→дочірні; `sections` у field-map для завантаження ТЧ). Придатний і для BusinessProcess/Task (--only).
 - `tools/gen_enum_batch.py` — генератор lookup-таблиці перечислень.
-- `tools/gen_odata_loaders.py` — двофазний завантажувач OData (RAW → типізована проекція).
-- `tools/gen_reconcile.py` — reconcile-прохід крос-FK за field-map.
+- `tools/gen_odata_loaders.py` — двофазний завантажувач OData (RAW→типізована проекція): `$skip`-пагінація, `--limit N` (bounded), проекція ТЧ (`section_block` JSON_TABLE), види owner_type/ref-poly, `enc` за типом.
+- `tools/gen_reconcile.py` — reconcile крос-FK за field-map (ref/ref-ext/ref-poly).
 - `references/` — правила маппінгу, шаблон специфікації, derive-guide. `SKILL.md` — 7 етапів + пастки.
 
 **Батчі (артефакти в `migration/`, встановлено на стенд BAS_REVERSE):**
@@ -31,8 +33,9 @@
 ## Стан стенду (BAS_REVERSE)
 
 - app 100 MASTER (еталон), app 122 ERP (порожній цільовий), app 130 ВД, **app 200 BUDYNKY** (пілот; **13 сторінок**; браузери живих даних: Організації, Контрагенти, Користувачі, **Погодження** (стор. 11) + **Master-Detail стор. 12** (drill з стор.11: шапка процесу classic report + IR погоджувачів з резолвом Роль/Користувач)).
-- **243 таблиці `RSD_*`** + 7 view: структура НСІ хвиль 1–4 (довідники) + 99 регістрів відомостей хвиль 2–4. Живі дані у **23 довідниках** (6 ядрових ~18k + 17 решти НСІ 1642 рядки).
-- Web Credential `BAS_DOC_CRED`, staging `RSD_ODATA_RAW` (сирий OData JSON ядрових).
+- **351 таблиця `RSD_*`** + 7 view, **0 INVALID**: НСІ хвиль 1–4 (довідники) + **99 регістрів** + **8 документів** (25 табл.) + **13 BusinessProcess** (83 табл.).
+- Живі дані: **23 довідники** (6 ядрових ~18k + 17 решти НСІ 1642) + **8 процесів** (3 малих повністю + 5 великих по 500 header + ТЧ; напр. Согласование 500 з погоджувачами/результатами).
+- Web Credential `BAS_DOC_CRED`, staging `RSD_ODATA_RAW` (сирий OData JSON довідників + процесів).
 
 ## Ключові пастки (усі в SKILL.md)
 
@@ -41,26 +44,64 @@
 - Дані: обмеження 1С (Code/FillChecking/OWNER) → NULLABLE; `''`=NULL; атомарний MERGE.
 - **Пагінація великих сутностей 1С OData**: deep-`$skip` cap ~3000, `$orderby` ігнорується, GUID-keyset не працює → **партиціювання за префіксом `Code` через `startswith`**.
 
-## З чого починаємо завтра
+## Зроблено цієї сесії (2026-07-19, 17 комітів)
 
-Пріоритет — на вибір власника; технічно все готове до будь-якого:
+Усі 4 стартові задачі + похідні: **браузери живих даних** (стор. 9/10 Контрагенти/
+Користувачі); **генератор регістрів** (`gen_register_batch`, батч 005: 99 таблиць+
+view); **§9** — чек-лист [`docs/section9-decisions.md`] + рішення власника →
+батч 007 (OWNER_TYPE+backfill, типізовані VALUE_*); **фікси генераторів**
+(gen_catalog_batch: PARENT/OWNER у field-map; gen_odata_loaders: $skip, owner_type/
+ref-poly, ТЧ-проекція `section_block`, `enc` за типом, `--limit`); **документи**
+(`gen_document_batch`, батч 008: 25 таблиць); **BP** — пілот+тираж (батчі 009/010:
+13 процесів, Шар 1) + записка [`docs/businessprocess-workflow.md`]; **дані**
+(батч 006: 17 НСІ; 011: ТЧ малих процесів; 012: 5 великих по 500+ТЧ); **UI процесів**
+(стор. 11 браузер Согласование + стор. 12 Master-Detail шапка+погоджувачі).
 
-1. ✅ **Показати дані в APEX** — ЗРОБЛЕНО (2026-07-19). app 200 має 3 браузери живих даних: Організації (158), Контрагенти (10576), Користувачі (490). Демо «структура + дані + UI» замкнуто. Переекспорт під BAS_REVERSE зроблено — репо=стенд байт-в-байт.
-   - Пароль схеми **BAS_REVERSE** — у `/root/apex-credentials.txt` рядок `^schema BAS_REVERSE` (поле 4). Export/edit/import APEXLang гнати під цією схемою (SYS export ловить `ORA-06598`). Пастка синтаксису SQLcl цієї збірки: `apex validate/import -workspaceId <id>` (не `-dir`/`-input`), `apex export -applicationid N -expType APEXLANG -dir <d>` (не `-as-apexlang`); import існуючого app зберігає ACL (re-grant не треба).
-2. **Структура за картою** (`docs/migration-map.md`):
-   - ✅ **99 регістрів відомостей** (батч `005`, `gen_register_batch.py`).
-   - ✅ **8 документів → 25 таблиць** (батч `008`, `gen_document_batch.py`, header+ТЧ Master-Detail-ready).
-   - ✅ **BusinessProcess→APEX Workflow** — проектна записка [`docs/businessprocess-workflow.md`](businessprocess-workflow.md): двошаровий поділ (стан=механічно як документи; маршрут=проектування). Блокер: маршрутні карти графічні (немає в атрибутному дампі), потрібен експорт схем БП. Рекомендація: мігрувати Task (ЗадачаИсполнителя) + пілот Workflow на «Согласовании» після рішення власника про обсяг.
-3. ✅ **Догрузити дані** решти НСІ — ЗРОБЛЕНО значну частину (батч 006: 17 довідників, усі опубліковані непорожні). Залишилось: УведомленияПрограммы (6478, треба Code-alt пагінацію) і довідники поза цим OData-публікуванням. Дані ERP-контуру (`/Riverside`) — окремо.
-4. ✅ **Ревю §9** — зведено у чек-лист [`docs/section9-decisions.md`](section9-decisions.md) (173 пункти → 8 груп) і **рішення власника прийнято**. Реалізовано батчем `007-section9-owner-values`: групи 1/3 підтверджено (0 змін), 2/4a — DDL+backfill (OWNER_TYPE Банк.рахунків 5752, OWNER_ID 5678; типізовані VALUE_* у 9 ТЧ доп.реквізитів). Follow-up: група 4b (нетипізовані посилання ~19, по-атрибутний розбір).
-   - ✅ **Gap'и генераторів виправлено** (2026-07-19): `gen_catalog_batch` тепер кладе у field-map `PARENT_ID` (ref self) і `OWNER` (єдиний → ref / поліморфний → OWNER_TYPE+ref-poly); `gen_odata_loaders` резолвить нові види (`owner_type` StandardODATA.Catalog_X→Catalog.X, `ref-poly` coalesce за цілями); `gen_reconcile` — `ref-poly`. Майбутні батчі не потребують окремих reconcile-parent/backfill. Батчі 003–007 їм передували (дані вже добито).
+## Наступні задачі (на вибір власника)
 
-**Рекомендація**: далі (3) догрузка решти НСІ (швидкий видимий результат тим самим конвеєром) або генератор документів (завершити структуру хвиль 2–4). (4) ревю §9 — коли потрібні архітектурні рішення для чистового дизайну.
+1. **Повний архів великих процесів** — Согласование 185k / КомплексныйПроцесс 108k
+   / Ознакомление 50k тощо: партиційний завантажувач за префіксом `Number`
+   (deep-$skip таймаутить >~3000), header × 4–7 ТЧ = мільйони рядків. Конвеєр
+   готовий (`--limit` для семплу; для повного — Code/Number-prefix, як для КОНTRAGENTY).
+2. **§9 група 4b** — ~19 нетипізованих ПОСИЛАНЬ (не «Значение»): по-атрибутний
+   розбір — одиночний FK де ціль однозначна (Подразделение→Структура,
+   ФизическоеЛицо→ФізОсоби), інакше REF_TYPE/REF_ID. Дрібний батч ALTER'ів+backfill.
+3. **BP Шар 2 — Workflow у Designer**: зібрати APEX Workflow «Согласование» за
+   специфікацією (README батча 009) в App Builder (потрібен логін), провалідувати
+   на 1 процесі, тиражувати шаблон на 12 інших. Опц.: редагований IG погоджувачів.
+4. **ERP-контур `/Riverside`** — інше джерело OData (BAS ERP, 41 підсистема,
+   реф-корпус `../BAS new/reference-erp/`): свій кластер/маппінг, більший обсяг.
+5. **Blueprint-track наскрізь** для нового кластера (FR+метадані→blueprint→app 122):
+   для регістрів/документів ще не проходили — поки DDL+дані+ручний APEXLang-UI.
+6. **Дрібне**: УведомленияПрограммы (6478, без Code — Code-alt пагінація); ~30 не-
+   ядрових НСІ поза OData-публікуванням; довантажити ТЧ документів/процесів решти.
+
+## Пастки/факти сесії (доповнення до SKILL.md)
+
+- **SQLcl цієї збірки**: `apex validate/import -workspaceId <id>` (не `-dir`/`-input`),
+  `apex export -applicationid N -exptype APEXLANG -dir <d>`. Пароль **BAS_REVERSE** —
+  `/root/apex-credentials.txt` рядок `^schema BAS_REVERSE` (поле 4); SYS export/session
+  ловить `ORA-06598` → гнати під схемою. `import` існуючого app зберігає ACL.
+- **OData**: документи ДО порожні (404); ключ **поліморфного** посилання — поле без
+  суфікса (`Owner`, `Исполнитель` = готовий UUID + `<Поле>_Type`), **однотипного** —
+  `<Поле>_Key`. `$skip` надійний ≤~3000; >3000 — prefix-партиціювання. ТЧ вкладені
+  в фід (без `$expand`). `sql%rowcount` після `commit` = 0 (лог до commit).
+- **APEXLang**: движок Workflow і повна `interactiveGrid`-`savedReport`/`view`
+  структура **не задокументовані у скілі** (для read-only — IR замість IG). Re-export
+  нормалізує (алфавіт колонок, `savedReportMappingIdentifier`, порядок записів);
+  після import завжди переекспортувати під BAS_REVERSE → репо=стенд.
+- **Поліморфізм**: композитні реквізити/виміри/ТЧ-поля (Предмет/Исполнитель/владелец)
+  лишаються §9 (REF_TYPE/REF_ID) і **не вантажаться авто** section_block'ом —
+  дорезолв цільовим UPDATE з RAW (`_Type`+UUID), як для погоджувачів у стор. 12.
+- **Передача macOS→стенд**: `COPYFILE_DISABLE=1 tar` (не scp/docker cp — AppleDouble).
 
 ## Команди для швидкого старту (деталі — docs/stand.md)
 
 ```bash
 ssh apex-vps "docker ps"                        # стан стека
 # app 200: https://apex.173-242-60-109.sslip.io/ords/f?p=200  (CLAUDE / див. /root/apex-credentials.txt)
-# APEXLang app 200 — джерело правди: applications/budynky/  (import: git archive | docker exec tar; LANG=C.utf8; -alias ASCII; re-grant ACL)
+# APEXLang app 200 — джерело правди: applications/budynky/
+#   перенос: COPYFILE_DISABLE=1 tar -cf - budynky | ssh apex-vps 'docker exec -i apex-ords tar -xf - -C /tmp/imp'
+#   валід/імпорт (LANG=C.utf8): apex validate|import -workspaceId 5350230995185067  (в контейнері apex-ords, як sys)
+#   re-export (репо=стенд): apex export -applicationid 200 -exptype APEXLANG -dir  (під схемою BAS_REVERSE)
 ```
