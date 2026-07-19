@@ -1,0 +1,21 @@
+role admin (
+    name: ADMIN
+    description {
+        description: Full access including delete on the approval header, plus browse, edit, and analytics.
+    }
+)
+
+role contributor (
+    name: CONTRIBUTOR
+    description {
+        description: Create and edit the approval header; no delete; full browse and analytics access.
+    }
+)
+
+role reader (
+    name: READER
+    description {
+        description: Read-only access to the dashboard, the approval list, and the read-only detail reports.
+    }
+)
+

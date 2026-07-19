@@ -1,0 +1,99 @@
+lov lov-polzovateli (
+    name: LOV_POLZOVATELI
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select p.name as display
+                 , p.id as return
+            from rsd_polzovateli p
+            where p.is_deleted = false
+            order by p.name
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+
+lov lov-rezultat (
+    name: LOV_REZULTAT
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select e.name as display
+                 , e.id as return
+            from rsd_enums e
+            where e.enum_type = 'РезультатыСогласования'
+                and e.is_deleted = false
+            order by e.sort_order, e.name
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+
+lov lov-sostoyanie (
+    name: LOV_SOSTOYANIE
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select e.name as display
+                 , e.id as return
+            from rsd_enums e
+            where e.enum_type = 'СостоянияБизнесПроцессов'
+                and e.is_deleted = false
+            order by e.sort_order, e.name
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+
+lov lov-variant (
+    name: LOV_VARIANT
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select e.name as display
+                 , e.id as return
+            from rsd_enums e
+            where e.enum_type = 'ВариантыМаршрутизацииЗадач'
+                and e.is_deleted = false
+            order by e.sort_order, e.name
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+
+lov lov-vazhnost (
+    name: LOV_VAZHNOST
+    source {
+        type: sqlQuery
+        sqlQuery:
+            ```sql
+            select e.name as display
+                 , e.id as return
+            from rsd_enums e
+            where e.enum_type = 'ВариантыВажностиЗадачи'
+                and e.is_deleted = false
+            order by e.sort_order, e.name
+            ```
+    }
+    columnMapping {
+        return: RETURN
+        display: DISPLAY
+    }
+)
+

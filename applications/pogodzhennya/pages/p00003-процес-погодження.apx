@@ -1,0 +1,903 @@
+page 3 (
+    name: Процес погодження
+    alias: ПРОЦЕС-ПОГОДЖЕННЯ
+    title: Процес погодження
+    pageGroup: @погодження
+    appearance {
+        pageMode: modalDialog
+        dialogTemplate: @/drawer
+        templateOptions: [
+            #DEFAULT#
+            js-dialog-class-t-Drawer--pullOutEnd
+        ]
+    }
+    dialog {
+        chained: false
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Approval process create/edit dialog launched from the Погодження list; save or cancel returns to the list; delete is limited to ADMIN, and the detail reports present migrated approver and result rows for review only.
+    }
+
+    region buttons (
+        name: Buttons
+        type: staticContent
+        layout {
+            sequence: 20
+            slot: dialogFooter
+        }
+        appearance {
+            template: @/buttons-container
+            templateOptions: #DEFAULT#
+        }
+        settings {
+            outputAs: text
+        }
+    )
+
+    region аркуш-погодження (
+        name: Аркуш погодження
+        type: classicReport
+        source {
+            location: localDatabase
+            tableName: RSD_V_SOGLAS_ISPOLNITELI
+            whereClause: owner_id = to_number(:P3_ID)
+            pageItemsToSubmit: P3_ID
+        }
+        orderBy {
+            type: staticValue
+            orderByClause: LINE_NO asc
+        }
+        layout {
+            sequence: 20
+            slot: contentBody
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+                t-Region--noBorder
+            ]
+        }
+        comments {
+            comments: Read-only classic report over RSD_V_SOGLAS_ISPOLNITELI listing the approver sheet for the current process; filtered by OWNER_ID, ordered by line number, with no create, edit, or delete actions and an empty-state message when the process has no rows.
+        }
+        componentAppearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Report--stretch
+                t-Report--staticRowColors
+                t-Report--rowHighlight
+                t-Report--horizontalBorders
+                t-Report--hideNoPagination
+            ]
+        }
+        pagination {
+            type: nextAndPreviousLinks
+        }
+
+        column ID (
+            reportColumnQueryId: 1
+            derivedColumn: N
+            type: hidden
+            layout {
+                sequence: 10
+            }
+        )
+
+        column ISPOLNITEL_NAME (
+            reportColumnQueryId: 4
+            derivedColumn: N
+            heading {
+                heading: Виконавець
+            }
+            layout {
+                sequence: 40
+            }
+        )
+
+        column ISPOLNITEL_TYPE (
+            reportColumnQueryId: 3
+            derivedColumn: N
+            heading {
+                heading: Тип
+            }
+            layout {
+                sequence: 30
+            }
+        )
+
+        column LINE_NO (
+            reportColumnQueryId: 2
+            derivedColumn: N
+            heading {
+                heading: №
+                alignment: end
+            }
+            layout {
+                sequence: 20
+                columnAlignment: end
+            }
+        )
+
+        column PORYADOK_NAME (
+            reportColumnQueryId: 5
+            derivedColumn: N
+            heading {
+                heading: Порядок
+            }
+            layout {
+                sequence: 50
+            }
+        )
+
+        column PROYDEN_LABEL (
+            reportColumnQueryId: 6
+            derivedColumn: N
+            heading {
+                heading: Пройдено
+            }
+            layout {
+                sequence: 60
+            }
+        )
+
+        column SROKISPOLNENIYA (
+            reportColumnQueryId: 7
+            derivedColumn: N
+            heading {
+                heading: Строк
+            }
+            layout {
+                sequence: 70
+            }
+            appearance {
+                formatMask: DD.MM.YYYY HH24:MI
+            }
+        )
+
+    )
+
+    region процес-погодження (
+        name: Процес погодження
+        type: form
+        source {
+            location: localDatabase
+            tableName: RSD_SOGLASOVANIE
+        }
+        layout {
+            sequence: 10
+            slot: contentBody
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+                t-Region--noBorder
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        comments {
+            comments: Single-record form over RSD_SOGLASOVANIE editing the approval header; Найменування, Автор, Стан, and Варіант погодження are mandatory, and Повторне погодження and Підписувати ЕП are switch-style boolean toggles.
+        }
+        edit {
+            enabled: true
+            allowedOperations: [
+                add
+                update
+                delete
+            ]
+        }
+    )
+
+    region результати-погодження (
+        name: Результати погодження
+        type: classicReport
+        source {
+            location: localDatabase
+            tableName: RSD_V_SOGLAS_REZULTATY
+            whereClause: owner_id = to_number(:P3_ID)
+            pageItemsToSubmit: P3_ID
+        }
+        orderBy {
+            type: staticValue
+            orderByClause: LINE_NO asc
+        }
+        layout {
+            sequence: 30
+            slot: contentBody
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--scrollBody
+                t-Region--noBorder
+            ]
+        }
+        comments {
+            comments: Read-only classic report over RSD_V_SOGLAS_REZULTATY listing the approval results by iteration for the current process; filtered by OWNER_ID, ordered by line number, with no create, edit, or delete actions and an empty-state message when the process has no rows.
+        }
+        componentAppearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Report--stretch
+                t-Report--staticRowColors
+                t-Report--rowHighlight
+                t-Report--horizontalBorders
+                t-Report--hideNoPagination
+            ]
+        }
+        pagination {
+            type: nextAndPreviousLinks
+        }
+
+        column ID (
+            reportColumnQueryId: 1
+            derivedColumn: N
+            type: hidden
+            layout {
+                sequence: 10
+            }
+        )
+
+        column LINE_NO (
+            reportColumnQueryId: 2
+            derivedColumn: N
+            heading {
+                heading: №
+                alignment: end
+            }
+            layout {
+                sequence: 20
+                columnAlignment: end
+            }
+        )
+
+        column NOMERITERATSII (
+            reportColumnQueryId: 3
+            derivedColumn: N
+            heading {
+                heading: Ітерація
+                alignment: end
+            }
+            layout {
+                sequence: 30
+                columnAlignment: end
+            }
+        )
+
+        column REZULTAT_NAME (
+            reportColumnQueryId: 4
+            derivedColumn: N
+            heading {
+                heading: Результат
+            }
+            layout {
+                sequence: 40
+            }
+        )
+
+    )
+
+    pageItem P3_AVTOR_ID (
+        type: selectList
+        label {
+            label: Автор
+            alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-polzovateli
+        }
+        layout {
+            sequence: 40
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @процес-погодження
+            column: AVTOR_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_DATANACHALA (
+        type: datePicker
+        label {
+            label: Дата початку
+            alignment: right
+        }
+        layout {
+            sequence: 90
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            formatMask: DD.MM.YYYY HH24:MI
+            width: 32
+        }
+        source {
+            formRegion: @процес-погодження
+            column: DATANACHALA
+            dataType: timestamp
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_DATAZAVERSHENIYA (
+        type: datePicker
+        label {
+            label: Дата завершення
+            alignment: right
+        }
+        layout {
+            sequence: 100
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            formatMask: DD.MM.YYYY HH24:MI
+            width: 32
+        }
+        source {
+            formRegion: @процес-погодження
+            column: DATAZAVERSHENIYA
+            dataType: timestamp
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_DOC_DATE (
+        type: datePicker
+        label {
+            label: Дата документа
+            alignment: right
+        }
+        layout {
+            sequence: 30
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            formatMask: DD.MM.YYYY HH24:MI
+            width: 32
+        }
+        source {
+            formRegion: @процес-погодження
+            column: DOC_DATE
+            dataType: timestamp
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_ID (
+        type: hidden
+        layout {
+            sequence: 10
+            region: @процес-погодження
+            slot: regionBody
+        }
+        source {
+            formRegion: @процес-погодження
+            column: ID
+            dataType: number
+            primaryKey: true
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_NAIMENOVANIE (
+        type: textField
+        label {
+            label: Найменування
+            alignment: right
+        }
+        layout {
+            sequence: 20
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @процес-погодження
+            column: NAIMENOVANIE
+            dataType: varchar2
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_OPISANIE (
+        type: textarea
+        label {
+            label: Опис
+            alignment: right
+        }
+        layout {
+            sequence: 120
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            width: 32
+        }
+        source {
+            formRegion: @процес-погодження
+            column: OPISANIE
+            dataType: clob
+        }
+        sessionState {
+            dataType: clob
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_PODPISYVATEP (
+        type: checkbox
+        label {
+            label: Підписувати ЕП
+            alignment: right
+        }
+        layout {
+            sequence: 140
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        source {
+            formRegion: @процес-погодження
+            column: PODPISYVATEP
+            dataType: boolean
+        }
+        sessionState {
+            dataType: boolean
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_POVTORITSOGLASOVANIE (
+        type: checkbox
+        label {
+            label: Повторне погодження
+            alignment: right
+        }
+        layout {
+            sequence: 130
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        source {
+            formRegion: @процес-погодження
+            column: POVTORITSOGLASOVANIE
+            dataType: boolean
+        }
+        sessionState {
+            dataType: boolean
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_REZULTATSOGLASOVANIYA_ID (
+        type: selectList
+        label {
+            label: Результат
+            alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-rezultat
+        }
+        layout {
+            sequence: 60
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        source {
+            formRegion: @процес-погодження
+            column: REZULTATSOGLASOVANIYA_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_SOSTOYANIE_ID (
+        type: selectList
+        label {
+            label: Стан
+            alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-sostoyanie
+        }
+        layout {
+            sequence: 50
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @процес-погодження
+            column: SOSTOYANIE_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_SROKISPOLNENIYAPROTSESSA (
+        type: datePicker
+        label {
+            label: Строк виконання
+            alignment: right
+        }
+        layout {
+            sequence: 110
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+            formatMask: DD.MM.YYYY HH24:MI
+            width: 32
+        }
+        source {
+            formRegion: @процес-погодження
+            column: SROKISPOLNENIYAPROTSESSA
+            dataType: timestamp
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_VARIANTSOGLASOVANIYA_ID (
+        type: selectList
+        label {
+            label: Варіант погодження
+            alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-variant
+        }
+        layout {
+            sequence: 70
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/required-floating
+            templateOptions: #DEFAULT#
+        }
+        validation {
+            valueRequired: true
+        }
+        source {
+            formRegion: @процес-погодження
+            column: VARIANTSOGLASOVANIYA_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    pageItem P3_VAZHNOST_ID (
+        type: selectList
+        label {
+            label: Важливість
+            alignment: right
+        }
+        lov {
+            type: sharedComponent
+            lov: @lov-vazhnost
+        }
+        layout {
+            sequence: 80
+            region: @процес-погодження
+            slot: regionBody
+            alignment: left
+        }
+        appearance {
+            template: @/optional-floating
+            templateOptions: #DEFAULT#
+        }
+        source {
+            formRegion: @процес-погодження
+            column: VAZHNOST_ID
+            dataType: number
+        }
+        security {
+            sessionStateProtection: checksumRequiredSessionLevel
+        }
+    )
+
+    button apply-changes (
+        buttonName: APPLY-CHANGES
+        label: Apply Changes
+        layout {
+            sequence: 2
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: update
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P3_ID
+        }
+    )
+
+    button cancel (
+        buttonName: CANCEL
+        label: Cancel
+        layout {
+            sequence: 4
+            region: @buttons
+            slot: close
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            action: triggerAction
+            executeValidations: false
+        }
+
+        triggerAction cancel-dialog (
+            name: Cancel Dialog
+            action: cancelDialog
+            execution {
+                sequence: 10
+            }
+        )
+
+    )
+
+    button create (
+        buttonName: CREATE
+        label: Create
+        layout {
+            sequence: 1
+            region: @buttons
+            slot: next
+        }
+        appearance {
+            buttonTemplate: @/text
+            hot: true
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: insert
+        }
+        serverSideCondition {
+            type: itemIsNull
+            item: P3_ID
+        }
+    )
+
+    button delete (
+        buttonName: DELETE
+        label: Delete
+        layout {
+            sequence: 3
+            region: @buttons
+            slot: delete
+        }
+        appearance {
+            buttonTemplate: @/text
+            templateOptions: #DEFAULT#
+        }
+        behavior {
+            executeValidations: false
+            warnOnUnsavedChanges: doNotCheck
+            databaseAction: delete
+            requiresConfirmation: true
+        }
+        confirmation {
+            message: &APP_TEXT$DELETE_MSG!RAW.
+        }
+        serverSideCondition {
+            type: itemIsNotNull
+            item: P3_ID
+        }
+        security {
+            authorizationScheme: @admin
+        }
+    )
+
+    dynamicAction dialog-refresh-аркуш-погодження (
+        name: Refresh on dialog close Аркуш погодження
+        execution {
+            sequence: 10
+        }
+        when {
+            event: apexafterclosedialog
+            selectionType: region
+            region: @аркуш-погодження
+        }
+
+        action refresh (
+            action: refresh
+            settings {
+                maintainPagination: true
+            }
+            affectedElements {
+                selectionType: region
+                region: @аркуш-погодження
+            }
+            execution {
+                sequence: 10
+                fireOnInit: false
+            }
+        )
+
+    )
+
+    dynamicAction dialog-refresh-результати-погодження (
+        name: Refresh on dialog close Результати погодження
+        execution {
+            sequence: 10
+        }
+        when {
+            event: apexafterclosedialog
+            selectionType: region
+            region: @результати-погодження
+        }
+
+        action refresh (
+            action: refresh
+            settings {
+                maintainPagination: true
+            }
+            affectedElements {
+                selectionType: region
+                region: @результати-погодження
+            }
+            execution {
+                sequence: 10
+                fireOnInit: false
+            }
+        )
+
+    )
+
+    process close-dialog (
+        name: Close Dialog
+        type: closeDialog
+        settings {
+            itemsToReturn: P3_ID
+        }
+        execution {
+            sequence: 20
+        }
+        advanced {
+            executionMappingIdentifier: 10385361864012368
+        }
+    )
+
+    process initialize-form-процес-погодження (
+        name: Initialize form Процес погодження
+        type: formInitialization
+        formRegion: @процес-погодження
+        execution {
+            sequence: 10
+            point: beforeHeader
+        }
+        advanced {
+            executionMappingIdentifier: 10385461286012369
+        }
+    )
+
+    process process-form-процес-погодження (
+        name: Process form Процес погодження
+        type: formAutoRowProcessing
+        formRegion: @процес-погодження
+        execution {
+            sequence: 10
+        }
+        advanced {
+            executionMappingIdentifier: 10385585481012369
+        }
+    )
+
+)
+

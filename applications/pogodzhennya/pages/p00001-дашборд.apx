@@ -1,0 +1,492 @@
+page 1 (
+    name: Дашборд
+    alias: ДАШБОРД
+    title: Дашборд
+    pageGroup: @погодження
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor-or-reader
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Home dashboard summarizing the approval registry; four KPI cards and three distribution charts give all roles a read-only overview before drilling into the list.
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 5
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region активних (
+        name: name: Активних
+        type: themeTemplateComponent/metricCard
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select count(*) as metric
+                from rsd_v_soglasovanie s
+                where s.sostoyanie_name = 'Активний'
+                ```
+        }
+        layout {
+            sequence: 20
+            slot: body
+            startNewRow: false
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: [
+                #DEFAULT#
+                margin-top-md
+                margin-bottom-md
+            ]
+        }
+        accessibility {
+            landmarkType: region
+        }
+        comments {
+            comments: KPI card counting approvals whose resolved state is Активний; highlights work in progress for all roles.
+        }
+        componentAppearance {
+            display: report
+        }
+        settings {
+            title: Активних
+            metric: &METRIC.
+            metricCssClasses: u-text-subheading-md
+            meta: Стан: Активний
+            layout: stacked
+        }
+        plugin-avatar {
+            displayAvatar: true
+            icon: fa-spinner
+            size: medium
+            position: inline
+        }
+
+        column METRIC (
+            layout {
+                sequence: 10
+            }
+            source {
+                databaseColumn: METRIC
+                dataType: number
+            }
+            appearance {
+                formatMask: 999G999G999G999G990
+            }
+        )
+
+    )
+
+    region не-погоджено (
+        name: name: Не погоджено
+        type: themeTemplateComponent/metricCard
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select count(*) as metric
+                from rsd_v_soglasovanie s
+                where s.rezultat_name = 'Не погоджено'
+                ```
+        }
+        layout {
+            sequence: 40
+            slot: body
+            startNewRow: false
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: [
+                #DEFAULT#
+                margin-top-md
+                margin-bottom-md
+            ]
+        }
+        accessibility {
+            landmarkType: region
+        }
+        comments {
+            comments: KPI card counting approvals whose resolved result is Не погоджено; surfaces rejected outcomes for all roles.
+        }
+        componentAppearance {
+            display: report
+        }
+        settings {
+            title: Не погоджено
+            metric: &METRIC.
+            metricCssClasses: u-text-subheading-md
+            meta: Результат: Не погоджено
+            layout: stacked
+        }
+        plugin-avatar {
+            displayAvatar: true
+            icon: fa-times-circle
+            size: medium
+            position: inline
+        }
+
+        column METRIC (
+            layout {
+                sequence: 10
+            }
+            source {
+                databaseColumn: METRIC
+                dataType: number
+            }
+            appearance {
+                formatMask: 999G999G999G999G990
+            }
+        )
+
+    )
+
+    region погодження-за-варіантом (
+        name: Погодження за варіантом
+        type: chart
+        layout {
+            sequence: 70
+            slot: body
+            columnSpan: 6
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--noBorder
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+                t-Region--scrollBody
+            ]
+        }
+        comments {
+            comments: Bar chart grouping the approval count by routing variant; shows the routing-method distribution for all roles.
+        }
+        title {
+            title: Погодження за варіантом
+        }
+        legend {
+            show: false
+        }
+
+        series погодження-за-варіантом (
+            name: Погодження за варіантом
+            execution {
+                sequence: 10
+            }
+            source {
+                type: sqlQuery
+                sqlQuery:
+                    ```sql
+                    select s.variant_name as label
+                         , count(*) as value
+                    from rsd_v_soglasovanie s
+                    group by s.variant_name
+                    order by value desc
+                    ```
+            }
+            columnMapping {
+                label: LABEL
+                value: VALUE
+            }
+        )
+
+        axis x (
+            name: x
+            majorTicks {
+                show: false
+            }
+        )
+
+        axis y (
+            name: y
+            value {
+                format: decimal
+                decimalPlaces: 0
+                formatScaling: none
+            }
+        )
+
+    )
+
+    region погодження-за-результатом (
+        name: Погодження за результатом
+        type: chart
+        layout {
+            sequence: 60
+            slot: body
+            startNewRow: false
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--noBorder
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+                t-Region--scrollBody
+            ]
+        }
+        comments {
+            comments: Donut chart grouping the approval count by resolved result; rows with no result are grouped as Без результату for all roles.
+        }
+        chart {
+            type: donut
+        }
+        title {
+            title: Погодження за результатом
+        }
+        legend {
+            show: false
+        }
+
+        series погодження-за-результатом (
+            name: Погодження за результатом
+            execution {
+                sequence: 10
+            }
+            source {
+                type: sqlQuery
+                sqlQuery:
+                    ```sql
+                    select nvl(s.rezultat_name, 'Без результату') as label
+                         , count(*) as value
+                    from rsd_v_soglasovanie s
+                    group by nvl(s.rezultat_name, 'Без результату')
+                    order by value desc
+                    ```
+            }
+            columnMapping {
+                label: LABEL
+                value: VALUE
+            }
+            label {
+                show: true
+            }
+        )
+
+    )
+
+    region погодження-за-станом (
+        name: Погодження за станом
+        type: chart
+        layout {
+            sequence: 50
+            slot: body
+        }
+        appearance {
+            template: @/standard
+            templateOptions: [
+                #DEFAULT#
+                t-Region--noBorder
+                t-Region--hideHeader js-addHiddenHeadingRoleDesc
+                t-Region--scrollBody
+            ]
+        }
+        comments {
+            comments: Bar chart grouping the approval count by resolved business-process state; gives all roles the state distribution.
+        }
+        title {
+            title: Погодження за станом
+        }
+        legend {
+            show: false
+        }
+
+        series погодження-за-станом (
+            name: Погодження за станом
+            execution {
+                sequence: 10
+            }
+            source {
+                type: sqlQuery
+                sqlQuery:
+                    ```sql
+                    select s.sostoyanie_name as label
+                         , count(*) as value
+                    from rsd_v_soglasovanie s
+                    group by s.sostoyanie_name
+                    order by value desc
+                    ```
+            }
+            columnMapping {
+                label: LABEL
+                value: VALUE
+            }
+        )
+
+        axis x (
+            name: x
+            majorTicks {
+                show: false
+            }
+        )
+
+        axis y (
+            name: y
+            value {
+                format: decimal
+                decimalPlaces: 0
+                formatScaling: none
+            }
+        )
+
+    )
+
+    region погоджено (
+        name: name: Погоджено
+        type: themeTemplateComponent/metricCard
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select count(*) as metric
+                from rsd_v_soglasovanie s
+                where s.rezultat_name = 'Погоджено'
+                ```
+        }
+        layout {
+            sequence: 30
+            slot: body
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: [
+                #DEFAULT#
+                margin-top-md
+                margin-bottom-md
+            ]
+        }
+        accessibility {
+            landmarkType: region
+        }
+        comments {
+            comments: KPI card counting approvals whose resolved result is Погоджено; measures positive outcomes for all roles.
+        }
+        componentAppearance {
+            display: report
+        }
+        settings {
+            title: Погоджено
+            metric: &METRIC.
+            metricCssClasses: u-text-subheading-md
+            meta: Результат: Погоджено
+            layout: stacked
+        }
+        plugin-avatar {
+            displayAvatar: true
+            icon: fa-check-circle
+            size: medium
+            position: inline
+        }
+
+        column METRIC (
+            layout {
+                sequence: 10
+            }
+            source {
+                databaseColumn: METRIC
+                dataType: number
+            }
+            appearance {
+                formatMask: 999G999G999G999G990
+            }
+        )
+
+    )
+
+    region усього-погоджень (
+        name: name: Усього погоджень
+        type: themeTemplateComponent/metricCard
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select count(*) as metric
+                from rsd_v_soglasovanie s
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/blank-with-attributes
+            templateOptions: [
+                #DEFAULT#
+                margin-top-md
+                margin-bottom-md
+            ]
+        }
+        accessibility {
+            landmarkType: region
+        }
+        comments {
+            comments: KPI card counting every approval process in RSD_V_SOGLASOVANIE; anchors the dashboard overview for all roles.
+        }
+        componentAppearance {
+            display: report
+        }
+        settings {
+            title: Усього погоджень
+            metric: &METRIC.
+            metricCssClasses: u-text-subheading-md
+            meta: Усі процеси погодження
+            layout: stacked
+        }
+        plugin-avatar {
+            displayAvatar: true
+            icon: fa-tasks
+            size: medium
+            position: inline
+        }
+
+        column METRIC (
+            layout {
+                sequence: 10
+            }
+            source {
+                databaseColumn: METRIC
+                dataType: number
+            }
+            appearance {
+                formatMask: 999G999G999G999G990
+            }
+        )
+
+    )
+
+)
+

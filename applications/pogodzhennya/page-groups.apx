@@ -1,0 +1,7 @@
+pageGroup погодження (
+    name: Погодження
+    description {
+        description: Approval process module: dashboard analytics over RSD_V_SOGLASOVANIE, the faceted approval list, and the modal approval process form with its read-only detail reports.
+    }
+)
+
