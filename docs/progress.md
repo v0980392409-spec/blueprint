@@ -3,6 +3,21 @@
 Робочий журнал експерименту №2 (BAS → APEX через Blueprint/APEXLang). Оновлюється
 в кінці сесії. Останнє оновлення: 2026-07-19.
 
+## Висновки сесії (APEX-скіли + ACL-фікс) — 2026-07-19
+
+1. **Покриття APEX — 6 скілів** (карта: `docs/apex-doc-map.md`): `bas2apex` · `apexlang` ·
+   `apex-workflow` · `apex-ui` · `apex-plsql-apis` · `apex-security-deploy`. Прочитано всю
+   бібліотеку 26.1; частину лишено reference-only **свідомо** (SQL Workshop, Quick SQL —
+   грамотика не опублікована, Globalization — одна мова, GenAI — не вживається).
+2. **Workflow — нативний approve-патерн**: `Human Task - Create` сам створює змінні
+   `TASK_OUTCOME`/`APPROVER`, гілкує активність `Switch` — а не «лінійно + вибір у коді» (як 013).
+3. **ACL на цьому стенді ≠ доці Oracle**: `add_user_role(p_role_static_id=>...)` падає `ORA-01403`
+   → lookup `role_id` за static_id + `p_role_id`. Призначення користувач→роль — у метаданих APEX
+   (`apex_appl_acl_user_roles`), **не** в `.apx` → після кожного `apex import` обов'язковий
+   `migration/016-acl-grant-fix/regrant.sh <app> admin CLAUDE,VIKTOR` (ідемпотентний).
+4. **Метод**: перевірка на стенді перемогла і доку Oracle, і мій свіжий скіл — **завжди звіряти
+   ціль перед тим, як довіряти рецепту** (inspect-before-fix).
+
 ## Що зроблено (повний вертикальний зріз пройдено)
 
 **Скіл `bas2apex`** (`.claude/skills/bas2apex/`) — конвеєр міграції з інструментами:
