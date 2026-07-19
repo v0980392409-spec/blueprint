@@ -100,13 +100,35 @@ end;
 """
 
 
-def stage_block(entity_odata, entity_ref):
+def stage_block(entity_odata, entity_ref, limit=None):
     # $skip-пагінація ($top=500, $skip=0,500,…): надійна для сутностей ≤~3000
     # рядків. Keyset за Ref_Key НЕ працює — 1С ігнорує $orderby, тож курсор
     # `Ref_Key gt` тихо обриває на першій сторінці (silent truncation).
     # Для сутностей >~3000 (глибокий $skip таймаутить через apex_web_service)
     # — окремий партиційний завантажувач за префіксом Code (див.
     # stage-kontragenty-by-code.sql). Перевіряй staged-count проти OData $count.
+    if limit:  # bounded-вибірка: один запит $top=N (семпл великих сутностей)
+        return f"""\
+-- {entity_ref} (bounded {limit})
+declare
+    l_clob clob;
+begin
+    l_clob := apex_web_service.make_rest_request(
+        p_url => '{BASE}/{entity_odata}?$format=json&$top={limit}',
+        p_http_method => 'GET', p_credential_static_id => 'BAS_DOC_CRED',
+        p_transfer_timeout => 300);
+    merge into rsd_odata_raw t using (
+        select rk, dc from json_table(l_clob, '$.value[*]' columns (
+            rk varchar2(36) path '$.Ref_Key',
+            dc clob format json path '$'))
+    ) s on (t.entity = '{entity_ref}' and t.ref_key = s.rk)
+    when matched then update set t.doc = s.dc, t.loaded_at = systimestamp
+    when not matched then insert (entity, ref_key, doc) values ('{entity_ref}', s.rk, s.dc);
+    dbms_output.put_line('{entity_ref}: bounded ' || sql%rowcount);  -- до commit (інакше rowcount 0)
+    commit;
+end;
+/
+"""
     return f"""\
 -- {entity_ref}
 declare
@@ -193,6 +215,8 @@ def main():
     ap.add_argument("--field-map", type=Path, required=True)
     ap.add_argument("--tables", required=True)
     ap.add_argument("--base", required=True)
+    ap.add_argument("--limit", type=int, default=None,
+                    help="bounded-вибірка: N рядків одним $top-запитом (для семплу великих сутностей)")
     ap.add_argument("--out-dir", type=Path, required=True)
     args = ap.parse_args()
     BASE = args.base.rstrip("/")
@@ -210,7 +234,7 @@ def main():
         if t not in fmap:
             print(f"! {t} відсутній у field-map — пропущено"); continue
         entity_ref = fmap[t]["entity"]                 # Catalog.Контрагенты / BusinessProcess.X
-        stage.append(stage_block(enc(entity_ref), entity_ref))
+        stage.append(stage_block(enc(entity_ref), entity_ref, limit=args.limit))
         project.append(project_block(t, fmap[t]))
 
     (args.out_dir / "raw-ddl.sql").write_text(RAW_DDL, encoding="utf-8")
