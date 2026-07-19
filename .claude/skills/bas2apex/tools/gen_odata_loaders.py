@@ -87,23 +87,23 @@ end;
 
 
 def stage_block(entity_odata, entity_ref):
-    # Keyset-пагінація: $orderby=Ref_Key asc + $filter=Ref_Key gt '<курсор>'.
-    # Кожен запит O(top), НЕ O(skip) — уникає cap глибокого $skip, на якому
-    # apex_web_service обриває великі сутності 1С OData (~3000 рядків).
+    # $skip-пагінація ($top=500, $skip=0,500,…): надійна для сутностей ≤~3000
+    # рядків. Keyset за Ref_Key НЕ працює — 1С ігнорує $orderby, тож курсор
+    # `Ref_Key gt` тихо обриває на першій сторінці (silent truncation).
+    # Для сутностей >~3000 (глибокий $skip таймаутить через apex_web_service)
+    # — окремий партиційний завантажувач за префіксом Code (див.
+    # stage-kontragenty-by-code.sql). Перевіряй staged-count проти OData $count.
     return f"""\
 -- {entity_ref}
 declare
-    l_clob clob; l_got number;
-    l_last varchar2(36) := '00000000-0000-0000-0000-000000000000';
-    l_next varchar2(36);
+    l_clob clob; l_got number; l_skip number := 0;
 begin
     loop
         l_clob := apex_web_service.make_rest_request(
-            p_url => '{BASE}/{entity_odata}?$format=json&$top=500'
-                  || '&$orderby=Ref_Key%20asc&$filter=Ref_Key%20gt%20%27' || l_last || '%27',
+            p_url => '{BASE}/{entity_odata}?$format=json&$top=500&$skip=' || l_skip,
             p_http_method => 'GET', p_credential_static_id => 'BAS_DOC_CRED',
             p_transfer_timeout => 120);
-        select count(*), max(rk) into l_got, l_next
+        select count(*) into l_got
           from json_table(l_clob, '$.value[*]' columns (rk varchar2(36) path '$.Ref_Key'));
         exit when l_got = 0;
         merge into rsd_odata_raw t using (
@@ -114,10 +114,10 @@ begin
         when matched then update set t.doc = s.dc, t.loaded_at = systimestamp
         when not matched then insert (entity, ref_key, doc) values ('{entity_ref}', s.rk, s.dc);
         commit;
-        exit when l_next = l_last;   -- курсор не зрушив — кінець
-        l_last := l_next;
+        l_skip := l_skip + 500;
+        exit when l_got < 500;   -- остання (неповна) сторінка
     end loop;
-    dbms_output.put_line('{entity_ref}: staged');
+    dbms_output.put_line('{entity_ref}: staged ' || l_skip);
 end;
 /
 """
