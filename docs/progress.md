@@ -155,6 +155,16 @@ ref-poly, ТЧ-проекція `section_block`, `enc` за типом, `--limit
   актуальний термін `Dynamic Translation`, не легасі «Translation Repository»), Generative AI
   (не вживається; `APEX_AI` провайдери 26.1 включають Anthropic Claude). Разом покриття APEX:
   bas2apex · apexlang · apex-workflow · apex-ui · apex-plsql-apis · apex-security-deploy.
+- `016-acl-grant-fix` — **ролі не злітають після `apex import` (app 200)**. Перевірено на стенді:
+  призначення користувач→роль живуть у метаданих APEX (`apex_appl_acl_user_roles`), **не** в `.apx`
+  → повний import їх втрачає. **Знахідка**: `apex_acl.add_user_role(p_role_static_id=>'admin')`
+  падає `ORA-01403` (супереч доці Oracle) → робоча форма — lookup `role_id` за static_id +
+  `p_role_id`. Артефакт: ідемпотентний `grant-roles.sql` (`@grant-roles.sql <app> <role> <users>`)
+  + обгортка `regrant.sh` — **обов'язковий крок після кожного імпорту** (`regrant.sh 200 admin
+  CLAUDE,VIKTOR`). Перевірено циклом зняти→0→grant→відновлено + ідемпотентність. Скіл
+  `apex-security-deploy` виправлено (Supporting Objects — для SQL-формату, не APEXlang; форма
+  гранта). Живий повний реімпорт не проганявся (команда `-workspaceId` у заметках суперечлива;
+  фікс детермінований у будь-якому разі).
 
 ## Команди для швидкого старту (деталі — docs/stand.md)
 
