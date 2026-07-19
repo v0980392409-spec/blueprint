@@ -37,7 +37,7 @@
 - `012-bp-data-bounded` — **bounded-вибірка 5 великих процесів по 500** (+ТЧ): Согласование/КомплексныйПроцесс/Ознакомление/Исполнение/Утверждение → **2500 header** + ТЧ (напр. SOGLASOVANIE_ISPOLNITELI 843, _REZULTATYSOGLASOVANIYA 702), 0 ORA. Нове: `--limit N` (один `$top=N` без пагінації, для семплу великих; payload 500≈2.6MB ОК) + fix bounded-репортингу (`dbms_output` до `commit`). Повний архів (185k+) — Code-prefix за Number, за потреби.
 - `011-bp-data-small` — **дані ТЧ процесів з OData (капабіліті + демо)**: завантажено 3 малих процеси повністю (header+ТЧ: РешениеВопросов 19, Рассмотрение 4, ОбработкаВнутр 2 = OData $count, 0 ORA; ТЧ з OWNER_ID/LINE_NO/enum-FK). Розширено конвеєр: `gen_document_batch` кладе ТЧ у field-map (`sections`); `gen_odata_loaders` — проекція ТЧ (`section_block` через JSON_TABLE), `proj_expr(src=...)`, **виправлено `enc`** (префікс OData з типу — був баг: усі не-довідники як `Catalog_`→404). Документи ДО порожні (404). Великі процеси (Согласование 185k…) — за рішенням про обсяг (Code-prefix, мільйони ТЧ).
 - `010-bp-processes` — **Шар 1 решти 12 BusinessProcess**: Исполнение, КомплексныйПроцесс, Обработка{Внутр/Вх/Исх}Документа, Ознакомление, Поручение, Приглашение, Рассмотрение, Регистрация, РешениеВопросов, Утверждение → **72 таблиці** (12 шапок + 60 ТЧ) / 677 колонок / 143 FK (+141 відкл.). Тим самим `gen_document_batch`. Встановлено (**351 таблиця RSD_*, 0 INVALID**). Усі 13 BP на стенді. Шар 2 (маршрути) — за шаблоном Согласования (README батча 009), у Workflow Designer.
-- `013-workflow-soglasovanie-build` — **Шар 2, рецепт складання** пілота в APEX Workflow Designer (спосіб — рішення власника: складає власник, я готую значення+SQL). Знахідка, що уточнює 009: код-first **можливий** — на стенді підтверджено повний app-import API `wwv_flow_imp_shared.create_workflow*` (+ `create_task_def*`) і словник типів активностей (`NATIVE_CREATE_TASK` Human Task, `NATIVE_WORKFLOW_SWITCH` Switch, `NATIVE_INVOKE_API` Execute Code, `NATIVE_WORKFLOW_END`), АЛЕ APEXLang його **не тримає** → workflow це окремий **SQL-трек** (фіксація експортом app 200 в SQL, не в `applications/budynky/`). Артефакт: `README.md` (чек-лист Designer: Task Definition `TASK_SOGLASOVANIE` + Workflow `SOGLASOVANIE` 5 активностей + переходи + активація), `sql/build-blocks.sql` (PL/SQL/запити для полів — **DML провалідовано проти живої схеми з rollback**; Task Definition тип **Approval Task** → 2 результати `APPROVED`/`REJECTED`, пише REZULTAT 747/746, стани 768–770; 748 «із зауваженнями» — наступний виток), `sql/pilot-test.sql` (наскрізний headless: `apex_workflow.start_workflow` p_detail_pk=94 → `apex_approval.complete_task` p_outcome=APPROVED → очікуємо REZULTAT=747 + рядок ТЧ). **Пастка:** APEX підставляє кириличний Static ID → перезаписати латиницею (`TASK_SOGLASOVANIE`, `SOGLASOVANIE`). Учасники — пілотна заглушка CLAUDE/VIKTOR (ПолныеРоли не мігровано, немає identity-bridge). **Статус: рецепт готовий; складання в Designer + тест — крок власника (логін).**
+- `013-workflow-soglasovanie-build` — **Шар 2, рецепт складання** пілота в APEX Workflow Designer (спосіб — рішення власника: складає власник, я готую значення+SQL). Знахідка, що уточнює 009: код-first **можливий** — на стенді підтверджено повний app-import API `wwv_flow_imp_shared.create_workflow*` (+ `create_task_def*`) і словник типів активностей (`NATIVE_CREATE_TASK` Human Task, `NATIVE_WORKFLOW_SWITCH` Switch, `NATIVE_INVOKE_API` Execute Code, `NATIVE_WORKFLOW_END`), АЛЕ APEXLang його **не тримає** → workflow це окремий **SQL-трек** (фіксація експортом app 200 в SQL, не в `applications/budynky/`). Артефакт: `README.md` (чек-лист Designer: Task Definition `TASK_SOGLASOVANIE` + Workflow `SOGLASOVANIE` 5 активностей + переходи + активація), `sql/build-blocks.sql` (PL/SQL/запити для полів — **DML провалідовано проти живої схеми з rollback**; Task Definition тип **Approval Task** → 2 результати `APPROVED`/`REJECTED`, пише REZULTAT 747/746, стани 768–770; 748 «із зауваженнями» — наступний виток), `sql/pilot-test.sql` (наскрізний headless: `apex_workflow.start_workflow` p_detail_pk=94 → `apex_approval.complete_task` p_outcome=APPROVED → очікуємо REZULTAT=747 + рядок ТЧ). **Пастка:** APEX підставляє кириличний Static ID → перезаписати латиницею (`TASK_SOGLASOVANIE`, `SOGLASOVANIE`). Учасники — пілотна заглушка CLAUDE/VIKTOR (ПолныеРоли не мігровано, немає identity-bridge). **Статус: ✅ ЗІБРАНО в Designer власником (лінійний варіант: Start→Execute Code→Human Task→Execute Code→End, гілка рішення в коді за V_OUTCOME) + НАСКРІЗНИЙ ТЕСТ ПРОЙДЕНО** (ID=94: NULL→747, екземпляр COMPLETED). Три бойові уроки в pilot-test.sql: (1) завершує НЕ-ініціатор — CLAUDE-ініціатор заблокований `Initiator Can Complete=OFF`, погоджує VIKTOR; (2) задача створюється **асинхронно** після start → baseline+опит `task_id>baseline`; (3) продовження після complete теж async → опит екземпляра до `COMPLETED`. Активація версії вимагає учасника **Workflow Owner** (Static Value VIKTOR) + **Save** після Activate (стан у Designer до Save не комітиться). Профільний скіл — `.claude/skills/apex-workflow/`. **Лишилось:** зафіксувати SQL-експортом app 200 (`-expType APPLICATION_SOURCE`) у `013-.../export/` — workflow не тримається APEXLang'ом.
 - `009-workflow-soglasovanie` — **пілот BP→Workflow (Согласование)**. Шар 1: 11 таблиць (RSD_SOGLASOVANIE +7 ТЧ, RSD_ZADACHAISPOLNITELYA +2 ТЧ; 279 таблиць RSD_*, 0 INVALID). Шар 2: маршрут реконструйовано (структура + РезультатыСогласования + BSL-імена — графічної карти в дампі немає) у **специфікацію APEX Workflow** (Старт→Human Task погодження→Switch за рішеннями→Погоджено/Ні; activities/transitions/participants у README + mermaid). APEX Workflow на стенді доступний (26.1). Межа: движок workflow не авториться APEXLang'ом (немає граматики) — складається у Workflow Designer за специфікацією (крок власника).
 - `006-data-nsi-2` — **живі дані решти НСІ**: **17 довідників / 1642 рядки** з OData, лічильники точно = `$count` (Умови маршрутизації 664, Види вх. док. 513, Структура підприємства 155 з ієрархією 144, Приміщення 30, Посади 2 тощо). Виправлено `gen_odata_loaders` (**$skip** замість зламаного keyset Ref_Key — тихо обривав >500). Нове: `relax-constraints` (UNIQUE(CODE) seed↔live), `dedup-seed` (−9 seed-дублів), `reconcile-parent` (self-FK ієрархії — gap gen_catalog_batch). Пропущено: УведомленияПрограммы (6478, без Code); 51/78 довідників — 404 (не опубліковані).
 
@@ -76,15 +76,24 @@ ref-poly, ТЧ-проекція `section_block`, `enc` за типом, `--limit
    / Ознакомление 50k тощо: партиційний завантажувач за префіксом `Number`
    (deep-$skip таймаутить >~3000), header × 4–7 ТЧ = мільйони рядків. Конвеєр
    готовий (`--limit` для семплу; для повного — Code/Number-prefix, як для КОНTRAGENTY).
-2. **§9 група 4b** — ~19 нетипізованих ПОСИЛАНЬ (не «Значение»): по-атрибутний
-   розбір — одиночний FK де ціль однозначна (Подразделение→Структура,
-   ФизическоеЛицо→ФізОсоби), інакше REF_TYPE/REF_ID. Дрібний батч ALTER'ів+backfill.
+2. ~~**§9 група 4b**~~ — **проаналізовано 2026-07-19, ВІДКЛАДЕНО** (рішення власника).
+   Очевидні одиночні FK уже стоять (Подразделение→Структура, ФизЛицо→ФізОсоби —
+   типізовані 003/005/008); решта untyped-`_ID` (514) вказують на ще не мігровані
+   цілі → ані FK, ані backfill. Повертатись при міграції тих каталогів (зворотній
+   reconcile). Деталі — `docs/section9-decisions.md` §4b.
 3. **BP Шар 2 — Workflow у Designer**: **рецепт готовий** (батч 013 —
    `migration/013-workflow-soglasovanie-build/`). Дія власника: скласти пілот
    «Согласование» у Designer за чек-лістом (Task Def + 5 активностей + переходи +
    активація; логін), прогнати `sql/pilot-test.sql` (наскрізний), зафіксувати
    SQL-експортом app 200. Далі — тиражування шаблоном на 12 інших. Опц.: редагований
    IG погоджувачів; продакшн-учасники (identity-bridge BAS→APEX).
+   **Новий скіл `apex-workflow`** (`.claude/skills/apex-workflow/`, 5 файлів): вивчено
+   офіційний мануал APEX 26.1 (Workflows & Tasks, 22 сторінки + підсторінки) → концепції
+   для новачка, каталог 13 активностей, зв'язки/стани, `APEX_HUMAN_TASK` API, рецепт
+   Designer+код-first, міграція BAS-маршрутів. **Уточнення до рецепту 013**: нативне
+   гілкування — активність `Switch` (`Check Workflow Variable`) по авто-змінній
+   `TASK_OUTCOME` (+ `APPROVER`), які створює сама `Human Task - Create` активність, — а не
+   «лінійно + вибір у коді».
 4. **ERP-контур `/Riverside`** — інше джерело OData (BAS ERP, 41 підсистема,
    реф-корпус `../BAS new/reference-erp/`): свій кластер/маппінг, більший обсяг.
 5. ✅ **Blueprint-track наскрізь — ЗРОБЛЕНО** (батч 014 → app 201 «ПОГОДЖЕННЯ»,
@@ -122,6 +131,30 @@ ref-poly, ТЧ-проекція `section_block`, `enc` за типом, `--limit
   лишаються §9 (REF_TYPE/REF_ID) і **не вантажаться авто** section_block'ом —
   дорезолв цільовим UPDATE з RAW (`_Type`+UUID), як для погоджувачів у стор. 12.
 - **Передача macOS→стенд**: `COPYFILE_DISABLE=1 tar` (не scp/docker cp — AppleDouble).
+- **APEX Workflow — модель (мануал, скіл `apex-workflow`)**: маршрут = активності+зв'язки;
+  каталог 13 типів (`Workflow Start/End`, `Execute Code`, `Human Task - Create`, `Switch`,
+  `Parallel Flow`, `Wait`, `Invoke Workflow`, `Invoke API`, `Send Email/Push`, `Generate Text
+  with AI`, `Custom Plug-in`). `Human Task - Create` авто-створює `TASK_OUTCOME`/`APPROVER`;
+  гілкування — `Switch` (типи `True False`/`Check Workflow Variable`/`Case`/`If Elsif Else`), НЕ
+  зв'язки. Зв'язки-транзиції: `Normal`/`Error`(по SQL-коду, інакше `Faulted`)/`Timeout`; окремо
+  Branches (виходи Switch). Стани WF: `Active`/`Suspended`/`Completed`/`Terminated`/`Faulted`;
+  активності: +`Waiting`. Активація потребує учасників маршруту (Owner/Admin) — вони ≠ виконавці
+  задачі (Potential Owner). Ретенція: задачі 7/30 днів, WF-інстанси 30/100. Троблшутинг:
+  `ORA-20987`=регістр імен (UPPER); scheduler-джоб=потрібна `apex_session.create_session`;
+  `HANDLE_TASK_DEADLINES` форсує дедлайни; `APEX$TASK_ID` не працює в Actions SQL → `APEX$TASK_PK`.
+- **Наскрізний огляд бібліотеки APEX 26.1 → 3 нові скіли** (6 агентів по кластерах; карта —
+  [`docs/apex-doc-map.md`]). Заведено: **`apex-ui`** (вибір регіону/сторінки/item: IR vs IG,
+  Faceted/Smart Filters, Cards, master-detail, 1C-поле→item), **`apex-plsql-apis`** (індекс 64
+  пакетів `APEX_*` + сигнатури web_service/json/exec/session/acl/data_parser + headless-патерни;
+  пастка `apex_acl.add_user_role` → тільки `p_role_static_id`), **`apex-security-deploy`** (auth/
+  authz/ACL, Security Attributes, export/import, стенд-адмін; **корінь «злетілих ролей»**:
+  призначення юзер→роль — дані в таблицях схеми, не експортуються → фікс = `apex_acl.add_user_role`
+  у Supporting Objects Installation Script + `Yes and Install on Import Automatically`). Довесок у
+  `bas2apex` — `references/ongoing-sync.md` (Web Credentials, Automations). Reference-only (свідомо
+  без скілу): SQL Workshop, Quick SQL (грамотика не опублікована), Globalization (одна мова;
+  актуальний термін `Dynamic Translation`, не легасі «Translation Repository»), Generative AI
+  (не вживається; `APEX_AI` провайдери 26.1 включають Anthropic Claude). Разом покриття APEX:
+  bas2apex · apexlang · apex-workflow · apex-ui · apex-plsql-apis · apex-security-deploy.
 
 ## Команди для швидкого старту (деталі — docs/stand.md)
 
