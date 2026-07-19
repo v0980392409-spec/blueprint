@@ -245,3 +245,7 @@
 | ПередачаДелВАрхив | RSD_PEREDACHADELVARKHIV | Передача справ в архів | Document |
 | УведомлениеПоSMS | RSD_UVEDOMLENIEPOSMS | Оповіщення по SMS | Document |
 | УничтожениеДел | RSD_UNICHTOZHENIEDEL | Знищення справ | Document |
+
+<!-- батч 009: пілот BP→Workflow (Согласование + Task ЗадачаИсполнителя як таблиці) -->
+| Согласование | RSD_SOGLASOVANIE | Погодження | BusinessProcess/Task |
+| ЗадачаИсполнителя | RSD_ZADACHAISPOLNITELYA | Задача | BusinessProcess/Task |
