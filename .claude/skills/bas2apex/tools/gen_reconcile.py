@@ -44,13 +44,12 @@ def main():
             continue
         entity = fmap[tbl]["entity"]
         for f in fmap[tbl]["fields"]:
-            if f["kind"] not in ("ref", "ref-ext"):
-                continue
-            target = f.get("target")
-            if not target or target not in loaded:
-                continue  # ціль не завантажена → лишається NULL
             col, od = f["col"], f["odata"]
-            out.append(f"""
+            if f["kind"] in ("ref", "ref-ext"):
+                target = f.get("target")
+                if not target or target not in loaded:
+                    continue  # ціль не завантажена → лишається NULL
+                out.append(f"""
 begin
     update {tbl} t set t.{col} = (
         select tgt.id from rsd_odata_raw r join {target} tgt
@@ -64,7 +63,27 @@ begin
     commit;
 end;
 /""")
-            n += 1
+                n += 1
+            elif f["kind"] == "ref-poly":
+                # поліморфне посилання: coalesce за всіма завантаженими цілями
+                targets = [t for t in (f.get("targets") or []) if t in loaded]
+                if not targets:
+                    continue
+                key = f"nullif(json_value(r.doc, '$.\"{od}\"'), '{EMPTY_UUID}')"
+                looks = ", ".join(f"(select tg.id from {t} tg where tg.legacy_ref = {key})" for t in targets)
+                out.append(f"""
+begin
+    update {tbl} t set t.{col} = (
+        select coalesce({looks})
+        from rsd_odata_raw r where r.entity = '{entity}' and r.ref_key = t.legacy_ref)
+    where t.{col} is null
+      and exists (select 1 from rsd_odata_raw r where r.entity = '{entity}'
+          and r.ref_key = t.legacy_ref and {key} is not null);
+    dbms_output.put_line('{tbl}.{col} (poly) -> {'|'.join(targets)}: ' || sql%rowcount || ' filled');
+    commit;
+end;
+/""")
+                n += 1
     out.append("\ncommit;")
     args.out.write_text("\n".join(out) + "\n", encoding="utf-8")
     print(f"{args.out}: {n} reconcile UPDATE(s)")

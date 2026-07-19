@@ -52,6 +52,17 @@ def proj_expr(f):
             return "cast(null as number)"  # ціль поза набором — реконсилиться пізніше
         return (f"(select tgt.id from {f['target']} tgt where tgt.legacy_ref = "
                 f"nullif(json_value(doc, {jpath(od)}), '{EMPTY_UUID}'))")
+    if k == "owner_type":
+        # StandardODATA.Catalog_X → Catalog.X (тип поліморфного власника)
+        return f"replace(json_value(doc, {jpath(od)}), 'StandardODATA.Catalog_', 'Catalog.')"
+    if k == "ref-poly":
+        # поліморфне посилання: ключ у полі `od`, ціль — одна з targets → coalesce
+        targets = f.get("targets") or []
+        if not targets:
+            return "cast(null as number)"
+        key = f"nullif(json_value(doc, {jpath(od)}), '{EMPTY_UUID}')"
+        looks = [f"(select tg.id from {t} tg where tg.legacy_ref = {key})" for t in targets]
+        return "coalesce(" + ", ".join(looks) + ")"
     # scalar за otype
     ot = (f.get("otype") or "").upper()
     if ot == "BOOLEAN":

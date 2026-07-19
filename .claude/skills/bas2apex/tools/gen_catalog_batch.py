@@ -216,22 +216,42 @@ class Gen:
             cols.append(("PARENT_ID", "NUMBER", None, "Батьківський елемент (ієрархія)", "self"))
             used.add("PARENT_ID")
             self.fks.append((tbl, "PARENT_ID", tbl)); self.stats["fk"] += 1
+            # field-map: self-FK ієрархії (odata Parent_Key) — без цього загрузчики
+            # (project/reconcile) не резолвлять PARENT_ID (був gap).
+            self.field_map[tbl]["fields"].append(
+                {"odata": "Parent_Key", "col": "PARENT_ID", "kind": "ref", "target": tbl})
         owners = obj.get("owners", [])
-        for owner in owners:
-            oref = owner if owner.startswith("Catalog.") else f"Catalog.{owner.split('.',1)[-1]}"
-            # OWNER_ID nullable: власник у 1С може бути поліморфним (Owner_Type) —
-            # для >1 власника резолвиться не завжди; NOT NULL валив би завантаження.
-            note = "поліморфний власник (Owner_Type) → §9" if len(owners) > 1 else ""
-            cols.append(("OWNER_ID", "NUMBER", None, "Власник", note))
-            used.add("OWNER_ID")
+        if owners:
+            # OWNER_ID nullable: власник у 1С може бути поліморфним; для історичних
+            # даних резолвиться не завжди; NOT NULL валив би завантаження.
+            orefs = [o if o.startswith("Catalog.") else f"Catalog.{o.split('.',1)[-1]}" for o in owners]
             if len(owners) > 1:
+                # поліморфний власник: OWNER_ID + OWNER_TYPE, без єдиного FK.
+                # Ключ поліморфного посилання 1С OData — у полі `Owner` (не Owner_Key).
+                cols.append(("OWNER_ID", "NUMBER", None, "Власник (поліморфний)", "poly"))
+                cols.append(("OWNER_TYPE", "VARCHAR2(60 CHAR)", None, "Тип власника (поліморфний)", ""))
+                used |= {"OWNER_ID", "OWNER_TYPE"}
                 self.open_q.append(f"- {tbl}.OWNER_ID — поліморфний власник "
-                                   f"({len(owners)} типів: {', '.join(owners)}) → рішення архітектора")
-            if oref in self.in_batch:
-                self.fks.append((tbl, "OWNER_ID", self.in_batch[oref])); self.stats["fk"] += 1
+                                   f"({len(owners)} типів: {', '.join(owners)}) → OWNER_TYPE+OWNER_ID")
+                targets = [self.in_batch[r] for r in orefs if r in self.in_batch]
+                self.field_map[tbl]["fields"].append(
+                    {"odata": "Owner_Type", "col": "OWNER_TYPE", "kind": "owner_type"})
+                self.field_map[tbl]["fields"].append(
+                    {"odata": "Owner", "col": "OWNER_ID", "kind": "ref-poly", "targets": targets})
+                if not targets:
+                    self.stats["fk_deferred"] += 1
             else:
-                self.stats["fk_deferred"] += 1
-            break
+                oref = orefs[0]
+                cols.append(("OWNER_ID", "NUMBER", None, "Власник", ""))
+                used.add("OWNER_ID")
+                if oref in self.in_batch:
+                    self.fks.append((tbl, "OWNER_ID", self.in_batch[oref])); self.stats["fk"] += 1
+                    self.field_map[tbl]["fields"].append(
+                        {"odata": "Owner_Key", "col": "OWNER_ID", "kind": "ref", "target": self.in_batch[oref]})
+                else:
+                    self.stats["fk_deferred"] += 1
+                    self.field_map[tbl]["fields"].append(
+                        {"odata": "Owner_Key", "col": "OWNER_ID", "kind": "ref", "target": None})
         for attr in obj.get("attributes", []):
             got = self.col(tbl, used, None, attr)
             if got:
