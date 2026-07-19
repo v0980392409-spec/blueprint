@@ -1,0 +1,202 @@
+page 10 (
+    name: Користувачі
+    alias: КОРИСТУВАЧІ
+    title: Користувачі
+    pageGroup: @довідники
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor-or-reader
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Read-only browser over RSD_POLZOVATELI (live BAS users, 662 rows). Фізична особа joined from RSD_FIZICHESKIELITSA; boolean flags Недійсний/Службовий rendered as Так/Ні. Native interactive report filtering.
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 5
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region користувачі (
+        name: Користувачі
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select p.id       as id
+                     , p.name     as name
+                     , fl.name    as fizlitso
+                     , case when p.nedeystvitelen then 'Так' else 'Ні' end as nedeystvitelen_label
+                     , case when p.sluzhebnyy     then 'Так' else 'Ні' end as sluzhebnyy_label
+                from rsd_polzovateli p
+                     left join rsd_fizicheskielitsa fl on fl.id = p.fizlitso_id
+                where p.is_deleted = false
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/interactive-report
+            templateOptions: [
+                #DEFAULT#
+                t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        advanced {
+            htmlDomId: polzovateli
+        }
+        comments {
+            comments: Read-only interactive report over RSD_POLZOVATELI; soft-deleted rows excluded; filter/search via the native toolbar.
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+        advanced {
+            savedReportMappingIdentifier: 9992181489621546
+        }
+
+        column FIZLITSO (
+            type: plainText
+            heading {
+                heading: Фізична особа
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        column ID (
+            type: hidden
+            heading {
+                heading: ІД
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: A
+            }
+        )
+
+        column NAME (
+            type: plainText
+            heading {
+                heading: Найменування
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: B
+            }
+        )
+
+        column NEDEYSTVITELEN_LABEL (
+            type: plainText
+            heading {
+                heading: Недійсний
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: D
+            }
+        )
+
+        column SLUZHEBNYY_LABEL (
+            type: plainText
+            heading {
+                heading: Службовий
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: E
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
+        savedReport polzovateli_primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+
+            displayColumn FIZLITSO (
+                sequence: 2
+            )
+
+            displayColumn NAME (
+                sequence: 1
+            )
+
+            displayColumn NEDEYSTVITELEN_LABEL (
+                sequence: 3
+            )
+
+            displayColumn SLUZHEBNYY_LABEL (
+                sequence: 4
+            )
+
+        )
+
+    )
+
+)
+

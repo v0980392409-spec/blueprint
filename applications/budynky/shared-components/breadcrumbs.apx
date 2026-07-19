@@ -14,6 +14,32 @@ breadcrumb breadcrumb (
         }
     )
 
+    entry контрагенти (
+        name: Контрагенти
+        pageNumber: 9
+        execution {
+            sequence: 40
+        }
+        link {
+            target: {
+                page: 9
+            }
+        }
+    )
+
+    entry користувачі (
+        name: Користувачі
+        pageNumber: 10
+        execution {
+            sequence: 50
+        }
+        link {
+            target: {
+                page: 10
+            }
+        }
+    )
+
     entry організації (
         name: Організації
         pageNumber: 4

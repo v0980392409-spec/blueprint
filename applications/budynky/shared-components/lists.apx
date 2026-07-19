@@ -80,6 +80,42 @@ list navigation-menu (
         }
     )
 
+    entry контрагенти (
+        label: Контрагенти
+        icon {
+            imageIconCssClasses: fa-handshake-o
+        }
+        layout {
+            sequence: 30
+        }
+        link {
+            target: {
+                page: 9
+            }
+        }
+        security {
+            authorizationScheme: @admin-or-contributor-or-reader
+        }
+    )
+
+    entry користувачі (
+        label: Користувачі
+        icon {
+            imageIconCssClasses: fa-users
+        }
+        layout {
+            sequence: 40
+        }
+        link {
+            target: {
+                page: 10
+            }
+        }
+        security {
+            authorizationScheme: @admin-or-contributor-or-reader
+        }
+    )
+
     entry організації (
         label: Організації
         icon {
@@ -104,7 +140,7 @@ list navigation-menu (
             imageIconCssClasses: fa-list
         }
         layout {
-            sequence: 30
+            sequence: 50
         }
         link {
             target: {

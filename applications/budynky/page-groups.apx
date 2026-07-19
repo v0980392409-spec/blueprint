@@ -12,6 +12,13 @@ pageGroup будинки (
     }
 )
 
+pageGroup довідники (
+    name: Довідники
+    description {
+        description: Read-only master-data browsers over live BAS data: counterparties (RSD_KONTRAGENTY) and users (RSD_POLZOVATELI).
+    }
+)
+
 pageGroup організації (
     name: Організації
     description {

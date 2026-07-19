@@ -1,0 +1,267 @@
+page 9 (
+    name: Контрагенти
+    alias: КОНТРАГЕНТИ
+    title: Контрагенти
+    pageGroup: @довідники
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor-or-reader
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Read-only browser over RSD_KONTRAGENTY (live BAS counterparties, 10597 rows). FK/enum labels joined for Вид (RSD_ENUMS ЮрФизЛицо), Фізична особа (RSD_FIZICHESKIELITSA), Відповідальний (RSD_POLZOVATELI). Native interactive report filtering.
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 5
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region контрагенти (
+        name: Контрагенти
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select k.id            as id
+                     , k.code          as code
+                     , k.name          as name
+                     , k.inn           as inn
+                     , k.kodpoedrpou   as kodpoedrpou
+                     , yf.name         as yurfizlitso
+                     , fl.name         as fizlitso
+                     , resp.name       as otvetstvennyy
+                from rsd_kontragenty k
+                     left join rsd_enums yf            on yf.id   = k.yurfizlitso_id
+                     left join rsd_fizicheskielitsa fl on fl.id   = k.fizlitso_id
+                     left join rsd_polzovateli resp    on resp.id = k.otvetstvennyy_id
+                where k.is_deleted = false
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/interactive-report
+            templateOptions: [
+                #DEFAULT#
+                t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        advanced {
+            htmlDomId: kontragenty
+        }
+        comments {
+            comments: Read-only interactive report over RSD_KONTRAGENTY; soft-deleted rows excluded; filter/search via the native toolbar.
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+        advanced {
+            savedReportMappingIdentifier: 9990870811621545
+        }
+
+        column CODE (
+            type: plainText
+            heading {
+                heading: Код
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: B
+            }
+        )
+
+        column FIZLITSO (
+            type: plainText
+            heading {
+                heading: Фізична особа
+            }
+            layout {
+                sequence: 70
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: G
+            }
+        )
+
+        column ID (
+            type: hidden
+            heading {
+                heading: ІД
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: A
+            }
+        )
+
+        column INN (
+            type: plainText
+            heading {
+                heading: ІПН
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: D
+            }
+        )
+
+        column KODPOEDRPOU (
+            type: plainText
+            heading {
+                heading: Код за ЄДРПОУ
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: E
+            }
+        )
+
+        column NAME (
+            type: plainText
+            heading {
+                heading: Найменування
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        column OTVETSTVENNYY (
+            type: plainText
+            heading {
+                heading: Відповідальний
+            }
+            layout {
+                sequence: 80
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: H
+            }
+        )
+
+        column YURFIZLITSO (
+            type: plainText
+            heading {
+                heading: Юр/фіз особа
+            }
+            layout {
+                sequence: 60
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: F
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
+        savedReport kontragenty_primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+
+            displayColumn CODE (
+                sequence: 1
+            )
+
+            displayColumn FIZLITSO (
+                sequence: 6
+            )
+
+            displayColumn INN (
+                sequence: 3
+            )
+
+            displayColumn KODPOEDRPOU (
+                sequence: 4
+            )
+
+            displayColumn NAME (
+                sequence: 2
+            )
+
+            displayColumn OTVETSTVENNYY (
+                sequence: 7
+            )
+
+            displayColumn YURFIZLITSO (
+                sequence: 5
+            )
+
+        )
+
+    )
+
+)
+
