@@ -1,0 +1,13 @@
+{
+ "registers": 99,
+ "cols": 552,
+ "fk": 109,
+ "fk_deferred": 58,
+ "composite": 24,
+ "untyped_dim": 28,
+ "untyped_res": 5,
+ "periodic": 7,
+ "subordinate": 0,
+ "zero_dim": 0,
+ "views": 7
+}
