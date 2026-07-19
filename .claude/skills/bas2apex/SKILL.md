@@ -205,7 +205,11 @@ To add/change a page, LOV, or item on an already-imported app, edit the
 
 1. **Validate**: `apex validate -input <dir>` in the ords container (LANG=C.utf8).
 2. **Import in place**: `apex import -input <dir> -id <id> -alias <ASCII> -workspace BAS_REVERSE`.
-3. **Re-grant roles** — import replaces the app and wipes ACL assignments (see above).
+3. **Re-grant roles** — import replaces the app and wipes ACL assignments (user→role
+   pairs live in APEX metadata, not in `.apx`). Mandatory idempotent step:
+   `migration/016-acl-grant-fix/regrant.sh <id> admin CLAUDE,VIKTOR`. NB (verified 26.1):
+   `add_user_role(p_role_static_id=>...)` throws `ORA-01403` here — look up `role_id`
+   from `apex_appl_acl_roles` by static_id and pass `p_role_id` (see `apex-security-deploy`).
 4. **Re-export** back to the repo (round-trip; APEX normalizes ordering + adds
    savedReport ids — commit that version so repo matches the stand).
 
@@ -228,6 +232,11 @@ git archive --format=tar HEAD:applications/<alias> | \
 ```
 
 ## Data track — live OData load (separate from structure)
+
+For the declarative complements (Web Credentials attribute mechanics, Automations
+for recurring reconcile, REST Source Sync spike), see
+`references/ongoing-sync.md`. The hand-rolled loader below stays the default for
+BAS's quirky OData.
 
 Once NSI structure exists, fill it from BAS OData (see
 `migration/004-data-nsi/` for the working pattern). Not `bas_sync_pkg` (the
