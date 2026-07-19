@@ -26,3 +26,10 @@ pageGroup організації (
     }
 )
 
+pageGroup процеси (
+    name: Процеси
+    description {
+        description: Business-process browsers over live BAS data: approval processes (RSD_SOGLASOVANIE, bounded sample) with state/routing/result labels and tabular-section counts.
+    }
+)
+

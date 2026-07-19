@@ -66,5 +66,18 @@ breadcrumb breadcrumb (
         }
     )
 
+    entry погодження (
+        name: Погодження
+        pageNumber: 11
+        execution {
+            sequence: 45
+        }
+        link {
+            target: {
+                page: 11
+            }
+        }
+    )
+
 )
 

@@ -152,5 +152,23 @@ list navigation-menu (
         }
     )
 
+    entry погодження (
+        label: Погодження
+        icon {
+            imageIconCssClasses: fa-check-square-o
+        }
+        layout {
+            sequence: 45
+        }
+        link {
+            target: {
+                page: 11
+            }
+        }
+        security {
+            authorizationScheme: @admin-or-contributor-or-reader
+        }
+    )
+
 )
 

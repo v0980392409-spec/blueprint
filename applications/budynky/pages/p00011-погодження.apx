@@ -1,0 +1,293 @@
+page 11 (
+    name: Погодження
+    alias: ПОГОДЖЕННЯ
+    title: Погодження (процеси)
+    pageGroup: @процеси
+    appearance {
+        pageTemplate: @/standard
+        templateOptions: #DEFAULT#
+    }
+    navigation {
+        cursorFocus: doNotFocusCursor
+    }
+    security {
+        authorizationScheme: @admin-or-contributor-or-reader
+        pageAccessProtection: argumentsMustHaveChecksum
+        formAutoComplete: false
+    }
+    advanced {
+        enableDuplicatePageSubmissions: false
+    }
+    comments {
+        comments: Read-only browser over RSD_SOGLASOVANIE (live BAS approval processes, bounded sample 500). Enum labels joined for Стан/Варіант/Результат (RSD_ENUMS), author from RSD_POLZOVATELI; scalar subqueries count approvers (_ISPOLNITELI) and results (_REZULTATYSOGLASOVANIYA) tabular sections. Демонструє дані процесів + workflow-вимір.
+    }
+
+    region breadcrumb (
+        name: Breadcrumb
+        type: breadcrumb
+        source {
+            breadcrumb: @breadcrumb
+        }
+        layout {
+            sequence: 5
+            slot: breadcrumbBar
+        }
+        appearance {
+            template: @/title-bar
+            templateOptions: [
+                #DEFAULT#
+                t-BreadcrumbRegion--useBreadcrumbTitle
+            ]
+        }
+        componentAppearance {
+            breadcrumbTemplate: @/breadcrumb
+            templateOptions: #DEFAULT#
+        }
+    )
+
+    region погодження (
+        name: Погодження
+        type: interactiveReport
+        source {
+            location: localDatabase
+            type: sqlQuery
+            sqlQuery:
+                ```sql
+                select s.id                                as id
+                     , s.naimenovanie                      as naimenovanie
+                     , to_char(s.doc_date, 'DD.MM.YYYY')    as data
+                     , st.name                              as sostoyanie
+                     , vr.name                              as variant
+                     , rz.name                              as rezultat
+                     , a.name                               as avtor
+                     , (select count(*) from rsd_soglasovanie_ispolniteli i where i.owner_id = s.id)              as pogodzhuvachiv
+                     , (select count(*) from rsd_soglasovanie_rezultatysoglasovaniya r where r.owner_id = s.id)   as rezultativ
+                from rsd_soglasovanie s
+                     left join rsd_enums st on st.id = s.sostoyanie_id
+                     left join rsd_enums vr on vr.id = s.variantsoglasovaniya_id
+                     left join rsd_enums rz on rz.id = s.rezultatsoglasovaniya_id
+                     left join rsd_polzovateli a on a.id = s.avtor_id
+                where s.is_deleted = false
+                ```
+        }
+        layout {
+            sequence: 10
+            slot: body
+        }
+        appearance {
+            template: @/interactive-report
+            templateOptions: [
+                #DEFAULT#
+                t-IRR-region--hideHeader js-addHiddenHeadingRoleDesc
+            ]
+        }
+        advanced {
+            htmlDomId: pogodzhennya
+        }
+        comments {
+            comments: Read-only interactive report over RSD_SOGLASOVANIE; soft-deleted excluded; filter/search via the native toolbar.
+        }
+        pagination {
+            type: rowRangesXToY
+        }
+        advanced {
+            savedReportMappingIdentifier: 10353244161712885
+        }
+
+        column AVTOR (
+            type: plainText
+            heading {
+                heading: Автор
+            }
+            layout {
+                sequence: 70
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: G
+            }
+        )
+
+        column DATA (
+            type: plainText
+            heading {
+                heading: Дата
+            }
+            layout {
+                sequence: 30
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: C
+            }
+        )
+
+        column ID (
+            type: hidden
+            heading {
+                heading: ІД
+            }
+            layout {
+                sequence: 10
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: A
+            }
+        )
+
+        column NAIMENOVANIE (
+            type: plainText
+            heading {
+                heading: Найменування
+            }
+            layout {
+                sequence: 20
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: B
+            }
+        )
+
+        column POGODZHUVACHIV (
+            type: plainText
+            heading {
+                heading: Погоджувачів
+                alignment: end
+            }
+            layout {
+                sequence: 80
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: H
+            }
+        )
+
+        column REZULTAT (
+            type: plainText
+            heading {
+                heading: Результат
+            }
+            layout {
+                sequence: 60
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: F
+            }
+        )
+
+        column REZULTATIV (
+            type: plainText
+            heading {
+                heading: Результатів
+                alignment: end
+            }
+            layout {
+                sequence: 90
+                columnAlignment: end
+            }
+            source {
+                dataType: NUMBER
+            }
+            advanced {
+                endUserAlias: I
+            }
+        )
+
+        column SOSTOYANIE (
+            type: plainText
+            heading {
+                heading: Стан
+            }
+            layout {
+                sequence: 40
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: D
+            }
+        )
+
+        column VARIANT (
+            type: plainText
+            heading {
+                heading: Варіант
+            }
+            layout {
+                sequence: 50
+            }
+            source {
+                dataType: STRING
+            }
+            advanced {
+                endUserAlias: E
+            }
+        )
+
+        page {
+            borderWidth: 0.5
+            borderColor: #666666
+        }
+
+        savedReport pogodzhennya_primary (
+            visibility: primaryDefault
+            view {
+                rowsPerPage: 50
+            }
+
+            displayColumn AVTOR (
+                sequence: 6
+            )
+
+            displayColumn DATA (
+                sequence: 2
+            )
+
+            displayColumn NAIMENOVANIE (
+                sequence: 1
+            )
+
+            displayColumn POGODZHUVACHIV (
+                sequence: 7
+            )
+
+            displayColumn REZULTAT (
+                sequence: 5
+            )
+
+            displayColumn REZULTATIV (
+                sequence: 8
+            )
+
+            displayColumn SOSTOYANIE (
+                sequence: 3
+            )
+
+            displayColumn VARIANT (
+                sequence: 4
+            )
+
+        )
+
+    )
+
+)
+
