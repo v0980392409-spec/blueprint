@@ -29,51 +29,54 @@ from urllib.parse import quote
 EMPTY_UUID = "00000000-0000-0000-0000-000000000000"
 
 
-def enc(name):  # Catalog_<Имя> з percent-encoding кирилиці
-    return "Catalog_" + quote(name, safe="_")
+def enc(entity_ref):  # Тип.Имя → OData entity set `Тип_<percent-encoded Имя>`
+    typ, name = entity_ref.split(".", 1)  # Catalog/Document/BusinessProcess/Task
+    return typ + "_" + quote(name, safe="_")
 
 
 def jpath(field):
     return "'$.\"" + field + "\"'"
 
 
-def proj_expr(f):
-    """SQL-вираз для колонки з doc (RAW)."""
+def proj_expr(f, src=None):
+    """SQL-вираз для колонки. `src` — вираз сирого значення (за замовч.
+    json_value(doc, ...)); для ТЧ передається колонка JSON_TABLE (jt.cN)."""
     k, od = f["kind"], f["odata"]
     if k == "legacy":
         return "json_value(doc, '$.Ref_Key')"
+    if src is None:
+        src = f"json_value(doc, {jpath(od)})"
     if k == "bool":
-        return f"case when lower(json_value(doc, {jpath(od)})) = 'true' then true else false end"
+        return f"case when lower({src}) = 'true' then true else false end"
     if k == "enum":
         return (f"(select id from rsd_enums where enum_type = '{f['enum_type']}' "
-                f"and value_key = json_value(doc, {jpath(od)}))")
+                f"and value_key = {src})")
     if k in ("ref", "ref-ext"):
         if not f.get("target"):
             return "cast(null as number)"  # ціль поза набором — реконсилиться пізніше
         return (f"(select tgt.id from {f['target']} tgt where tgt.legacy_ref = "
-                f"nullif(json_value(doc, {jpath(od)}), '{EMPTY_UUID}'))")
+                f"nullif({src}, '{EMPTY_UUID}'))")
     if k == "owner_type":
         # StandardODATA.Catalog_X → Catalog.X (тип поліморфного власника)
-        return f"replace(json_value(doc, {jpath(od)}), 'StandardODATA.Catalog_', 'Catalog.')"
+        return f"replace({src}, 'StandardODATA.Catalog_', 'Catalog.')"
     if k == "ref-poly":
         # поліморфне посилання: ключ у полі `od`, ціль — одна з targets → coalesce
         targets = f.get("targets") or []
         if not targets:
             return "cast(null as number)"
-        key = f"nullif(json_value(doc, {jpath(od)}), '{EMPTY_UUID}')"
+        key = f"nullif({src}, '{EMPTY_UUID}')"
         looks = [f"(select tg.id from {t} tg where tg.legacy_ref = {key})" for t in targets]
         return "coalesce(" + ", ".join(looks) + ")"
     # scalar за otype
     ot = (f.get("otype") or "").upper()
     if ot == "BOOLEAN":
-        return f"case when lower(json_value(doc, {jpath(od)})) = 'true' then true else false end"
+        return f"case when lower({src}) = 'true' then true else false end"
     if ot.startswith("NUMBER"):
-        return f"to_number(json_value(doc, {jpath(od)}) default null on conversion error)"
+        return f"to_number({src} default null on conversion error)"
     if ot in ("DATE", "TIMESTAMP"):
         fn = "to_date" if ot == "DATE" else "to_timestamp"
-        return (f"{fn}(substr(json_value(doc, {jpath(od)}), 1, 19), "
-                f"'YYYY-MM-DD\"T\"HH24:MI:SS')")
-    return f"json_value(doc, {jpath(od)})"  # string
+        return f"{fn}(substr({src}, 1, 19), 'YYYY-MM-DD\"T\"HH24:MI:SS')"
+    return src  # string
 
 
 RAW_DDL = """\
@@ -134,6 +137,31 @@ end;
 """
 
 
+def section_block(parent, entity, sec):
+    """Проекція ТЧ: JSON_TABLE '$.<Section>[*]' → дочірня таблиця (OWNER_ID+LINE_NO).
+    Ідемпотентно (delete завантажених owner'ів + insert). Композитні/нетипізовані
+    поля ТЧ у field-map відсутні (як у головних) → лишаються NULL (§9)."""
+    tname, fields = sec["table"], sec["fields"]
+    jt_cols = ["LINE_NO for ordinality"]
+    for i, f in enumerate(fields):
+        jt_cols.append(f"c{i} varchar2(4000) path '$.\"{f['odata']}\"'")
+    sel = ["p.id", "jt.LINE_NO"] + [proj_expr(f, f"jt.c{i}") for i, f in enumerate(fields)]
+    ins_cols = ["OWNER_ID", "LINE_NO"] + [f["col"] for f in fields]
+    return f"""\
+-- ТЧ {sec['odata']} → {tname}
+delete from {tname} where owner_id in (select id from {parent});
+insert into {tname} ({', '.join(ins_cols)})
+select {', '.join(sel)}
+from rsd_odata_raw r
+    join {parent} p on p.legacy_ref = r.ref_key
+    cross join json_table(r.doc, '$."{sec['odata']}"[*]' columns (
+            {(',' + chr(10) + '            ').join(jt_cols)}
+    )) jt
+where r.entity = '{entity}';
+commit;
+"""
+
+
 def project_block(table, fm):
     fields = fm["fields"]
     sel = ",\n        ".join(f"{proj_expr(f)} as {f['col']}" for f in fields)
@@ -141,7 +169,7 @@ def project_block(table, fm):
     upd = ",\n        ".join(f"t.{c} = s.{c}" for c in cols if c != "LEGACY_REF")
     ins_cols = ", ".join(cols)
     ins_vals = ", ".join(f"s.{c}" for c in cols)
-    return f"""\
+    out = f"""\
 -- {fm['entity']} → {table}
 merge into {table} t using (
     select
@@ -154,6 +182,9 @@ when not matched then insert ({ins_cols})
     values ({ins_vals});
 commit;
 """
+    for sec in fm.get("sections", []):
+        out += "\n" + section_block(table, fm["entity"], sec)
+    return out
 
 
 def main():
@@ -178,9 +209,8 @@ def main():
     for t in tables:
         if t not in fmap:
             print(f"! {t} відсутній у field-map — пропущено"); continue
-        entity_ref = fmap[t]["entity"]                 # Catalog.Контрагенты
-        name = entity_ref.split(".", 1)[1]
-        stage.append(stage_block(enc(name), entity_ref))
+        entity_ref = fmap[t]["entity"]                 # Catalog.Контрагенты / BusinessProcess.X
+        stage.append(stage_block(enc(entity_ref), entity_ref))
         project.append(project_block(t, fmap[t]))
 
     (args.out_dir / "raw-ddl.sql").write_text(RAW_DDL, encoding="utf-8")

@@ -36,6 +36,28 @@ AUDIT = [
 
 
 class DocGen(gc.Gen):
+    def tab_section(self, parent_tbl, ts):
+        # Як gc.Gen.tab_section, але реєструє field-map ТЧ під parent["sections"]
+        # (odata-ім'я секції, дочірня таблиця, поля) — щоб loader проектував ТЧ.
+        tname = gc.uniq((parent_tbl + "_" + gc.translit(ts["name"]))[:120], set())
+        used = {"ID", "OWNER_ID", "LINE_NO"}
+        cols = [("ID", "NUMBER GENERATED ALWAYS AS IDENTITY", None, "Ключ", ""),
+                ("OWNER_ID", "NUMBER", "NOT NULL", "Власник ТЧ", ""),
+                ("LINE_NO", "NUMBER", "NOT NULL", "Номер рядка", "")]
+        sec_fields = []
+        self.field_map.setdefault(parent_tbl, {"fields": []}).setdefault("sections", []).append(
+            {"odata": ts["name"], "table": tname, "fields": sec_fields})
+        self.field_map[tname] = {"entity": None, "fields": sec_fields}  # col() дописує сюди
+        for attr in ts.get("attributes", []):
+            got = self.col(tname, used, None, attr)
+            if got:
+                cols.extend(got)
+        del self.field_map[tname]  # field-map ТЧ живе лише під parent["sections"]
+        self.tables.append((tname, cols, "ID", [], [], gc.label_of(ts) + " (ТЧ)", None))
+        self.fks.append((tname, "OWNER_ID", parent_tbl)); self.stats["fk"] += 1
+        self.stats["child"] += 1
+        self.stats["tables"] += 1
+
     def document(self, ref, obj):
         tbl = gc.table_name(ref)
         self.glossary.append((obj["name"], tbl, gc.label_of(obj), "Document"))
