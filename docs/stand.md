@@ -45,9 +45,11 @@ ssh apex-vps 'source /opt/apex-stand/.env && docker exec -i -e NLS_LANG=.AL32UTF
 ssh apex-vps 'docker exec -it apex-ords /opt/oracle/sqlcl/bin/sql BAS_REVERSE@//db:1521/FREEPDB1'
 
 # експорт застосунку 122 у APEXLang (.apx), з SQLcl:
-#   apex export -applicationid 122 -as-apexlang
+#   apex export -applicationid 122 -exptype APEXLANG
 # валідація APEXLang-каталогу:
-#   apex validate -dir <каталог>
+#   apex validate -input <каталог>
+# імпорт APEXLang-каталогу назад:
+#   apex import -input <каталог>
 ```
 
 ## Суміжні локальні репозиторії
