@@ -24,7 +24,7 @@ ssh apex-vps 'source /opt/apex-stand/.env && docker exec -i -e NLS_LANG=.AL32UTF
 
 # SQLcl — всередині контейнера ORDS (локально не встановлений)
 ssh apex-vps 'docker exec -it apex-ords /opt/oracle/sqlcl/bin/sql BAS_REVERSE@//db:1521/FREEPDB1'
-# у SQLcl: apex export -applicationid 122 -as-apexlang   |   apex validate -dir <dir>
+# у SQLcl: apex export -applicationid 122 -exptype APEXLANG   |   apex validate -input <dir>   |   apex import -input <dir>
 ```
 
 Білда і тестів немає — «збірка» тут це генерація blueprint / APEXLang-артефактів та їх імпорт в APEX.
